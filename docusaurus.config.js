@@ -72,9 +72,21 @@ const config = {
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'smSidebar',
+            sidebarId: 'luaSidebar',
             position: 'left',
-            label: 'SM',
+            label: 'Lua',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'networkSidebar',
+            position: 'left',
+            label: 'Network',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'miscSidebar',
+            position: 'left',
+            label: 'Misc',
           },
           {
             href: 'https://github.com/Scrap-Mechanic-Modding',
