@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunksm_docs=self.webpackChunksm_docs||[]).push([[229],{6456:a=>{a.exports=JSON.parse('{"title":"Lua","slug":"/category/lua","permalink":"/docs/category/lua","navigation":{"next":{"title":"lua api","permalink":"/docs/lua/docs/lua api"}}}')}}]);

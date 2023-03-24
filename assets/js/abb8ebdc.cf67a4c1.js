@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunksm_docs=self.webpackChunksm_docs||[]).push([[495],{1135:e=>{e.exports=JSON.parse('{"title":"Structures","slug":"/category/structures","permalink":"/docs/category/structures","navigation":{"next":{"title":"ImHex Patterns","permalink":"/docs/category/imhex-patterns"}}}')}}]);
