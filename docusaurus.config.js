@@ -103,8 +103,20 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'SM',
-                to: '/docs/category/sm',
+                label: 'Lua',
+                to: '/docs/category/lua',
+              },
+              {
+                label: 'Networking',
+                to: '/docs/category/networking',
+              },
+              {
+                label: 'Structures',
+                to: '/docs/category/structures',
+              },
+              {
+                label: 'Misc',
+                to: '/docs/category/misc',
               },
             ],
           },
