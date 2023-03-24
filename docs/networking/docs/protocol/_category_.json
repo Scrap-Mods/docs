@@ -1,0 +1,8 @@
+{
+  "label": "Protocol",
+  "position": 3,
+  "link": {
+    "description": "Quack",
+    "type": "generated-index"
+  }
+}
