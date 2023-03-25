@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunksm_docs=self.webpackChunksm_docs||[]).push([[256],{8133:e=>{e.exports=JSON.parse('{"title":"Packets","slug":"/category/packets","permalink":"/docs/category/packets","navigation":{"previous":{"title":"Networking","permalink":"/docs/category/networking"},"next":{"title":"Player","permalink":"/docs/networking/docs/packets/player"}}}')}}]);
