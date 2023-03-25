@@ -113,7 +113,7 @@ const config = {
               },
               {
                 label: 'Networking',
-                to: '/category/networking',
+                to: '/docs/category/packets',
               },
               {
                 label: 'Structures',
