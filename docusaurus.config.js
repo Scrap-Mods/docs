@@ -32,6 +32,10 @@ const config = {
     locales: ['en'],
   },
 
+  markdown: {
+    mermaid: true,
+  },
+
   presets: [
     [
       'classic',
@@ -51,7 +55,7 @@ const config = {
     ],
   ],
 
-  //themes: ['@docusaurus/theme-search-algolia'],
+  themes: [/* '@docusaurus/theme-search-algolia', */ '@docusaurus/theme-mermaid'],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -61,6 +65,7 @@ const config = {
         disableSwitch: false,
         respectPrefersColorScheme: true,
       },
+      
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
