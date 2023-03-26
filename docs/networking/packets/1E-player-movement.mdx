@@ -1,0 +1,116 @@
+---
+title: Player Movement
+---
+
+The client sends this packet to the server once every tick. It contains pressed movement keys and the player's look direction. It does not contain any position coordinates.
+
+- **ID**: 0x1E (30)
+- **Size**: 9 bytes
+- **State**: Playing
+- **Bound To**: Client -> Server
+
+## Structure
+
+| Offset | Field Name | Field Type  | Notes |
+|--------|------------|------------ |-------|
+| 0x00   | Unknown    | u8          | Always `0x80`. |
+| 0x01   | Tick       | be u32      | The current tick. |
+| 0x05   | Keys       | u8 bitfield | Bitfield of which movement keys are pressed. See [Keys bitfield](#keys-bitfield). |
+| 0x06   | Direction  | u8 bitfield | Bitfield of the last horizontal direction moved in. See [Direction bitfield](#direction-bitfield). |
+| 0x07   | Yaw        | u8          | The player's horizontal look rotation. A yaw of `0` means the player is looking into the positive Y direction. Rotating counter-clockwise (to the left) increases the yaw. After reaching `255`, the yaw overflows back to `0`. |
+| 0x08   | Pitch      | u8          | The player's vertical look rotation. A pitch of `0` means the player is looking straight down (into the negative Z direction). Looking straight up yields a pitch of `128`. |
+
+### Keys bitfield
+
+Contains information about which movement keys are pressed. All bits are always low while the player's character is seated or tumbling.
+
+<table>
+    <thead>
+        <tr>
+            <th>Bits</th>
+            <th>Field name</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>7</td>
+            <td>Sprint</td>
+            <td>
+                High when the player is sprinting while moving horizontally. Low in all other cases, including when the player is holding the Sprint button while standing still.<br />
+                Always lags one tick behind when starting a sprint from standstill. The sprint bitflag also continues to stay high for one more tick after the player has stopped moving horizontally.
+            </td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Horizontal</td>
+            <td>High when any of the Move Forward, Move Backward, Stafe Left or Strafe Right keys are pressed.</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Crawl</td>
+            <td>High when the player is holding the Crawl (crouch) keybind. This is not connected to the actual crawl state of the player's character. If the character is crawling and unable to stand up, the value can be either high or low depending on wether the player is holding the Crawl key or not.</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Jump</td>
+            <td>High when the player is holding the Jump button. The player's character does not have to be on the ground.</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td rowspan="4">Unknown</td>
+            <td rowspan="4">Not known to be anything other than low.</td>
+        </tr>
+        <tr>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>0</td>
+        </tr>
+    </tbody>
+</table>
+
+### Direction bitfield
+
+<table>
+    <thead>
+        <tr>
+            <th>Bits</th>
+            <th>Field name</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>7</td>
+            <td rowspan="3">Direction</td>
+            <td rowspan="3">The direction relative to the player the player is walking in. Ranges from <code>0</code> up to and including <code>7</code>. Strafing right starts at <code>0</code> and increases by <code>1</code> for every 45 degrees rotated counter-clockwise (to the left).</td>
+        </tr>
+        <tr>
+            <td>6</td>
+        </tr>
+        <tr>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td rowspan="5">Unknown</td>
+            <td rowspan="5">Not known to be anything other than low.</td>
+        </tr>
+        <tr>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>0</td>
+        </tr>
+    </tbody>
+</table>
