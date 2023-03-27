@@ -36,6 +36,20 @@ Contains information about which movement keys are pressed. All bits are always 
     <tbody>
         <tr>
             <td>7</td>
+            <td rowspan="4">Unknown</td>
+            <td rowspan="4">Not known to be anything other than low.</td>
+        </tr>
+        <tr>
+            <td>6</td>
+        </tr>
+        <tr>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>3</td>
             <td>Sprint</td>
             <td>
                 High when the player is sprinting while moving horizontally. Low in all other cases, including when the player is holding the Sprint button while standing still.<br />
@@ -43,33 +57,19 @@ Contains information about which movement keys are pressed. All bits are always 
             </td>
         </tr>
         <tr>
-            <td>6</td>
+            <td>2</td>
             <td>Horizontal</td>
             <td>High when any of the Move Forward, Move Backward, Stafe Left or Strafe Right keys are pressed.</td>
         </tr>
         <tr>
-            <td>5</td>
+            <td>1</td>
             <td>Crawl</td>
             <td>High when the player is holding the Crawl (crouch) keybind. This is not connected to the actual crawl state of the player's character. If the character is crawling and unable to stand up, the value can be either high or low depending on wether the player is holding the Crawl key or not.</td>
         </tr>
         <tr>
-            <td>4</td>
+            <td>0</td>
             <td>Jump</td>
             <td>High when the player is holding the Jump button. The player's character does not have to be on the ground.</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td rowspan="4">Unknown</td>
-            <td rowspan="4">Not known to be anything other than low.</td>
-        </tr>
-        <tr>
-            <td>2</td>
-        </tr>
-        <tr>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>0</td>
         </tr>
     </tbody>
 </table>
