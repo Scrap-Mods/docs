@@ -1,14 +1,14 @@
 ---
-title: Hello
+title: Request Passphrase
 ---
 
-The client sends this packet to the server to initiate the connection. The server responds with the same packet.
+The server sends this packet to the client when the client is joining the server and the server requires a passphrase to join.
 
-- **ID**: 0x01
+- **ID**: 0x03
 - **Size**: 1 byte
 - **LZ4 Compressed**: No
 - **State**: Joining
-- **Bound To**: Client <-> Server
+- **Bound To**: Server -> Client
 
 ## Structure
 
@@ -17,4 +17,3 @@ No data.
 | Offset | Field Name | Field Type |
 |--------|------------|------------|
 | N/A    | N/A        | N/A        |
-
