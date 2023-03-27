@@ -2,7 +2,9 @@
 title: Player Movement
 ---
 
-The client sends this packet to the server once every tick. It contains pressed movement keys and the player's look direction. It does not contain any position coordinates.
+This packet contains pressed movement keys and the player's look direction. It does not contain any position coordinates.
+
+The client sends this packet to the server once every tick. If the client's framerate drops below the tickrate, at most one packet is sent per frame.
 
 - **ID**: 0x1E (30)
 - **Size**: 9 bytes
