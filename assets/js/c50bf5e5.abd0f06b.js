@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunksm_docs=self.webpackChunksm_docs||[]).push([[256],{8133:e=>{e.exports=JSON.parse('{"title":"Packets","description":"Definitions for all known and unknown packets.","slug":"/category/packets","permalink":"/docs/category/packets","navigation":{"next":{"title":"01 - Hello","permalink":"/docs/networking/packets/hello"}}}')}}]);
