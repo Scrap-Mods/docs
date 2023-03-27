@@ -1,0 +1,18 @@
+---
+title: Invalid Checksum
+---
+
+If a checksum sent by [File Checksums](06-file-checksums.mdx) is invalid, this packet is sent.
+
+- **ID**: 0x08
+- **Size**: 5 bytes
+- **LZ4 Compressed**: Yes
+- **State**: Joining
+- **Bound To**: Client -> Server
+
+## Structure
+
+| Offset | Field Name | Field Type  | Notes                          |
+|--------|------------|------------ |--------------------------------|
+| 0      | Index       | uint32      | The index of the invalid checksum |
+
