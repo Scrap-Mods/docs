@@ -1,0 +1,18 @@
+---
+title: Respond Passphrase
+---
+
+The client sends this packet to the server to respond to the passphrase challenge.
+
+- **ID**: 0x04
+- **Size**: Variable
+- **LZ4 Compressed**: No
+- **State**: Joining
+- **Bound To**: Client -> Server
+
+## Structure
+
+| Offset | Field Name | Field Type | Notes              |
+|--------|------------|------------|--------------------|
+| 0x0    | Magic      | Byte       | Should be `$`      |
+| 0x1    | Passphrase | String     | Until the end of packet  |
