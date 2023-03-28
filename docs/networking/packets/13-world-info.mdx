@@ -48,7 +48,7 @@ Packet13 packet ;
 
 | Field Name | Field Type | Notes              |
 |------------|------------|--------------------|
-| Game Tick  | uint32     |          |
+| Game Tick  | u32     |          |
 | Blobs      | BlobData[] | From `GenericData` table in save.  Read until end of file.       |
 
 
@@ -57,15 +57,15 @@ Packet13 packet ;
 | Field Name | Field Type | Notes              |
 |------------|------------|--------------------|
 | Data       | GenericData |          |
-| World ID   | uint16     |          |
-| Flags      | unsigned byte |          |
-| Compressed Size | uint32 |          |
-| Compressed Data | byte[] |          |
+| World ID   | u16     |          |
+| Flags      | u8 |          |
+| Compressed Size | u32 |          |
+| Compressed Data | u8[] |          |
 
 ### GenericData
 
 | Field Name | Field Type | Notes              |
 |------------|------------|--------------------|
-| UUID       | byte[16]   |          |
-| Size       | uint16     |          |
-| Value      | byte[Size]     |          |
+| UUID       | u8[16]   |          |
+| Size       | u16     |          |
+| Value      | u8[Size]     |          |
