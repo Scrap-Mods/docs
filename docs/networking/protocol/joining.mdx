@@ -27,14 +27,19 @@ In the joining sequence, the following packets are used:
 
 The joining sequence depends on the `Multiplayer` setting of the server.
 
-### Public - WIP
+### Public
 
 ```mermaid
 sequenceDiagram
-    Client->>Server: Initiate connection
     Server->>Client: Client Accepted
     Client->>Server: Hello
     Server->>Client: Server Info
+    Server->>Client: World Info
+    Server-->Client: 29
+    Client->>Server: File Checksums
+    Server->>Client: Checksums Accepted
+    Client->>Server: Character Info
+    Server->>Client: Join Confirmation
 ```
 
 ### Friends Only
@@ -64,6 +69,22 @@ sequenceDiagram
 ```
 ### Friends of Friends - WIP
 
+**If friended:**
+
+```mermaid
+sequenceDiagram
+    Client->>Server: Initiate connection
+    Server->>Client: Client Accepted
+    Client->>Server: Hello
+    Server->>Client: Server Info
+    Server->>Client: World Info
+    Server-->Client: 29
+    Client->>Server: File Checksums
+    Server->>Client: Checksums Accepted
+    Client->>Server: Character Info
+    Server->>Client: Join Confirmation
+```
+
 **If passphrase is valid:**
 
 ```mermaid
@@ -74,13 +95,19 @@ sequenceDiagram
     Server->>Client: Client Accepted 
     Client->>Server: Hello
     Server->>Client: Server Info
+    Server->>Client: World Info
+    Server-->Client: 29
+    Client->>Server: File Checksums
+    Server->>Client: Checksums Accepted
+    Client->>Server: Character Info
+    Server->>Client: Join Confirmation
 ```
 
 **If passphrase is invalid:**
 
 Todo
 
-### Private - WIP
+### Private
 
 ```mermaid
 sequenceDiagram
