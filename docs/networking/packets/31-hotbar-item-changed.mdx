@@ -17,5 +17,5 @@ This packet is sent when the player equips a different item. No packet is sent w
 | Offset | Field Name       | Field Type | Notes |
 |--------|------------------|------------|-------|
 | 0x00   | Character ID     | be u32     | The character ID of the player sending the packet. |
-| 0x04   | Uuid             | be u128    | The UUID of the newly equiped item. `00000000-0000-0000-0000-000000000000` when no item is equipped |
+| 0x04   | Uuid             | le u128    | The UUID of the newly equiped item. `00000000-0000-0000-0000-000000000000` when no item is equipped |
 | 0x14   | Tool Instance ID | be u32     | The instance id of the newly equiped tool. Always `0xFFFFFFFF` for items that are not tools or when no item is equipped. |
