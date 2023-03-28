@@ -6,20 +6,28 @@ title: Joining
 
 Joining is the process of establishing a connection between two peers. It is a critical part of the protocol, as it is the only way to verify that the peer you are connected to is the peer you intended to connect to. It is also the only way to verify that the peer you are connected to is running the correct version of the protocol.
 
+Joining packets range from packet ID `0` -> `13`.
+
 ## Packets
-IDs: 0x01 - 0x0D (13)
-- [Hello](../packets/01-hello.mdx)
-- [Server Info](../packets/02-server-info.mdx)
-- [Request Passphrase](../packets/03-request-passphrase.mdx)
-- [Respond Passphrase](../packets/04-respond-passphrase.mdx)
-- [Client Accepted](../packets/05-client-accepted.mdx)
-- [Character](../packets/09-character.mdx)
+
+In the joining sequence, the following packets are used:
+- [01 - Hello](../packets/01-hello.mdx)
+- [02 - Server Info](../packets/02-server-info.mdx)
+- [03 - Request Passphrase](../packets/03-request-passphrase.mdx)
+- [04 - Respond Passphrase](../packets/04-respond-passphrase.mdx)
+- [05 - Client Accepted](../packets/05-client-accepted.mdx)
+- [06 - File Checksums](../packets/06-file-checksums.mdx)
+- [07 - Checksums Accepted](../packets/07-checksums-accepted.mdx)
+- [08 - Checksums Denied](../packets/08-checksums-denied.mdx)
+- [09 - Character Info](../packets/09-character-info.mdx)
+- [10 - Join Confirmation](../packets/10-join-confirmation.mdx)
+- [13 - World Info](../packets/13-world-info.mdx)
 
 ## Joining Sequence
 
 The joining sequence depends on the `Multiplayer` setting of the server.
 
-### Public
+### Public - WIP
 
 ```mermaid
 sequenceDiagram
@@ -39,6 +47,12 @@ sequenceDiagram
     Server->>Client: Client Accepted
     Client->>Server: Hello
     Server->>Client: Server Info
+    Server->>Client: World Info
+    Server-->Client: 29
+    Client->>Server: File Checksums
+    Server->>Client: Checksums Accepted
+    Client->>Server: Character Info
+    Server->>Client: Join Confirmation
 ```
 
 **If un-friended:**
@@ -48,7 +62,7 @@ sequenceDiagram
     Client->>Server: Initiate connection
     Server->>Client: Close connection
 ```
-### Friends of Friends
+### Friends of Friends - WIP
 
 **If passphrase is valid:**
 
@@ -66,7 +80,7 @@ sequenceDiagram
 
 Todo
 
-### Private
+### Private - WIP
 
 ```mermaid
 sequenceDiagram
