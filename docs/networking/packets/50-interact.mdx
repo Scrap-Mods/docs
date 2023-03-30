@@ -1,0 +1,34 @@
+---
+title: 50 - Interact
+---
+
+# Interact
+
+This packet is sent when the player interacts with an interactable (pressing, unpressing, interacting).
+
+- **ID**: 0x32 (50)
+- **Size**: Variable
+- **LZ4 Compressed**: No
+- **State**: Playing
+- **Bound To**: Client -> Server
+
+## Structure
+
+Depends on packet type.
+
+#### Set seated 0x90
+| Offset | Field Name       | Field Type | Notes |
+|--------|------------------|------------|-------|
+| 0x00   | Packet Type      | u8         | Entering seats |
+| 0x01   | Interactable ID  | be u32     | |
+| 0x05   | Player ID        | be u32     | |
+
+#### Other 0x80
+| Offset | Field Name       | Field Type | Notes |
+|--------|------------------|------------|-------|
+| 0x00   | Packet Type      | u8         |Buttons and switches etc|
+| 0x01   | Interactable ID  | be u32     | |
+| 0x05   | State            | u8         | |
+
+[//]: # (Size veries between pressing buttons and entering seats,
+last byte for pressing is the state.)
