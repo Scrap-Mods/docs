@@ -1,0 +1,31 @@
+---
+title: 44 - Connect
+---
+
+# Connect
+
+This packet is sent when the player changes a connection between 2 connection points with the connect tool.
+
+- **ID**: 0x2C (44)
+- **Size**: (0x0A  | 10 bytes)
+- **LZ4 Compressed**: No
+- **State**: Playing
+- **Bound To**: Client -> Server
+
+## Structure
+
+#### connecting
+
+| Offset | Field Name       | Field Type | Notes |
+|--------|------------------|------------|-------|
+| 0x00   | Unknown          | u8         | 90 |
+| 0x04   | shapeID1         | be u32     | |
+| 0x01   | shapeID2         | be u32     | |
+
+#### rotating
+
+| Offset | Field Name       | Field Type | Notes |
+|--------|------------------|------------|-------|
+| 0x00   | Unknown          | u8         | 90 |
+| 0x04   | ConnectIndex     | be u32     | |
+| 0x01   | ParentShapeId    | be u32     | |
