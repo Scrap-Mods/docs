@@ -1,0 +1,28 @@
+---
+title: 34 - Remove WIP
+---
+
+# Remove
+
+This packet is sent when the player Removes a shape.
+
+- **ID**: 0x23 (35)
+- **Size**: Variable
+- **LZ4 Compressed**: No
+- **State**: Playing
+- **Bound To**: Client -> Server
+
+## Structure
+
+Depends on drag size.
+
+#### Place 1x1x1 block
+| Offset | Field Name       | Field Type | Notes |
+|--------|------------------|------------|-------|
+| 0x00   | Unknown          | u8         | |
+| 0x01   | SizeV            | be u32     | Vertical |
+| 0x05   | SizeH            | be u32     | Horizontal |
+| 0x09   | SizeD            | be u32     | Depth |
+| 0x25   | ShapeID          | be u32     | |
+
+[//]: # (Not fully documented, need drag size for blocks, pos, parts.)
