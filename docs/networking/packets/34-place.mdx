@@ -1,0 +1,28 @@
+---
+title: 34 - Place
+---
+
+# Place
+
+This packet is sent when the player places a shape.
+
+- **ID**: 0x22 (34)
+- **Size**: Variable
+- **LZ4 Compressed**: No
+- **State**: Playing
+- **Bound To**: Client -> Server
+
+## Structure
+
+Depends on UUID and drag size.
+
+#### Place 1x1x1 block
+| Offset | Field Name       | Field Type | Notes |
+|--------|------------------|------------|-------|
+| 0x00   | Unknown          | u8         | |
+| 0x04   | HotbarIndex      | u8         | |
+| 0x25   | ShapeUuid        | be u128    | |
+| 0x25   | Pos1             | float      | Unknown axis |
+| 0x25   | Pos2             | float      | Unknown axis |
+
+[//]: # (Not fully documented, need drag size for blocks, and the other position, which is up direciton.)
