@@ -41,15 +41,17 @@ Depends on packet type.
 | Offset | Field Name       | Field Type   | Notes |
 |--------|------------------|--------------|-------|
 | 0x00   | Packet Type      | u8           | Bearing Setting |
-| 0x11   | Value            | float        | |
+| 0x01   | Unknown          | u8[14]       | |
 | 0x0f   | type             | u8 | Index of bearing change <br/><ul><li>0x01=LTurnSpeed</li><li>0x02=RTurnSpeed</li><li>0x03=RTurnANgle</li><li>0x04=LTurnAngle</li></ul>|
+| 0x11   | Value            | float        | |
 
 #### Bearing Setting (Size=18) 0xfA
 | Offset | Field Name       | Field Type   | Notes |
 |--------|------------------|--------------|-------|
 | 0x00   | Packet Type      | u8           | Bearing Setting |
-| 0x11   | Value            | Boolean      | |
+| 0x01   | Unknown          | u8[14]       | |
 | 0x0f   | type             | u8 | Index of bearing change ( 0x10=BearingLock )|
+| 0x11   | Value            | Boolean      | |
 
 [//]: # (Size veries between pressing buttons and entering seats,
 last byte for pressing is the state.)
