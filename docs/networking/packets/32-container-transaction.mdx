@@ -50,7 +50,26 @@ The transaction structure has a variable size. Every Action ID has its own struc
 | 0x00   | Action      | enum Action : u8 | The type of the transaction. |
 | 0x01   | Action Data | ...              | The data of the action. This depends on the value of Action. |
 
-Now all possible transaction structures will follow. Please note the Action field has been left out.
+
+#### Action enum
+
+:::note
+The Action field has been left out in all of the following Action structures. The offsets still include the byte containing the action's ID.
+:::
+
+| ID    | Action |
+|-------|--------|
+| 0     | [Set Item](#action-0---set-item) |
+| 1     | [Swap](#action-1---swap) |
+| 2     | [Collect](#action-2---collect) |
+| 3     | [Spend](#action-3---spend) |
+| 4     | [Collect To Slot](#action-4---collect-to-slot) |
+| 5     | [Collect To Slot Or Collect](#action-5---collect-to-slot-or-collect) |
+| 6     | [Spend From Slot](#action-6---spend-from-slot) |
+| 7     | [Move](#action-7---move) |
+| 8     | [Move From Slot](#action-8---move-from-slot) |
+| 9     | [Move All](#action-9---move-all) |
+| Other | [Default Action](#default-action) |
 
 #### Action 0 - Set Item
 
@@ -146,7 +165,7 @@ This action calls `ContainerManager2.collectToSlot()` under the hood, but no usa
 | 0x1D   | To         | [ItemStack](#itemstack) | <p>The empty slot the moved item is moved to.</p><ul><li>**Uuid**: Always `00000000-0000-0000-0000-000000000000`</li><li>**Tool Instance ID**: Always `0xFFFFFFFF`</li><li>**Quantity**: Always `337`</li></ul> |
 | 0x39   | Unknown    | u8                      | Not known to be anything other than `0x00`. |
 
-#### Action 8 - Move
+#### Action 8 - Move From Slot
 
 - **Description**: Moves an item stack in the specified slot to another container.
 - **Occurs when**: Holding shift while clicking on an item. Both containers must be limited inventory containers.
@@ -166,3 +185,7 @@ This action calls `ContainerManager2.collectToSlot()` under the hood, but no usa
 |--------|-------------------|------------|-------|
 | 0x01   | From Container ID | be u32     | The ID of the container to move all items from. |
 | 0x05   | To Container ID   | be u32     | The ID of the container to move all items to. |
+
+#### Default Action
+
+In some cases a transaction with an action outside of the 0 to 9 range is created. The game treats these actions the same as [Action 7 - Move](#action-7---move).
