@@ -82,7 +82,7 @@ Now all possible transaction structures will follow. Please note the Action fiel
 | 0x11   | Unknown      | be u32     | Most likely the tool instance ID, but it is always `0xFFFFFFFF`, even for tools. The Lua API function `sm.container.collect` does not take any parameter that could result into this value being `0xFFFFFFFF`. |
 | 0x15   | Quantity     | be u16     | The amount of items to add to the container. |
 | 0x17   | Container ID | be u32     | The ID of the container to add the items to. |
-| 0x1B   | Unknown      | u8         | Not known to be anything other than `0x80`. Could possibly be related to the `mustCollectAll` parameter of the `sm.container.collect` Lua API function. Its description reads: <blockquote>Must collect all items for the transaction to be valid. Defaults to true.</blockquote> |
+| 0x1B   | Unknown      | u8         | Not known to be anything other than `0x80`. Could possibly be related to the `mustCollectAll` parameter of the `sm.container.collect` Lua API function. Its description reads: <blockquote>Must collect all items for the transaction to be valid. Defaults to true. (Optional)</blockquote> |
 
 #### Action 3 - Spend
 
@@ -105,3 +105,55 @@ Calls `ContainerManager2.collectToSlot()` under the hood, but has never been see
 | Offset | Field Name | Field Type | Notes |
 |--------|------------|------------|-------|
 | 0x01   | ???        | ???        | To be documented. |
+
+#### Action 5 - Collect To Slot
+
+- **Description**: Adds an item to the specified slot of the container. The quantity can overflow into following slots when possible.
+- **Occurs when**: Dragging an item from the player's unlimited inventory backpack into a limited inventory container.
+
+| Offset | Field Name | Field Type              | Notes |
+|--------|------------|-------------------------|-------|
+| 0x01   | To         | [ItemStack](#itemstack) | The item stack collected into the slot of the container. |
+| 0x1D   | Unknown    | u8                      | Not known to be anything other than `0x00`. Could possibly be related to the `mustCollectAll` parameter of the `sm.container.collectToSlot` Lua API function. Its description reads: <blockquote>If true, only add items if there is enough room. If false, add as many items as possible. Defaults to true. (Optional)</blockquote> |
+
+#### Action 6 - Spend From Slot
+
+- **Description**: Removes an item from the specified slot of the container.
+- **Occurs when**: Dragging an item from the limited inventory container into the player's unlimited inventory backpack.
+
+| Offset | Field Name | Field Type              | Notes |
+|--------|------------|-------------------------|-------|
+| 0x01   | From       | [ItemStack](#itemstack) | The item stack removed from the slot of the container. |
+| 0x1D   | Unknown    | u8                      | Not known to be anything other than `0x00`. Could possibly be related to the `mustSpendAll` parameter of the `sm.container.spendFromSlot` Lua API function. Its description reads: <blockquote>If true, only remove items if there are enough. If false, remove as many items as possible. Defaults to true. (Optional)</blockquote> |
+
+#### Action 7 - Move
+
+- **Description**: Moves an item stack to an empty slot of a container. The `From` and `To` item stacks can be in two distinct containers.
+- **Occurs when**: If the player has a limited inventory, dragging an item onto an empty slot of a container, or holding shift while clicking on an item to move the item between the hotbar and the backpack. <br /> If the player has an unlimited inventory container, the Move action is only used when moving items from the hotbar to another empty hotbar slot while the backpack is open. Opening the GUI of another container and then dragging an item from the hotbar to another empty hotbar slot will use the [Spend From Slot](#action-6---spend-from-slot) action instead.
+
+| Offset | Field Name | Field Type              | Notes |
+|--------|------------|-------------------------|-------|
+| 0x01   | From       | [ItemStack](#itemstack) | <p>The item stack of the moved item.</p><ul><li>**Uuid**: Always `00000000-0000-0000-0000-000000000000`</li><li>**Tool Instance ID**: Always `0xFFFFFFFF`</li><li>**Quantity**: The amount of items moved. Can be less than the total amount of items an item stack contains.</li></ul> |
+| 0x1D   | To         | [ItemStack](#itemstack) | <p>The empty slot the moved item is moved to.</p><ul><li>**Uuid**: Always `00000000-0000-0000-0000-000000000000`</li><li>**Tool Instance ID**: Always `0xFFFFFFFF`</li><li>**Quantity**: Always `337`</li></ul> |
+| 0x39   | Unknown    | u8                      | Not known to be anything other than `0x00`. |
+
+#### Action 8 - Move
+
+- **Description**: Moves an item stack in the specified slot to another container.
+- **Occurs when**: Holding shift while clicking on an item. Both containers must be limited inventory containers.
+
+| Offset | Field Name        | Field Type | Notes |
+|--------|-------------------|------------|-------|
+| 0x01   | From Slot         | be u16     | The index of the slot to be moved to the other container. |
+| 0x03   | From Container ID | be u32     | The ID of the container of the slot to be moved. |
+| 0x07   | To Container ID   | be u32     | The ID of the container to move the slot to. |
+
+#### Action 9 - Move All
+
+- **Description**: Moves all items from one container to another container.
+- **Occurs when**: Pressing the "TAKE ALL" button in the GUI of the bag a player leaves behind when respawning after death.
+
+| Offset | Field Name        | Field Type | Notes |
+|--------|-------------------|------------|-------|
+| 0x01   | From Container ID | be u32     | The ID of the container to move all items from. |
+| 0x05   | To Container ID   | be u32     | The ID of the container to move all items to. |
