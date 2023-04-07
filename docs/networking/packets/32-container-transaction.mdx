@@ -86,29 +86,38 @@ Now all possible transaction structures will follow. Please note the Action fiel
 
 #### Action 3 - Spend
 
-Calls `ContainerManager2.spend()` under the hood, but has never been seen.
+:::note
+This action calls `ContainerManager2.spend()` under the hood, but no usage of this action has been recorded. The documentation for this action has been reverse engineered from the executable.
+:::
 
-- **Description**: To be documented.
+- **Description**: Removes a quantity of a given item from a container.
 - **Occurs when**: Unknown.
 
-| Offset | Field Name | Field Type | Notes |
-|--------|------------|------------|-------|
-| 0x01   | ???        | ???        | To be documented. |
+| Offset | Field Name   | Field Type | Notes |
+|--------|--------------|------------|-------|
+| 0x01   | Uuid         | le u128    | The UUID of the item to remove from the container. |
+| 0x11   | Unknown      | be u32     | Most likely the tool instance ID. The Lua API function `sm.container.spend` does not take any other integer parameters, but after reverse engineering the executable we can assume this field is the same as the [Collect](#action-2---collect) action. |
+| 0x15   | Quantity     | be u16     | The amount of items to remove from the container. |
+| 0x17   | Container ID | be u32     | The ID of the container to remove the items to. |
+| 0x1B   | Unknown      | u8         | Could possibly be related to the `mustSpendAll` parameter of the `sm.container.spend` Lua API function. Its description reads: <blockquote>If true, only remove items if there are enough. If false, remove as many items as possible. Defaults to true. (Optional)</blockquote> |
 
-#### Action 4 - Collect To Slot (?)
+#### Action 4 - Collect To Slot
 
-Calls `ContainerManager2.collectToSlot()` under the hood, but has never been seen.
+:::note
+This action calls `ContainerManager2.collectToSlot()` under the hood, but no usage of this action has been recorded. The documentation for this action has been reverse engineered from the executable.
+:::
 
-- **Description**: To be documented.
+- **Description**: Adds an item to the specified slot of the container, up to the maximum stack size. The remaining number of items does not overflow to other slots.
 - **Occurs when**: Unknown.
 
-| Offset | Field Name | Field Type | Notes |
-|--------|------------|------------|-------|
-| 0x01   | ???        | ???        | To be documented. |
+| Offset | Field Name | Field Type              | Notes |
+|--------|------------|-------------------------|-------|
+| 0x01   | To         | [ItemStack](#itemstack) | The item stack collected into the slot of the container. |
+| 0x1D   | Unknown    | u8                      | Could possibly be related to the `mustCollectAll` parameter of the `sm.container.collectToSlot` Lua API function. Its description reads: <blockquote>If true, only add items if there is enough room. If false, add as many items as possible. Defaults to true. (Optional)</blockquote> |
 
-#### Action 5 - Collect To Slot
+#### Action 5 - Collect To Slot Or Collect
 
-- **Description**: Adds an item to the specified slot of the container. The quantity can overflow into following slots when possible.
+- **Description**: Adds an item to the specified slot of the container. If the maximum stack size is reached, the remaining number of items will overflow into following slots when possible.
 - **Occurs when**: Dragging an item from the player's unlimited inventory backpack into a limited inventory container.
 
 | Offset | Field Name | Field Type              | Notes |
