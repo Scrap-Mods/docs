@@ -1,16 +1,16 @@
 ---
-title: 40 - Glowstick Effect Removal WIP
+title: 40 - Harvestable Destroy WIP
 ---
 
-# Glowstick Effect Removal
+# Harvestable Destroy
 
-This packet is sent when the player removes a glowstick effect.
+This packet is sent when the player removes a glowstick effect, picks up an item, or sm.harvestable.destroy is called.
 
 - **ID**: 0x28 (40)
 - **Size**: 6
 - **LZ4 Compressed**: No
 - **State**: Playing
-- **Bound To**: Client IDK Server
+- **Bound To**: Client -> Server
 
 ## Structure
 
@@ -18,6 +18,6 @@ This packet is sent when the player removes a glowstick effect.
 |--------|------------------|------------|-------|
 | 0x00   | Unknown          | u8         | Unknown |
 | 0x01   | Unknown          | u8         | Unknown |
-| 0x02   | Effect ID        | u32        |  |
+| 0x02   | Effect ID        | be u32     |  |
 
 [//]: # (TEXT)

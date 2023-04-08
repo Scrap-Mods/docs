@@ -10,7 +10,7 @@ This packet is sent when the player presses up or down, lift has to be placed.
 - **Size**: 10
 - **LZ4 Compressed**: No
 - **State**: Playing
-- **Bound To**: Client IDK Server
+- **Bound To**: Client -> Server
 
 ## Structure
 
@@ -18,7 +18,7 @@ This packet is sent when the player presses up or down, lift has to be placed.
 |--------|------------------|------------|-------|
 | 0x00   | Unknown          | u8         | Unknown |
 | 0x01   | Unknown          | u8         | Unknown |
-| 0x02   | Lift ID          | u32        |  |
-| 0x06   | Direction        | s32        |  |
+| 0x02   | Lift ID          | be u32     |  |
+| 0x06   | Direction        | be s32     |  |
 
 [//]: # (TEXT)
