@@ -1,0 +1,24 @@
+---
+title: 52 - Lift Level WIP
+---
+
+# Lift Level
+
+This packet is sent when the player presses up or down, lift has to be placed.
+
+- **ID**: 0x34 (52)
+- **Size**: 10
+- **LZ4 Compressed**: No
+- **State**: Playing
+- **Bound To**: Client -> Server
+
+## Structure
+
+| Offset | Field Name       | Field Type | Notes |
+|--------|------------------|------------|-------|
+| 0x00   | Unknown          | u8         | Unknown |
+| 0x01   | Unknown          | u8         | Unknown |
+| 0x02   | Lift ID          | be u32     |  |
+| 0x06   | Direction        | be s32     |  |
+
+[//]: # (TEXT)
