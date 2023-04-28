@@ -1,0 +1,24 @@
+---
+title: 19 - Display Alert Text
+---
+
+# Display Alert Text
+
+Displays an alert message.
+
+- **ID**: 0x13 (19)
+- **Size**: Variable
+- **LZ4 Compressed**: Yes
+- **State**: Playing
+- **Bound To**: Server -> Client
+
+## Structure
+
+Setting the size to be shorter than the size of the message will cut of the end of the message.
+
+Setting the size to be larger than the size of the message will display only the alert icon, no text.
+
+| Offset | Field Name | Field Type  | Notes |
+|--------|------------|-------------|-------|
+| 0x00   | Size       | be u16      | The size of the message. |
+| 0x04   | Message    | utf8 string | The utf-8 encoded message. |
