@@ -17,13 +17,13 @@ This packet is sent when the player places a shape.
 :::note
 The `Local Position` and `Local Position Start` fields depend on the surface the shape is placed on. When local to the world, positions are relative to the world origin. Positions local to the body are in the same space as returned by `shape:getLocalPosition()`.
 
-| Placed On       | Local positions |
-|-----------------|-----------------|
-| Terrain Surface | Local to world  |
-| Terrain Asset   | Local to world  |
-| Body            | Local to body   |
-| Lift            | Local to world  |
-| Joint           | Local to body   |
+| ID | Placed On       | Local positions |
+|----|-----------------|-----------------|
+| 2  | Terrain Surface | Local to world  |
+| 3  | Terrain Asset   | Local to world  |
+| 4  | Body            | Local to body   |
+| 6  | Lift            | Local to world  |
+| 8  | Joint           | Local to body   |
 :::
 
 | Offset | Field Name           | Field Type      | Notes |
@@ -121,7 +121,7 @@ There are no size validations. Any size is accepted, including negative bounds, 
 The player must have enough blocks in their inventory to place the shape. If the volume is negative, the player is rewarded with blocks. If the quantity of the item stack becomes larger than the maximum allowed stack size, the item stack disappears.
 
 ### Rotation
-The server accepts any values for the `Z Axis` and `X Axis fields, including impossible configurations. Rotations where both axes are in parallel or where an axis is not of length 1 are allowed. If the angle between the X and Z axes is not 90 degrees, undefined bahaviour will occur. Physical sizes and collisions will diverge from the placed size. It may make removing the shape impossible. Models look either completely normal, or are completely invisible. They will never be warped.
+The server accepts any values for the `Z Axis` and `X Axis` fields, including impossible configurations. Rotations where both axes are in parallel or where an axis is not of length 1 are allowed. If the angle between the X and Z axes is not 90 degrees, undefined bahaviour will occur. Physical sizes and collisions will diverge from the placed size. It may make removing the shape impossible. Models look either completely normal, or are completely invisible. They will never be warped.
 
 ### Uuids
 The `Shape Uuid` is always validated to belong to a loaded shape. If this no shape exists with the provided `Shape Uuid`, the packet is ignored and the server responds with [19 - Display Alert Text](./19-display-alert-text.mdx) "Your host does not support that shape".
@@ -131,3 +131,6 @@ The `Item Uuid` field must be valid for the given `Shape Uuid`. It is valid if t
 
 #### Unlimited inventory mode
 The `Item Uuid` field is ignored, the `Shape Uuid` is always used. Invalid uuids for the `Item Uuid` field are allowed.
+
+### Placed on
+See [PlacedOn Enum](#placedon-enum).
