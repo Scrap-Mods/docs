@@ -1,5 +1,5 @@
 ---
-title: 34 - Place WIP
+title: 34 - Place
 ---
 
 # Place
@@ -7,22 +7,128 @@ title: 34 - Place WIP
 This packet is sent when the player places a shape.
 
 - **ID**: 0x22 (34)
-- **Size**: Variable
-- **LZ4 Compressed**: No
+- **Size**: 109 bytes
+- **LZ4 Compressed**: Yes
 - **State**: Playing
-- **Bound To**: Client IDK Server
+- **Bound To**: Client -> Server
 
 ## Structure
 
-Depends on UUID and drag size.
+:::note
+The `Local Position` and `Local Position Start` fields depend on the surface the shape is placed on. When local to the world, positions are relative to the world origin. Positions local to the body are in the same space as returned by `shape:getLocalPosition()`.
 
-#### Place 1x1x1 block
-| Offset | Field Name       | Field Type | Notes |
-|--------|------------------|------------|-------|
-| 0x00   | Unknown          | u8         | |
-| 0x04   | HotbarIndex      | u8         | |
-| 0x25   | ShapeUuid        | be u128    | |
-| 0x38   | Pos1             | float      | Unknown axis |
-| 0x3C   | Pos2             | float      | Unknown axis |
+| ID | Placed On       | Local positions |
+|----|-----------------|-----------------|
+| 2  | Terrain Surface | Local to world  |
+| 3  | Terrain Asset   | Local to world  |
+| 4  | Body            | Local to body   |
+| 6  | Lift            | Local to world  |
+| 8  | Joint           | Local to body   |
+:::
 
-[//]: # (Not fully documented, need drag size for blocks, and the other position, which is up direciton.)
+| Offset | Field Name           | Field Type      | Notes |
+|--------|----------------------|-----------------|-------|
+| 0x00   | Hotbar Index         | be u32          | The index of the placed item in the hotbar. |
+| 0x04   | Total Item Quantity  | be u32          | The total amount of items of the same type in the player's inventory. Always `1` when in unlimited inventory mode. |
+| 0x08   | Size                 | [Vec3i](#vec3i) | The size of the blocks placed. Always `(0, 0, 0)` for parts, which the server ignores. |
+| 0x14   | Local Position Start | [Vec3i](#vec3i) | The position in block units, local to the world or body, where the shape is placed on. The placed shape will be connected to all sticky faces adjacent to this position. |
+| 0x20   | Z Axis               | [Vec3i](#vec3i) | The Z-axis of the placed shape. |
+| 0x2C   | X Axis               | [Vec3i](#vec3i) | The X-axis of the placed shape. |
+| 0x38   | Local Position       | [Vec3i](#vec3i) | The position of the placed shape in block units, local to the world or body. If local to the body (see note), this value matches the value returned by the `shape:getLocalPosition()` Lua API function. |
+| 0x44   | Item Uuid            | le u128         | The UUID of the item in the inventory that is placed. This does not have to equal to the Shape Uuid. The Vacuum Pipes for example have multiple shapes that can be placed with a single item. |
+| 0x54   | Shape Uuid           | le u128         | The UUID of the placed shape. |
+| 0x64   | Placed On            | enum [PlacedOn](#placedon-enum) : u8 | The type of surface the shape is placed on. |
+| 0x65   | Placed On Data       | ... (8 bytes)   | The data of the placed on surface. |
+
+### Vec3i
+
+:::note
+The order of the coordinates is Z, Y, X, which may be seen as counterintuitive.
+:::
+
+| Offset | Field Name | Field Type | Notes |
+|--------|------------|------------|-------|
+| 0x00   | Z          | be s32     | The signed Z coordinate. |
+| 0x04   | Y          | be s32     | The signed Y coordinate. |
+| 0x08   | X          | be s32     | The signed X coordinate. |
+
+### PlacedOn Enum
+
+This is an exhaustive list. Packets with values not listed in the table are rejected by the server and `Failed to create shape {<uuid>}` is printed to the console.
+
+| ID | Placed On |
+|----|--------|
+| 2  | [Terrain Surface](#placedon-2---terrain-surface) |
+| 3  | [Terrain Asset](#placedon-3---terrain-asset) |
+| 4  | [Body](#placedon-4---body) |
+| 6  | [Lift](#placedon-6---lift) |
+| 8  | [Joint](#placedon-8---joint) |
+
+#### PlacedOn 2 - Terrain Surface
+
+| Offset | Field Name | Field Type | Notes |
+|--------|------------|------------|-------|
+| 0x00   | Unknown    | 4 bytes    | Most of the time equal to `00 00 02 BB`, but right after entering the world equal to `D2 0A 69 8D`. The server accepts any value, modifying it does not seem to result in any changes. |
+| 0x04   | Unknown    | 4 bytes    | Different every time. The server accepts any value, modifying it does not seem to result in any changes. |
+
+#### PlacedOn 3 - Terrain Asset
+
+Appears to be the same as [Terrain Surface](#placedon-2---terrain-surface).
+
+#### PlacedOn 4 - Body
+
+| Offset | Field Name | Field Type | Notes |
+|--------|------------|------------|-------|
+| 0x00   | Shape ID   | be u32     | The ID of the shape the new shape is placed on. Using a non-existing Shape ID is accepted by the server. |
+| 0x04   | Body ID    | be u32     | The ID of the body the new shape is placed on. Using a non-existing Body ID will fail to create the shape. |
+
+#### PlacedOn 6 - Lift
+
+| Offset | Field Name | Field Type | Notes |
+|--------|------------|------------|-------|
+| 0x00   | Unknown    | 4 bytes    | Appears to be the same as the first Unknown field of [Terrain Surface](#placedon-2---terrain-surface). |
+| 0x04   | Lift ID    | be u32     | The ID of the lift the new shape is placed on. Using a non-existing Lift ID results in the shape to become static. |
+
+#### PlacedOn 8 - Joint
+
+| Offset | Field Name | Field Type | Notes |
+|--------|------------|------------|-------|
+| 0x00   | Unknown    | 4 bytes    | Appears to be the same as the first Unknown field of [Terrain Surface](#placedon-2---terrain-surface). |
+| 0x04   | Joint ID   | be u32     | The ID of the joint the new shape is placed on. Using a non-existing Joint ID will fail to create the shape. |
+
+## Validation
+
+### Hotbar index
+
+#### Limited inventory mode
+If the uuid of the item in the slot indicated by the `Hotbar Index` field does not equal to the value of the `Item Uuid` field, the packet is ignored.
+
+#### Unlimited inventory mode
+The `Hotbar Index` field is ignored. Any value is accepted, including non-existent slots.
+
+### Total item quantity
+Any value for the `Total Item Quantity` field is accepted by the server.
+
+### Position
+The game performs a collision check where the shape will appear in the world. If the space is occupied, the packet is ignored. It is not validated if the shape is physically connected to anything.
+
+### Size
+There are no size validations. Any size is accepted, including negative bounds, on the condition the space is not already occupied.
+
+#### Limited inventory mode
+The player must have enough blocks in their inventory to place the shape. If the volume is negative, the player is rewarded with blocks. If the quantity of the item stack becomes larger than the maximum allowed stack size, the item stack disappears.
+
+### Rotation
+The server accepts any values for the `Z Axis` and `X Axis` fields, including impossible configurations. Rotations where both axes are in parallel or where an axis is not of length 1 are allowed. If the angle between the X and Z axes is not 90 degrees, undefined bahaviour will occur. Physical sizes and collisions will diverge from the placed size. It may make removing the shape impossible. Models look either completely normal, or are completely invisible. They will never be warped.
+
+### Uuids
+The `Shape Uuid` is always validated to belong to a loaded shape. If this no shape exists with the provided `Shape Uuid`, the packet is ignored and the server responds with [19 - Display Alert Text](./19-display-alert-text.mdx) "Your host does not support that shape".
+
+#### Limited inventory mode
+The `Item Uuid` field must be valid for the given `Shape Uuid`. It is valid if the `Item Uuid` equals to the `Shape Uuid` or the `baseUuid` property in the shapeset JSON file. If it is invalid, the server ignores the packet.
+
+#### Unlimited inventory mode
+The `Item Uuid` field is ignored, the `Shape Uuid` is always used. Invalid uuids for the `Item Uuid` field are allowed.
+
+### Placed on
+See [PlacedOn Enum](#placedon-enum).
