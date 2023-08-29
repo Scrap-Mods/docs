@@ -1,0 +1,30 @@
+---
+title: 45 - Lift Import Creation
+---
+
+# Lift Import Creation
+
+This packet is sent when the player imports a creation from the lift.
+
+- **ID**: 0x2D (45)
+- **Size**: Variable
+- **LZ4 Compressed**: Yes
+- **State**: Playing
+- **Bound To**: Client -> Server
+
+## Structure
+
+| Offset | Field Name                | Field Type           | Notes |
+|--------|---------------------------|----------------------|-------|
+| 0x00   | Lift ID                   | be u32               | The ID of the lift to import the creation on. |
+| 0x04   | Uncompressed Size         | be u32               | The size of the blueprint data before it is compressed with LZ4. |
+| 0x08   | Compressed Size           | be u32               | The size of the blueprint data after it is compressed with LZ4. |
+| 0x14   | Compressed Blueprint Data | LZ4 compressed bytes | The contents of the `blueprint.json` file, compressed with LZ4 block compression. |
+
+:::info
+The blueprint data can be decompressed using the `lz4_decompress_safe` function from the LZ4 [C API](https://github.com/lz4/lz4). The `lz4.block.decompress` function from [python-lz4](https://github.com/python-lz4/python-lz4) can also be used by providing the `uncompressed_size` argument. Without this argument, decompressing the blueprint data will fail.
+:::
+
+:::note
+When compressing the blueprint data, ensure the used LZ4 library does not prepend the `Compressed Blueprint Data` field with the compressed size.
+:::
