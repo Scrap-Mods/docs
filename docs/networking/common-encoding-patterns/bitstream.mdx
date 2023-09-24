@@ -1,0 +1,47 @@
+---
+title: BitStream
+---
+
+import BitstreamDisplay from "./bitstream-display";
+
+Scrap Mechanic uses a stream of bits to serialize and deserialize all network packets. Most packets only use whole bytes, but some packets use bits that are not aligned to byte boundaries. This page describes the BitStream format.
+
+## BitStream format
+
+Internally, the BitStream contains a buffer of bytes and a bit index. The bit index is the number of bits that have been read from or written to the buffer.
+
+The BitStream is read and written from left to right. The bit index is incremented after each read or write operation by the number of bits that were read or written.
+
+### Example 1
+
+The following example shows a BitStream with a buffer of 3 bytes. The bit index starts at 0. The following operations are performed:
+
+1. An unsigned 8-bit integer with the value `0x11` is written to the BitStream.
+2. An unsigned 16-bit big-endian integer with the value `0x2233` is written to the BitStream.
+
+The BitStream now contains the following data:
+
+<BitstreamDisplay data={[
+    { name: "8-bit integer", bits: 8, value: 0x11 },
+    { name: "16-bit integer", bits: 16, value: 0x2233 },
+]}/>
+
+Because only whole bytes were written, the individual bytes of the buffer reflect the bytes that were written. The bit index after the write operations is 24.
+
+### Example 2
+
+The following example shows a BitStream with a buffer of 4 bytes. The bit index starts at 0. The following operations are performed:
+
+1. A boolean flag bit with the value `1` is written to the BitStream.
+2. An unsigned 8-bit integer with the value `0x11` is written to the BitStream.
+3. An unsigned 16-bit big-endian integer with the value `0x2233` is written to the BitStream.
+
+The BitStream now contains the following data:
+
+<BitstreamDisplay data={[
+    { name: "bool", bits: 1, value: 1 },
+    { name: "8-bit integer", bits: 8, value: 0x11 },
+    { name: "16-bit integer", bits: 16, value: 0x2233 },
+]}/>
+
+Notice how the boolean flag bit is stored in the first bit of the first byte, offsetting the other bits by 1. It is now very difficult to see where the individual bytes start and end. The bit index after the write operations is 25.
