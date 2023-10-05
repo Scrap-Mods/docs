@@ -9,8 +9,8 @@ This packet contains pressed movement keys and the player's look direction. It d
 The client sends this packet to the server once every tick. If the client's framerate drops below the tickrate, at most one packet is sent per frame.
 
 - **ID**: 0x1E (30)
-- **Size**: 9 bytes
-- **LZ4 Compressed**: No
+- **Size**: 8 bytes
+- **LZ4 Compressed**: Yes
 - **State**: Playing
 - **Bound To**: Client -> Server
 
@@ -18,12 +18,11 @@ The client sends this packet to the server once every tick. If the client's fram
 
 | Offset | Field Name | Field Type  | Notes |
 |--------|------------|------------ |-------|
-| 0x00   | Unknown    | u8          | Always `0x80`. |
-| 0x01   | Tick       | be u32      | The current tick. |
-| 0x05   | Keys       | u8 bitfield | Bitfield of which movement keys are pressed. See [Keys bitfield](#keys-bitfield). |
-| 0x06   | Direction  | u8 bitfield | Bitfield of the last horizontal direction moved in. See [Direction bitfield](#direction-bitfield). |
-| 0x07   | Yaw        | u8          | The player's horizontal look rotation. A yaw of `0` means the player is looking into the positive Y direction. Rotating counter-clockwise (to the left) increases the yaw. After reaching `255`, the yaw overflows back to `0`. |
-| 0x08   | Pitch      | u8          | The player's vertical look rotation. A pitch of `0` means the player is looking straight down (into the negative Z direction). Looking straight up yields a pitch of `128`. |
+| 0x00   | Tick       | be u32      | The current tick. |
+| 0x04   | Keys       | u8 bitfield | Bitfield of which movement keys are pressed. See [Keys bitfield](#keys-bitfield). |
+| 0x05   | Direction  | u8 bitfield | Bitfield of the last horizontal direction moved in. See [Direction bitfield](#direction-bitfield). |
+| 0x06   | Yaw        | u8          | The player's horizontal look rotation. A yaw of `0` means the player is looking into the positive Y direction. Rotating counter-clockwise (to the left) increases the yaw. After reaching `255`, the yaw overflows back to `0`. |
+| 0x07   | Pitch      | u8          | The player's vertical look rotation. A pitch of `0` means the player is looking straight down (into the negative Z direction). Looking straight up yields a pitch of `128`. |
 
 ### Keys bitfield
 
