@@ -18,7 +18,7 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="/docs/category/lua">
-            Get bonked!!
+            Dive in!
           </Link>
         </div>
       </div>
@@ -30,7 +30,7 @@ export default function Home(): JSX.Element {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      description="Description will go into a meta tag in <head />">
+      description="Unoffical Scrap Mechanic Documentation!">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
