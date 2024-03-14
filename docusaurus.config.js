@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'SM - Docs',
-  tagline: 'Dinosaurs are cool',
+  tagline: 'Unoffical Scrap Mechanic documentation!',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -67,11 +67,11 @@ const config = {
       },
       
       // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
+      image: 'img/blue-bearing.png',
       navbar: {
         title: 'SM - Docs',
         logo: {
-          alt: 'My Site Logo',
+          alt: 'SM - Docs',
           src: 'img/favicon.ico',
         },
         items: [
