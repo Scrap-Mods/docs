@@ -1,4 +1,4 @@
-# Unoffical docs for sm
+# Unofficial docs for sm
 [website](https://docs.scrapmods.io/)
 
 Use this for changes:
