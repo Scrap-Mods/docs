@@ -18,7 +18,7 @@ const config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'Scrap-Mechanic-Modding', // Usually your GitHub org/user name.
+  organizationName: 'Scrap-Mods', // Usually your GitHub org/user name.
   projectName: 'docs', // Usually your repo name.
 
   onBrokenLinks: 'throw',
@@ -46,7 +46,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://pr.new/github.com/Scrap-Mechanic-Modding/Scrap-Mechanic-Modding.github.io/blob/main',
+            'https://pr.new/github.com/Scrap-Mods/docs/blob/main',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -139,7 +139,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/Scrap-Mechanic-Modding',
+                href: 'https://github.com/Scrap-Mods',
               },
             ],
           },
