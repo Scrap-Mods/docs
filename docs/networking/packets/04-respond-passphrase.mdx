@@ -16,5 +16,5 @@ The client sends this packet to the server to respond to the passphrase challeng
 
 | Offset | Field Name | Field Type | Notes              |
 |--------|------------|------------|--------------------|
-| 0x0    | Magic      | Byte       | Should be `$`      |
+| 0x0    | Size       | Byte       | Should be `$` (0x24)     |
 | 0x1    | Passphrase | String     | Until the end of packet  |
