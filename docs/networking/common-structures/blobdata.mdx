@@ -8,31 +8,6 @@ A `BlobData` is a structure used to store or transmit various types of data in t
 
 Internally, the `BlobData` structure is managed by a `BlobDataManager` intance. There are two such managers, `GenericDataManager` and `ScriptDataManager`.
 
-<!--
-BlobData = Struct(
-    "uid" / UuidBE,
-    "key" / Prefixed(Int16ub, Select(
-        LuaObject,
-        Int32ul,
-        GreedyBytes,
-    )),
-    "world_id" / Int16ub,
-    "flags" / Byte,
-    "data" / Prefixed(Int32ub, CompressedLZ4Block(
-        Switch(this.uid, {
-            str(BlobDataUids.GenericData_World.value): World,
-            str(BlobDataUids.GenericData_GameplayOptions.value): GameplayOptions,
-            str(BlobDataUids.GenericData_PlayerData.value): PlayerData,
-            str(BlobDataUids.GenericData_ChatMessage.value): ChatMessage,
-            str(BlobDataUids.GenericData_CharacterAnimation.value): GreedyBytes,
-            str(BlobDataUids.ScriptData_Unknown.value): LuaObject,
-            str(BlobDataUids.ScriptData_Game.value): LuaObject,
-            str(BlobDataUids.ScriptData_Player.value): LuaObject,
-        }, default=GreedyBytes)
-    )),
-)
--->
-
 ## Structure
 
 | Offset | Field Name   | Field Type   | Notes |
