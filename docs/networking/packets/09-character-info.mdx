@@ -1,10 +1,10 @@
 ---
-title:  09 - Character Info - WIP
+title:  09 - Character Info
 ---
 
 # Character Info
 
-Contains all information about a character.
+Contains the name of the player and the customization options of the character.
 
 - **ID**: 0x09
 - **Size**: Variable
@@ -14,20 +14,7 @@ Contains all information about a character.
 
 ## Structure
 
-| Field Name | Field Type  | Size | Notes |
-|------------|------------ |------|-------|
-| Name Legth | UInt16 | 2 | |
-| Name | String | Name Legth | |
-| CharVersionMaybe | UInt32 | 4 | Always 2? |
-| IsFemale | Boolean | 1 | |
-| Clothes Length | Byte | 1 | |
-| Clothes | UUID | 16 * Items Length | Uuid fields from `Data\Character\customization_options.json`, 1 from each category (Face, Hair, Torso..) |
-| FacePalette | UInt32 | 4 | Index into palette inside Face of `Data\Character\customization_options.json` |
-| HairPalette | UInt32 | 4 | Index into palette inside Hair of `Data\Character\customization_options.json` |
-| FacialHairPalette | UInt32 | 4 | Unused for now |
-| TorsoPalette | UInt32 | 4 | Unused for now |
-| GlovesPalette | UInt32 | 4 | Unused for now |
-| ShoesPalette | UInt32 | 4 | Unused for now |
-| PantsPalette | UInt32 | 4 | Unused for now |
-| HatPalette | UInt32 | 4 | Unused for now |
-| BackpackPalette | UInt32 | 4 | Unused for now |
+| Field Name              | Field Type | Notes |
+|-------------------------|------------|-------|
+| Name                    | [String](../common-structures/string.mdx) | The name of the player of the character. The server displays this name above the character and in the chat. |
+| Character Customization | [Character Customization](../../structures/docs/character-customization) | The customization options of the character. |
