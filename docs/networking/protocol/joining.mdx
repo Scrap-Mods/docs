@@ -21,7 +21,7 @@ In the joining sequence, the following packets are used:
 - [08 - Checksums Denied](../packets/08-checksums-denied.mdx)
 - [09 - Character Info](../packets/09-character-info.mdx)
 - [10 - Join Confirmation](../packets/10-join-confirmation.mdx)
-- [13 - World Info](../packets/13-world-info.mdx)
+- [13 - Generic Initialization Data](../packets/13-generic-initialization-data.mdx)
 
 ## Joining Sequence
 
@@ -34,7 +34,7 @@ sequenceDiagram
     Server->>Client: Client Accepted
     Client->>Server: Hello
     Server->>Client: Server Info
-    Server->>Client: World Info
+    Server->>Client: Generic Initialization Data
     Server-->Client: 29
     Client->>Server: File Checksums
     Server->>Client: Checksums Accepted
@@ -52,7 +52,7 @@ sequenceDiagram
     Server->>Client: Client Accepted
     Client->>Server: Hello
     Server->>Client: Server Info
-    Server->>Client: World Info
+    Server->>Client: Generic Initialization Data
     Server-->Client: 29
     Client->>Server: File Checksums
     Server->>Client: Checksums Accepted
@@ -77,7 +77,7 @@ sequenceDiagram
     Server->>Client: Client Accepted
     Client->>Server: Hello
     Server->>Client: Server Info
-    Server->>Client: World Info
+    Server->>Client: Generic Initialization Data
     Server-->Client: 29
     Client->>Server: File Checksums
     Server->>Client: Checksums Accepted
@@ -95,7 +95,7 @@ sequenceDiagram
     Server->>Client: Client Accepted 
     Client->>Server: Hello
     Server->>Client: Server Info
-    Server->>Client: World Info
+    Server->>Client: Generic Initialization Data
     Server-->Client: 29
     Client->>Server: File Checksums
     Server->>Client: Checksums Accepted
