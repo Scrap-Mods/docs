@@ -1,0 +1,27 @@
+---
+title: 28 - Generic Data (C->S) - WIP
+---
+
+import BlobDataPacketsNotice from "../_reusable/blobdata-packets-notice.mdx"
+
+# Generic Data (C->S)
+
+To be documented.
+
+- **ID**: 0x1C (28)
+- **Size**: Variable
+- **LZ4 Compressed**: Yes
+- **State**: Playing
+- **Bound To**: Client -> Server
+
+## Structure
+
+<BlobDataPacketsNotice />
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Data       | [BlobData](../common-structures/blobdata.mdx)[until EOS] | The generic data. This array is read until the end of the packet. |
+
+## BlobData Payloads
+
+To be documented.
