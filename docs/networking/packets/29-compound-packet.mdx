@@ -1,0 +1,29 @@
+---
+title: 29 - Compound Packet
+---
+
+# Compound Packet
+
+This packet combines multiple packets into a single packet, which is then sent over the network. The subpackets of this packet must not be compressed.
+
+Can contain any Server -> Client packet that is documented with `LZ4 Compressed: Yes`, because internally the game handles non-compressable packets in a previous stage.
+
+- **ID**: 0x1D (29)
+- **Size**: Variable
+- **LZ4 Compressed**: Yes
+- **State**: Playing
+- **Bound To**: Server -> Client
+
+## Structure
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Subpackets | [Subpacket](#Subpacket)[until EOS] | The array of subpackets contained in this packet. This array is read until the end of the stream. |
+
+## Subpacket
+
+| Field Name  | Field Type   | Notes |
+|-------------|--------------|-------|
+| Size        | be u32       | The size of the subpacket. Equal to `sizeof(Packet ID) + sizeof(Packet Data)`. |
+| Packet ID   | u8           | The ID of the subpacket. |
+| Packet Data | u8[Size - 1] | The non-compressed data of the subpacket.  |
