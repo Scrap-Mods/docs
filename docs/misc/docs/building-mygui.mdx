@@ -1,0 +1,25 @@
+---
+title: Building MyGUI
+---
+
+# Building MyGUI
+
+Building MyGUI was kinda painful, so it's time to document the entire process so it's not lost to time.
+
+## Getting MyGUI
+You can get MyGUI [**here**](https://github.com/MyGUI/mygui).
+
+## Getting the dependencies
+1. Download and compile [**SDL2**](https://github.com/libsdl-org/SDL)
+2. Download and compile [**SDL2 Image**](https://github.com/libsdl-org/SDL_image)
+3. Download and compile [**FreeType**](https://github.com/freetype/freetype)
+
+## Configuring MyGUI with CMake
+1. Set **MYGUI_RENDERSYSTEM** to **4** (OpenGL)
+2. Set **FREETYPE_LIBRARY** as the path to **freetype.lib** file
+3. Set **FREETYPE_INCLUDE_DIRS** to the include directory of freetype
+4. Set **SDL2_INCLUDE_DIR** to the include directory of SDL2
+5. Set **SDL2_LIBRARY** as the path to **SDL2.lib** file
+6. Set **SDL2_IMAGE_INCLUDE_DIR** to the include directory of SDL2 Image
+7. Set **SDL2_IMAGE_LIBRARY** as the path to **SDL2_image.lib** file
+8. Compile MyGUI and have fun
