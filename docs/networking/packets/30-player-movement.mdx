@@ -39,8 +39,8 @@ Contains information about which movement keys are pressed. All bits are always 
     <tbody>
         <tr>
             <td>7</td>
-            <td rowspan="4">Unknown</td>
-            <td rowspan="4">Not known to be anything other than low.</td>
+            <td rowspan="3">Unused</td>
+            <td rowspan="3">Guaranteed to not be used. Always low.</td>
         </tr>
         <tr>
             <td>6</td>
@@ -50,6 +50,18 @@ Contains information about which movement keys are pressed. All bits are always 
         </tr>
         <tr>
             <td>4</td>
+            <td>Aim</td>
+            <td>
+                High when the player is aiming with a tool. This value is set using
+                <a href="https://scrapmechanic.com/api/userdata_Game_Tool.html#setMovementSlowDown">
+                    <code>Tool:setMovementSlowDown(boolean)</code>
+                </a>
+                and read using
+                <a href="https://scrapmechanic.com/api/userdata_Game_Character.html#isAiming">
+                    <code>Character:isAiming()</code>
+                </a>
+                .
+            </td>
         </tr>
         <tr>
             <td>3</td>
