@@ -20,7 +20,7 @@ The client sends this packet to the server once every tick. If the client's fram
 |--------|------------|------------ |-------|
 | 0x00   | Tick       | be u32      | The current tick. |
 | 0x04   | Keys       | u8 bitfield | Bitfield of which movement keys are pressed. See [Keys bitfield](#keys-bitfield). |
-| 0x05   | Direction  | u8 bitfield | Bitfield of the last horizontal direction moved in. See [Direction bitfield](#direction-bitfield). |
+| 0x05   | Direction  | u8          | <p>The horizontal direction, relative to the player's yaw, the player is walking in or has last walked in. When the player stops walking, this value is not updated.</p> Strafing right starts at `0` and increases when changing the direction counter-clockwise (to the left). When using the keyboard, only distinct increments of `32` can be achieved, but the server supports any value between `0` and `255`. |
 | 0x06   | Yaw        | u8          | The player's horizontal look rotation. A yaw of `0` means the player is looking into the positive Y direction. Rotating counter-clockwise (to the left) increases the yaw. After reaching `255`, the yaw overflows back to `0`. |
 | 0x07   | Pitch      | u8          | The player's vertical look rotation. A pitch of `0` means the player is looking straight down (into the negative Z direction). Looking straight up yields a pitch of `128`. |
 
@@ -85,51 +85,6 @@ Contains information about which movement keys are pressed. All bits are always 
             <td>0</td>
             <td>Jump</td>
             <td>High when the player is holding the Jump button. The player's character does not have to be on the ground.</td>
-        </tr>
-    </tbody>
-</table>
-
-### Direction bitfield
-
-<table>
-    <thead>
-        <tr>
-            <th>Bits</th>
-            <th>Field name</th>
-            <th>Notes</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>7</td>
-            <td rowspan="3">Direction</td>
-            <td rowspan="3">
-                <p>The direction relative to the player the player is walking in or has last walked in. When the player stops walking, this value is not updated.</p>
-                Ranges from <code>0</code> up to and including <code>7</code>. Strafing right starts at <code>0</code> and increases by <code>1</code> for every 45 degrees rotated counter-clockwise (to the left). Bit <code>7</code> is the most significant bit.
-            </td>
-        </tr>
-        <tr>
-            <td>6</td>
-        </tr>
-        <tr>
-            <td>5</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td rowspan="5">Unknown</td>
-            <td rowspan="5">Not known to be anything other than low.</td>
-        </tr>
-        <tr>
-            <td>3</td>
-        </tr>
-        <tr>
-            <td>2</td>
-        </tr>
-        <tr>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>0</td>
         </tr>
     </tbody>
 </table>
