@@ -24,4 +24,17 @@ To be documented.
 
 ## BlobData Payloads
 
-To be documented.
+In this subsection, known [BlobData](../common-structures/blobdata.mdx) payloads are listed. This is not guaranteed to be an exhaustive list.
+
+### Chat Message
+
+This [BlobData](../common-structures/blobdata.mdx) is sent when the player sends a chat message. The server does not verify any of the fields and broadcasts them to all players without modification.
+
+- **UID**: `46968863-090a-46b8-ad99-1159b53450fe`
+- **Key**: Always `0`, stored as `le u32`.
+- **World ID**: [No World](../common-structures/blobdata.mdx#special-world-ids)
+- **Flags**: 0
+
+#### Payload
+
+See [27 - Generic Data (S->C) - Chat Message](./27-generic-data-s2c.mdx#chat-message).
