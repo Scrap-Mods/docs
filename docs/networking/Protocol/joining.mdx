@@ -1,0 +1,116 @@
+---
+title: Joining
+---
+
+# Joining
+
+Joining is the process of establishing a connection between two peers. It is a critical part of the protocol, as it is the only way to verify that the peer you are connected to is the peer you intended to connect to. It is also the only way to verify that the peer you are connected to is running the correct version of the protocol.
+
+Joining packets range from packet ID `0` -> `13`.
+
+## Packets
+
+In the joining sequence, the following packets are used:
+- [01 - Hello](../Packets/hello)
+- [02 - Server Info](../Packets/server-info)
+- [03 - Request Passphrase](../Packets/request-passphrase)
+- [04 - Respond Passphrase](../Packets/respond-passphrase)
+- [05 - Client Accepted](../Packets/client-accepted)
+- [06 - File Checksums](../Packets/file-checksums)
+- [07 - Checksums Accepted](../Packets/checksums-accepted)
+- [08 - Checksums Denied](../Packets/checksums-denied)
+- [09 - Character Info](../Packets/character-info)
+- [10 - Join Confirmation](../Packets/join-confirmation)
+- [13 - Generic Initialization Data](../Packets/generic-initialization-data)
+
+## Joining Sequence
+
+The joining sequence depends on the `Multiplayer` setting of the server.
+
+### Public
+
+```mermaid
+sequenceDiagram
+    Server->>Client: Client Accepted
+    Client->>Server: Hello
+    Server->>Client: Server Info
+    Server->>Client: Generic Initialization Data
+    Server-->Client: 29
+    Client->>Server: File Checksums
+    Server->>Client: Checksums Accepted
+    Client->>Server: Character Info
+    Server->>Client: Join Confirmation
+```
+
+### Friends Only
+
+**If friended:**
+
+```mermaid
+sequenceDiagram
+    Client->>Server: Initiate connection
+    Server->>Client: Client Accepted
+    Client->>Server: Hello
+    Server->>Client: Server Info
+    Server->>Client: Generic Initialization Data
+    Server-->Client: 29
+    Client->>Server: File Checksums
+    Server->>Client: Checksums Accepted
+    Client->>Server: Character Info
+    Server->>Client: Join Confirmation
+```
+
+**If un-friended:**
+
+```mermaid
+sequenceDiagram
+    Client->>Server: Initiate connection
+    Server->>Client: Close connection
+```
+### Friends of Friends - WIP
+
+**If friended:**
+
+```mermaid
+sequenceDiagram
+    Client->>Server: Initiate connection
+    Server->>Client: Client Accepted
+    Client->>Server: Hello
+    Server->>Client: Server Info
+    Server->>Client: Generic Initialization Data
+    Server-->Client: 29
+    Client->>Server: File Checksums
+    Server->>Client: Checksums Accepted
+    Client->>Server: Character Info
+    Server->>Client: Join Confirmation
+```
+
+**If passphrase is valid:**
+
+```mermaid
+sequenceDiagram
+    Client->>Server: Initiate connection
+    Server->>Client: Request Passphrase
+    Client->>Server: Respond Passphrase
+    Server->>Client: Client Accepted 
+    Client->>Server: Hello
+    Server->>Client: Server Info
+    Server->>Client: Generic Initialization Data
+    Server-->Client: 29
+    Client->>Server: File Checksums
+    Server->>Client: Checksums Accepted
+    Client->>Server: Character Info
+    Server->>Client: Join Confirmation
+```
+
+**If passphrase is invalid:**
+
+Todo
+
+### Private
+
+```mermaid
+sequenceDiagram
+    Client->>Server: Initiate connection
+    Server->>Client: Close connection
+```

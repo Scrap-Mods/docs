@@ -1,8 +1,0 @@
-{
-  "label": "Common Structures",
-  "position": 3,
-  "link": {
-    "description": "Structures that are reused in multiple packets, but are not found outside of the network layer.",
-    "type": "generated-index"
-  }
-}

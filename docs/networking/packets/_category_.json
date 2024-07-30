@@ -1,8 +1,0 @@
-{
-  "label": "Packets",
-  "position": 3,
-  "link": {
-    "description": "Definitions for all known and unknown packets.",
-    "type": "generated-index"
-  }
-}
