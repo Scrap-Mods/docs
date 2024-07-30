@@ -16,14 +16,16 @@ The Lua Object is a custom serialization format used by the game to store Lua ob
 |--------|------------|-------------------------------|-------|
 | 0x00   | Magic Tag  | Constant `"LUA"` (`4c 55 41`) | This helps recognizing the start of the Lua object. |
 | 0x03   | Version    | be u32                        | The version of the serialization format. This is currently `1`. |
-| 0x07   | Data       | [LuaSaveData](#LuaSaveData)   | The data that is serialized. |
+| 0x07   | Data       | [LuaSaveData](#luasavedata)   | The data that is serialized. |
 
 ## LuaSaveData
+
+### LuaSaveData Structure
 
 | Offset | Field Name | Field Type | Notes |
 |--------|------------|------------|-------|
 | 0x00   | Type       | enum [LuaSaveDataType](#luasavedatatype-enum) : u8 | The type of data that is stored. |
-| 0x01   | Value      | [LuaSaveDataValue](#luasavedata-value-types) | The actual data that is stored. The type of this field depends on the `Type` field. |
+| 0x01   | Value      | [LuaSaveDataValue](#luasavedatavalue) | The actual data that is stored. The type of this field depends on the `Type` field. |
 
 ## LuaSaveDataType enum
 
@@ -109,7 +111,7 @@ If `Is Array` is `false` (continued):
 
 | Field Name | Field Type | Notes |
 |------------|------------|-------|
-| Elements   | [TableKeyValuePair](#table-key-value-pair)[Count] | The key-value pairs of the table. |
+| Elements   | [TableKeyValuePair](#tablekeyvaluepair)[Count] | The key-value pairs of the table. |
 
 If `Is Array` is `true` (continued):
 
@@ -119,6 +121,8 @@ If `Is Array` is `true` (continued):
 | Elements   | [LuaSaveData](#luasavedata)[Count] | The elements of the table. |
 
 #### TableKeyValuePair
+
+##### TableKeyValuePair Structure
 
 | Field Name | Field Type | Notes |
 |------------|------------|-------|
@@ -168,7 +172,7 @@ The `LuaUserdata` type is used to represent a userdata object in Lua. It is seri
 
 | Field Name | Field Type | Notes |
 |------------|------------|-------|
-| Type ID    | enum [UserdataTypeId](#userdata-type-id-enum) : be u32 | The type ID of the userdata object. |
+| Type ID    | enum [UserdataTypeId](#userdatatypeid-enum) : be u32 | The type ID of the userdata object. |
 | Data       | dynamic    | The data of the userdata object. The type of this field depends on the `Type ID` field. |
 
 ### UserdataTypeId enum

@@ -18,9 +18,11 @@ Can contain any Server -> Client packet that is documented with `LZ4 Compressed:
 
 | Field Name | Field Type | Notes |
 |------------|------------|-------|
-| Subpackets | [Subpacket](#Subpacket)[until EOS] | The array of subpackets contained in this packet. This array is read until the end of the stream. |
+| Subpackets | [Subpacket](#subpacket)[until EOS] | The array of subpackets contained in this packet. This array is read until the end of the stream. |
 
 ## Subpacket
+
+### Subpacket Structure
 
 | Field Name  | Field Type   | Notes |
 |-------------|--------------|-------|
