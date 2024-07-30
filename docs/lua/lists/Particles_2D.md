@@ -9,7 +9,7 @@ sidebar-label: '2D Particles'
 
 ### 2D Particles
 
-Listed below are all 2D particles that can be used with [sm.particle.createParticle](/docs/game_script_env/static_functions/sm.particle#createparticle).
+Listed below are all 2D particles that can be used with [sm.particle.createParticle](/docs/lua/game_script_env/static_functions/sm.particle#createparticle).
 A (potentially more complete) list of particles can be found [here](https://github.com/Vajdani/sm_docs/blob/master/Lists/Particles.txt).
 
 ### Creative Mode

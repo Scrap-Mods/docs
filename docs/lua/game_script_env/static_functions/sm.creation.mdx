@@ -24,7 +24,7 @@ Exports a creation to a blueprint formatted json string.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>body</code> [<strong> <a href="/docs/game_script_env/userdata/Body"> Body </a> </strong>]: Any body in the creation.
+- <code>body</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Body"> Body </a> </strong>]: Any body in the creation.
 - <code>exportTransforms</code> [<strong> bool </strong>]: Export the current world transform of bodies. Defaults to false.
 - <code>forceDynamic</code> [<strong> bool </strong>]: Force export to dynamic bodies. Defaults to false.
 
@@ -45,7 +45,7 @@ Exports a creation to a blueprint Lua table.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>body</code> [<strong> <a href="/docs/game_script_env/userdata/Body"> Body </a> </strong>]: Any body in the creation.
+- <code>body</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Body"> Body </a> </strong>]: Any body in the creation.
 - <code>exportTransforms</code> [<strong> bool </strong>]: Export the current world transform of bodies. Defaults to false.
 - <code>forceDynamic</code> [<strong> bool </strong>]: Force export to dynamic bodies. Defaults to false.
 
@@ -72,9 +72,9 @@ If the blueprint was not exported with transforms, the importer will treat it as
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>world</code> [<strong> <a href="/docs/game_script_env/userdata/World"> World </a> </strong>]: The world to import to.
+- <code>world</code> [<strong> <a href="/docs/lua/game_script_env/userdata/World"> World </a> </strong>]: The world to import to.
 - <code>pathString</code> [<strong> string </strong>]: The path to the blueprint file.
-- <code>worldPosition</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The world position of the creation. Defaults to <code>sm.vec3.zero()</code>
+- <code>worldPosition</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The world position of the creation. Defaults to <code>sm.vec3.zero()</code>
 - <code>worldRotation</code> [<strong>quat </strong>]: The world rotation of the creation. Defaults to <code>sm.quat.identity()</code>
 - <code>importTransforms</code> [<strong> bool </strong>]: Import world transforms from bodies. Defaults to false.
 - <code>indestructible</code> [<strong> bool </strong>]: (DEPRECATED, use <code>setDestructable</code> on each body in the creation.)
@@ -102,9 +102,9 @@ If the blueprint was not exported with transforms, the importer will treat it as
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>world</code> [<strong> <a href="/docs/game_script_env/userdata/World"> World </a> </strong>]: The world to import to.
+- <code>world</code> [<strong> <a href="/docs/lua/game_script_env/userdata/World"> World </a> </strong>]: The world to import to.
 - <code>jsonString</code> [<strong> string </strong>]: The blueprint json string.
-- <code>worldPosition</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The world position of the creation. Defaults to <code>sm.vec3.zero()</code>
+- <code>worldPosition</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The world position of the creation. Defaults to <code>sm.vec3.zero()</code>
 - <code>worldRotation</code> [<strong>quat </strong>]: The world rotation of the creation. Defaults to <code>sm.quat.identity()</code>
 - <code>importTransforms</code> [<strong> bool </strong>]: Import world transforms from bodies. Defaults to false.
 - <code>forceInactive</code> [<strong> bool </strong>]: Sets whether interactables are forced inactive when imported or not. Defaults to false.

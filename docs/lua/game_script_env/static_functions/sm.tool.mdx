@@ -9,14 +9,14 @@ sidebar-label: 'sm.tool'
 
 ## sm.tool
 
-**Associated object type:** [Tool](/docs/game_script_env/userdata/Tool)
+**Associated object type:** [Tool](/docs/lua/game_script_env/userdata/Tool)
 
 A <strong>tool</strong> is a scripted tool a player holds in their hand. <br></br>
 The tool object is focused on handling animations for first and third person view.
 
-For more information about creating your own scripted tools, see [ToolClass](/docs/game_script_env/classes/tool_class).
+For more information about creating your own scripted tools, see [ToolClass](/docs/lua/game_script_env/classes/tool_class).
 
-[Constants](/docs/game_script_env/Constants#smtoolinteractstate)
+[Constants](/docs/lua/game_script_env/Constants#smtoolinteractstate)
 
 ## Functions
 
@@ -31,7 +31,7 @@ Used to check collisions between the lift and the world.
 <strong>Arguments:</strong> <br></br>
 
 - <code>creation</code> [<strong> table </strong>]: A table of all the bodies belonging to the creation placed on the lift.
-- <code>position</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The lift position.
+- <code>position</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The lift position.
 - <code>rotation</code> [<strong> int </strong>]: The rotation of the creation on the lift.
 
 <strong>Returns:</strong> <br></br>
@@ -53,7 +53,7 @@ Pass nil to unforce an already forced tool.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>tool</code> [<strong> <a href="/docs/game_script_env/userdata/Tool"> Tool </a> </strong>]: The tool.
+- <code>tool</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Tool"> Tool </a> </strong>]: The tool.
 
 ---
 
@@ -83,7 +83,7 @@ Returns whether the tool uuid exists.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The uuid.
 
 <strong>Returns:</strong> <br></br>
 

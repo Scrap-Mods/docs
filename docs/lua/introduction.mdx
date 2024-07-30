@@ -33,7 +33,7 @@ If you yourself want to contribute to this documentation, you can do so by using
 
 It is recommended to start the game with the <code>-dev</code> launch option in steam to get access to the <br></br>
 Debug Console and enable the script hot-reload feature. <br></br>
-Use [print](/docs/lua/Game-Script-Environment/static_functions/Global#print) to print data to the console. <br></br>
+Use [print](/docs/lua/game_script_env/static_functions/Global#print) to print data to the console. <br></br>
 
 ### Classes
 
@@ -98,7 +98,7 @@ end
 ### Static Functions
 
 Static Functions can be called from Lua to do certain things in the game, <br></br>
-such as creating a part using [sm.shape.createPart](/docs/lua/Game-Script-Environment/static_functions/sm.shape#createpart). <br></br>
+such as creating a part using [sm.shape.createPart](/docs/lua/game_script_env/static_functions/sm.shape#createpart). <br></br>
 
 The createPart function will return a userdata object of type Shape which can be used to reference the part. <br></br>
 This reference is valid as long as the part still exists in the game. <br></br>
@@ -106,11 +106,11 @@ This reference is valid as long as the part still exists in the game. <br></br>
 ### Userdata
 
 Userdata is a Lua concept to define custom objects. <br></br>
-Scrap Mechanic uses userdata to add game objects such as a [Shape](/docs/lua/Game-Script-Environment/Userdata/Shape) and utility objects such as [Vec3](/docs/lua/Game-Script-Environment/Userdata/Vec3). <br></br>
+Scrap Mechanic uses userdata to add game objects such as a [Shape](/docs/lua/game_script_env/Userdata/Shape) and utility objects such as [Vec3](/docs/lua/game_script_env/Userdata/Vec3). <br></br>
 They are similar to [instances](https://en.wikipedia.org/wiki/Instance_(computer_science)) in [object-oriented programming](https://en.wikipedia.org/wiki/Object-oriented_programming). <br></br>
 The userdata objects have a set of member values and functions. <br></br>
 
-Here is an example where the member function [getColor](/docs/lua/Game-Script-Environment/Userdata/Shape#getcolor) is called on the [Shape](/docs/lua/Game-Script-Environment/Userdata/Shape) userdata:
+Here is an example where the member function [getColor](/docs/lua/game_script_env/Userdata/Shape#getcolor) is called on the [Shape](/docs/lua/game_script_env/Userdata/Shape) userdata:
 ```lua
 local color = myShape.getColor( myShape ) -- All userdata functions require the object itself as first parameter.
 ```
@@ -120,7 +120,7 @@ local color = myShape:getColor()
 ```
 
 Userdata can also be used as parameters to other functions. <br></br>
-The color returned by [getColor](/docs/lua/Game-Script-Environment/Userdata/Shape#getcolor) is another userdata type; [Color](/docs/lua/Game-Script-Environment/Userdata/Color). That color can be used as a parameter to [setColor](/docs/lua/Game-Script-Environment/Userdata/Shape#setcolor):
+The color returned by [getColor](/docs/lua/game_script_env/Userdata/Shape#getcolor) is another userdata type; [Color](/docs/lua/game_script_env/Userdata/Color). That color can be used as a parameter to [setColor](/docs/lua/game_script_env/Userdata/Shape#setcolor):
 
 ```lua
 local color = myShape:getColor()
@@ -133,7 +133,7 @@ local color = myShape.color
 myOtherShape.color = color -- Copy the color from myShape to myOtherShape
 ```
 
-Another way to get a [Color](/docs/lua/Game-Script-Environment/Userdata/Color) userdata object is to call [sm.color.new](/docs/lua/Game-Script-Environment/static_functions/sm.color#new). <br></br>
+Another way to get a [Color](/docs/lua/game_script_env/Userdata/Color) userdata object is to call [sm.color.new](/docs/lua/game_script_env/static_functions/sm.color#new). <br></br>
 Here is an example where the shape color is set to red:
 ```lua
 local color = sm.color.new( 1.0, 0.0, 0.0 )
@@ -151,7 +151,7 @@ The <strong>server</strong> side simulates the game world and communicates with 
 The server side is only running on the hosting player's computer. <br></br>
 
 In a script class, <strong>serverCallback</strong> implies that the the code will run in server mode and can only access functions marked as <strong>server</strong> or <strong>server and client</strong>. <br></br>
-To check if a script is running in server mode at runtime you can also use [sm.isServerMode](/docs/lua/Game-Script-Environment/static_functions/sm#isservermode). <br></br>
+To check if a script is running in server mode at runtime you can also use [sm.isServerMode](/docs/lua/game_script_env/static_functions/sm#isservermode). <br></br>
 
 ### Client
 The <strong>client</strong> is the part of Scrap Mechanic that a player sees and interacts with (e.g. graphics, audio, player input, etc.). <br></br>

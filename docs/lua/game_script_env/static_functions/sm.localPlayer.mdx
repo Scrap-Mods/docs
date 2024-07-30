@@ -12,7 +12,7 @@ sidebar-label: 'sm.localPlayer'
 Local player represents the current character being controlled on the client's computer. <br></br>
 This library can only be used on the [client](/docs/#client).
 
-For more information about other players in the world, see [sm.player](/docs/game_script_env/static_functions/sm.player).
+For more information about other players in the world, see [sm.player](/docs/lua/game_script_env/static_functions/sm.player).
 
 ## Functions
 
@@ -42,7 +42,7 @@ Returns the item currently held by the local player.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The uuid of the held item.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The uuid of the held item.
 
 ---
 
@@ -72,7 +72,7 @@ Returns the local player's carrying container.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Container"> Container </a> </strong>]: The player's carry.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Container"> Container </a> </strong>]: The player's carry.
 
 ---
 
@@ -87,7 +87,7 @@ Returns the color of the shape that the local player is carrying.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Color"> Color </a> </strong>]: The player's carry color.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Color"> Color </a> </strong>]: The player's carry color.
 
 ---
 
@@ -102,7 +102,7 @@ Returns the direction in which the local player is looking.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The player's aim direction.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The player's aim direction.
 
 ---
 
@@ -140,7 +140,7 @@ Returns the world position for a bone in the first person view animation skeleto
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The bone position.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The bone position.
 
 ---
 
@@ -155,7 +155,7 @@ Returns the local player's hotbar container.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Container"> Container </a> </strong>]: The hotbar.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Container"> Container </a> </strong>]: The hotbar.
 
 ---
 
@@ -185,7 +185,7 @@ Returns the local player's inventory container.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Container"> Container </a> </strong>]: The inventory.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Container"> Container </a> </strong>]: The inventory.
 
 ---
 
@@ -216,7 +216,7 @@ Returns the local player's lift.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Lift"> Lift </a> </strong>]: The lift.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Lift"> Lift </a> </strong>]: The lift.
 
 ---
 
@@ -231,7 +231,7 @@ Returns the local player's player object.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Player"> Player </a> </strong>]: The player.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Player"> Player </a> </strong>]: The player.
 
 ---
 
@@ -261,13 +261,13 @@ Performs a [raycast](https://en.wikipedia.org/wiki/Ray_casting) relative to the 
 <strong>Arguments:</strong> <br></br>
 
 - <code>range</code> [<strong> number </strong>]: The maximum range.
-- <code>origin</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The start position. Defaults to <code>sm.localPlayer.getRaycastStart()</code>
-- <code>direction</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The direction. Defaults to <code>sm.localPlayer.getDirection()</code>
+- <code>origin</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The start position. Defaults to <code>sm.localPlayer.getRaycastStart()</code>
+- <code>direction</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The direction. Defaults to <code>sm.localPlayer.getDirection()</code>
 
 <strong>Returns:</strong> <br></br>
 
 - [<strong> bool </strong>]: Whether the raycast was successful or not.
-- [<strong> <a href="/docs/game_script_env/userdata/RaycastResult"> RaycastResult </a> </strong>]: The raycast result data.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/RaycastResult"> RaycastResult </a> </strong>]: The raycast result data.
 
 ---
 
@@ -279,11 +279,11 @@ sm.localPlayer.getRaycastStart()
 <code>Client-Only</code> <br></br>
 
 Returns the start position of the local player's raycast. <br></br>
-The position depends on the [camera](/docs/game_script_env/static_functions/sm.camera)'s position, and whether it's in first - or third-person.
+The position depends on the [camera](/docs/lua/game_script_env/static_functions/sm.camera)'s position, and whether it's in first - or third-person.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The start position of the raycast.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The start position of the raycast.
 
 ---
 
@@ -298,7 +298,7 @@ Returns the right-vector perpendicular to the local player's aim.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The right-vector of the local player's aim.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The right-vector of the local player's aim.
 
 ---
 
@@ -328,7 +328,7 @@ Returns the up-vector perpendicular to the local player's aim.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The up-vector of the local player's aim.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The up-vector of the local player's aim.
 
 ---
 
@@ -343,7 +343,7 @@ Checks if the garment has been granted to the local player.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The garment uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The garment uuid.
 
 <strong>Returns:</strong> <br></br>
 
@@ -409,7 +409,7 @@ Intended to be used when the controls have been locked (See [sm.localPlayer.setL
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>dir</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The direction.
+- <code>dir</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The direction.
 
 ---
 

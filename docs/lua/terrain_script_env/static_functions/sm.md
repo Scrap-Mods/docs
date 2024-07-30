@@ -11,7 +11,7 @@ sidebar-label: 'sm'
 
 The <strong>sm</strong> namespace contain all API features related to Scrap Mechanic.
 
-[Constants](/docs/game_script_env/Constants#sm)
+[Constants](/docs/lua/game_script_env/Constants#sm)
 
 ## Functions
 
@@ -41,7 +41,7 @@ sm.isServerMode( object )
 ```
 
 Returns whether the script is currently running in [server](/docs/#server) mode. <br></br>
-Otherwise, it is running in [client](/docs/#client) mode. Server mode only occurs when [sm.isHost](/docs/game_script_env/Constants#sm) is true.
+Otherwise, it is running in [client](/docs/#client) mode. Server mode only occurs when [sm.isHost](/docs/lua/game_script_env/Constants#sm) is true.
 
 <strong>Returns:</strong> <br></br>
 

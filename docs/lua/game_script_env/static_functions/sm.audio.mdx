@@ -15,14 +15,14 @@ The <strong>audio</strong> manager is used to play sound effects in the game.
 This manager does only produce sound for the local [client](/docs/#client). <br></br>
 This is useful for small sound effects such as GUI button sounds.
 
-For more information about sound and particle effects that affect all players, see [sm.effect](/docs/game_script_env/static_functions/sm.effect).
+For more information about sound and particle effects that affect all players, see [sm.effect](/docs/lua/game_script_env/static_functions/sm.effect).
 :::
 
 :::caution warning
-Audio is deprecated, use [Effects](/docs/game_script_env/userdata/Effect) instead.
+Audio is deprecated, use [Effects](/docs/lua/game_script_env/userdata/Effect) instead.
 :::
 
-[Constants](/docs/game_script_env/Constants#smaudiosoundlist)
+[Constants](/docs/lua/game_script_env/Constants#smaudiosoundlist)
 
 ## Functions
 
@@ -37,11 +37,11 @@ Plays a sound.
 
 If position is specified, the sound will play at the given coordinates in the world. Otherwise, the sound will play normally.
 
-For a list of available sounds to play, see [sm.audio.soundList](/docs/game_script_env/Constants#smaudiosoundlist).
+For a list of available sounds to play, see [sm.audio.soundList](/docs/lua/game_script_env/Constants#smaudiosoundlist).
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>sound</code> [<strong> <a href="/docs/game_script_env/userdata/Interactable"> Interactable </a> </strong>]: The name of the sound.
-- <code>position</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The sound position (optional).
+- <code>sound</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Interactable"> Interactable </a> </strong>]: The name of the sound.
+- <code>position</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The sound position (optional).
 
 ---

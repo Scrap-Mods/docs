@@ -9,7 +9,7 @@ sidebar-label: 'Harvestable'
 
 ## Harvestable
 
-**Associated namespace:** [sm.harvestable](/docs/game_script_env/static_functions/sm.harvestable)
+**Associated namespace:** [sm.harvestable](/docs/lua/game_script_env/static_functions/sm.harvestable)
 
 Represents a harvestable object in the game.
 
@@ -368,7 +368,7 @@ Returns the harvestable's scale.
 kinematic:getSeatCharacter()
 ```
 
-Returns the [Character](/docs/game_script_env/userdata/Character) that is seated in the kinematic.
+Returns the [Character](/docs/lua/game_script_env/userdata/Character) that is seated in the kinematic.
 
 <strong>Arguments:</strong> <br></br>
 
@@ -376,7 +376,7 @@ Returns the [Character](/docs/game_script_env/userdata/Character) that is seated
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Character"> Character </a> </strong>]: The character.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Character"> Character </a> </strong>]: The character.
 
 ---
 
@@ -608,12 +608,12 @@ Can only be used on kinematic harvestables.
 kinematic:setSeatCharacter( character )
 ```
 
-Requests to seat a [Character](/docs/game_script_env/userdata/Character) in the kinematic.
+Requests to seat a [Character](/docs/lua/game_script_env/userdata/Character) in the kinematic.
 
 <strong>Arguments:</strong> <br></br>
 
 - <code>kinematic</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The kinematic.
-- <code>character</code> [<strong> <a href="/docs/game_script_env/userdata/Character"> Character </a> </strong>]: The character.
+- <code>character</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Character"> Character </a> </strong>]: The character.
 
 ---
 

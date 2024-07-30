@@ -84,7 +84,7 @@ Finds the closest axis-aligned vector from the given vector.
 sm.vec3.getRotation( vec1, vec2 )
 ```
 
-Returns a [quaternion](/docs/game_script_env/userdata/Quat) representing the rotation from one vector to another.
+Returns a [quaternion](/docs/lua/game_script_env/userdata/Quat) representing the rotation from one vector to another.
 
 The quaternion can then be multiplied with any vector to rotate it in the same fashion.
 

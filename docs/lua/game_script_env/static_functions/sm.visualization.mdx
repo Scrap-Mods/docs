@@ -9,7 +9,7 @@ sidebar-label: 'sm.visualization'
 
 ## sm.visualization
 
-**Associated object type:** [BlueprintVisualization](/docs/game_script_env/userdata/BlueprintVisualization)
+**Associated object type:** [BlueprintVisualization](/docs/lua/game_script_env/userdata/BlueprintVisualization)
 
 A <strong>visualization</strong> is used for visualizing game objects.
 
@@ -22,7 +22,7 @@ sm.visualization.createBlueprint( blueprint )
 ```
 <code>Client-Only</code> <br></br>
 
-Creates a [Blueprint Visualization](/docs/game_script_env/userdata/BlueprintVisualization) from blueprint data.
+Creates a [Blueprint Visualization](/docs/lua/game_script_env/userdata/BlueprintVisualization) from blueprint data.
 
 <strong>Arguments:</strong> <br></br>
 
@@ -30,7 +30,7 @@ Creates a [Blueprint Visualization](/docs/game_script_env/userdata/BlueprintVisu
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/BlueprintVisualization"> BlueprintVisualization </a> </strong>]: The blueprint visualization.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/BlueprintVisualization"> BlueprintVisualization </a> </strong>]: The blueprint visualization.
 
 ---
 
@@ -48,13 +48,13 @@ The builder guide blueprint contains stage indices based on shape color, stage c
 <strong>Arguments:</strong> <br></br>
 
 - <code>path</code> [<strong> string </strong>]: The file path to the builder guide blueprint.
-- <code>shape</code> [<strong> <a href="/docs/game_script_env/userdata/Shape"> Shape </a> </strong>]: The root Shape for comparing the creation from.
+- <code>shape</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Shape"> Shape </a> </strong>]: The root Shape for comparing the creation from.
 - <code>ignoreBlockUuid</code> [<strong> bool </strong>]: Whether the block UUID should be evaluated for stage completion. Defaults to false.
 - <code>completeEffectName</code> [<strong> string </strong>]: The name of the effect to play when the guide is completed. Defaults to none.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/BlueprintVisualization"> BlueprintVisualization </a> </strong>]: The builder guide blueprint visualization.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/BlueprintVisualization"> BlueprintVisualization </a> </strong>]: The builder guide blueprint visualization.
 
 ---
 
@@ -69,7 +69,7 @@ Visualizes a block.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>position</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The world position of the block. Local position if using a target.
+- <code>position</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The world position of the block. Local position if using a target.
 - <code>illegal</code> [<strong> bool </strong>]: Whether the visualization should render as illegal.
 - <code>target</code> [<strong> <a href="/docs/game_script_env/userdata/Shape"> Shape </a>/<a href="/docs/game_script_env/userdata/Joint"> Joint </a>/ nil </strong>]: The target shape or joint. Defaults to none (visualizes in world space).
 
@@ -134,7 +134,7 @@ Set the world position of the creation visualization. Only works <code>setFreePl
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>pos</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The visualization position.
+- <code>pos</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The visualization position.
 
 ---
 
@@ -210,7 +210,7 @@ Sets the lift position of the lift visualization.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>pos</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The position of the lift.
+- <code>pos</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The position of the lift.
 
 ---
 

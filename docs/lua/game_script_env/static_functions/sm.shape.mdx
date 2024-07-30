@@ -9,12 +9,12 @@ sidebar-label: 'sm.shape'
 
 ## sm.shape
 
-**Associated object type:** [Shape](/docs/game_script_env/userdata/Shape)
+**Associated object type:** [Shape](/docs/lua/game_script_env/userdata/Shape)
 
 A <strong>shape</strong> is any block, part or basic material that can be built by a player. <br></br>
-Shapes are always connected to a [body](/docs/game_script_env/userdata/Body), which is a collection of shapes.
+Shapes are always connected to a [body](/docs/lua/game_script_env/userdata/Body), which is a collection of shapes.
 
-For more information about creating your own scripted shapes, see [ShapeClass](/docs/game_script_env/classes/shape_class).
+For more information about creating your own scripted shapes, see [ShapeClass](/docs/lua/game_script_env/classes/shape_class).
 
 ## Functions
 
@@ -29,16 +29,16 @@ Creates a new block.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The block uuid.
-- <code>size</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The block size.
-- <code>position</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The the world position.
-- <code>rotation</code> [<strong> <a href="/docs/game_script_env/userdata/Quat"> Quat </a> </strong>]: The world rotation (defaults to none).
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The block uuid.
+- <code>size</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The block size.
+- <code>position</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The the world position.
+- <code>rotation</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Quat"> Quat </a> </strong>]: The world rotation (defaults to none).
 - <code>dynamic</code> [<strong> bool </strong>]: Whether the shape is dynamic or static. Defaults to true (dynamic).
 - <code>forceSpawn</code> [<strong> bool </strong>]: Whether to force spawn the shape or not. Optional.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Shape"> Shape </a> </strong>]: The created shape.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Shape"> Shape </a> </strong>]: The created shape.
 
 ---
 
@@ -53,15 +53,15 @@ Creates a new part.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The part uuid.
-- <code>position</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The the world position.
-- <code>rotation</code> [<strong> <a href="/docs/game_script_env/userdata/Quat"> Quat </a> </strong>]: The world rotation (defaults to none).
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The part uuid.
+- <code>position</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The the world position.
+- <code>rotation</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Quat"> Quat </a> </strong>]: The world rotation (defaults to none).
 - <code>dynamic</code> [<strong> bool </strong>]: Whether the shape is dynamic or static. Defaults to true (dynamic).
 - <code>forceSpawn</code> [<strong> bool </strong>]: Whether to force spawn the shape or not. Optional.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Shape"> Shape </a> </strong>]: The created shape.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Shape"> Shape </a> </strong>]: The created shape.
 
 ---
 
@@ -75,7 +75,7 @@ Returns the item description for the given uuid.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
 
 <strong>Returns:</strong> <br></br>
 
@@ -93,7 +93,7 @@ sm.shape.getShapeIcon( uuid )
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
 
 <strong>Returns:</strong> <br></br>
 
@@ -111,7 +111,7 @@ Returns the item's name for the given uuid.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
 
 <strong>Returns:</strong> <br></br>
 
@@ -129,11 +129,11 @@ Returns the color of the uuid's shape type.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Color"> Color </a> </strong>]: The color of the shape type.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Color"> Color </a> </strong>]: The color of the shape type.
 
 ---
 
@@ -147,7 +147,7 @@ Returns whether the uuid belongs to a harvestable shape.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
 
 <strong>Returns:</strong> <br></br>
 
@@ -165,7 +165,7 @@ Returns whether the shape uuid exists.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
 
 <strong>Returns:</strong> <br></br>
 

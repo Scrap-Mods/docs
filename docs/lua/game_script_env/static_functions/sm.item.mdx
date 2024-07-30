@@ -19,11 +19,11 @@ Allows checking for static information about items.
 sm.item.getCharacterShape( uuid )
 ```
 
-Returns data for the character [shape](/docs/game_script_env/userdata/Shape).
+Returns data for the character [shape](/docs/lua/game_script_env/userdata/Shape).
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
 
 <strong>Returns:</strong> <br></br>
 
@@ -37,11 +37,11 @@ Returns data for the character [shape](/docs/game_script_env/userdata/Shape).
 sm.item.getEdible( uuid )
 ```
 
-Returns data for the edible [shape](/docs/game_script_env/userdata/Shape).
+Returns data for the edible [shape](/docs/lua/game_script_env/userdata/Shape).
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
 
 <strong>Returns:</strong> <br></br>
 
@@ -59,7 +59,7 @@ Returns the shape's feature data.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
 
 <strong>Returns:</strong> <br></br>
 
@@ -122,11 +122,11 @@ Returns a table of all interactable uuids of an interactable type.
 sm.item.getPlantable( uuid )
 ```
 
-Returns data for the plantable [shape](/docs/game_script_env/userdata/Shape).
+Returns data for the plantable [shape](/docs/lua/game_script_env/userdata/Shape).
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
 
 <strong>Returns:</strong> <br></br>
 
@@ -158,7 +158,7 @@ Returns the quality level of the shape.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
 
 <strong>Returns:</strong> <br></br>
 
@@ -176,11 +176,11 @@ Returns the default color of the shape.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Color"> Color </a> </strong>]: The color.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Color"> Color </a> </strong>]: The color.
 
 ---
 
@@ -194,11 +194,11 @@ Returns the shape offset.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The offset.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The offset.
 
 ---
 
@@ -212,11 +212,11 @@ Returns the block dimensions of a shape.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The shape uuid.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The shape size.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The shape size.
 
 ---
 
@@ -230,7 +230,7 @@ Returns whether the item is a block or not.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
 
 <strong>Returns:</strong> <br></br>
 
@@ -248,7 +248,7 @@ Returns whether the uuid belongs to a harvestable shape.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
 
 <strong>Returns:</strong> <br></br>
 
@@ -266,7 +266,7 @@ Returns whether the item is a joint or not.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
 
 <strong>Returns:</strong> <br></br>
 
@@ -284,7 +284,7 @@ Returns whether the item is a part or not.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
 
 <strong>Returns:</strong> <br></br>
 
@@ -302,7 +302,7 @@ Returns whether the item is a tool or not.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The item uuid.
 
 <strong>Returns:</strong> <br></br>
 

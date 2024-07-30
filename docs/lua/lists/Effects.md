@@ -9,7 +9,7 @@ sidebar-label: 'Effects'
 
 ### Effects
 
-Listed below are all effects that can be used with functions like [sm.effect.playEffect](/docs/game_script_env/static_functions/sm.effect#playeffect).
+Listed below are all effects that can be used with functions like [sm.effect.playEffect](/docs/lua/game_script_env/static_functions/sm.effect#playeffect).
 A (potentially more complete) list of effects can be found [here](https://github.com/Vajdani/sm_docs/blob/master/Lists/Effects.txt).
 
 ### Creative Mode

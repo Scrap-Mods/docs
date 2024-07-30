@@ -9,7 +9,7 @@ sidebar-label: 'Color'
 
 ## Color
 
-**Associated namespace:** [sm.color](/docs/game_script_env/static_functions/sm.color)
+**Associated namespace:** [sm.color](/docs/lua/game_script_env/static_functions/sm.color)
 
 A userdata object representing a <strong>color</strong>.
 

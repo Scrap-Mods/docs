@@ -9,10 +9,10 @@ sidebar-label: 'sm.body'
 
 ## sm.body
 
-**Associated object type:** [Body](/docs/game_script_env/userdata/Body)
+**Associated object type:** [Body](/docs/lua/game_script_env/userdata/Body)
 
-A <strong>body</strong> is a collection of [shapes](/docs/game_script_env/userdata/Shape) that are built together. <br></br>
-Bodies can be connected to other bodies using [joints](/docs/game_script_env/userdata/Joint) such as the bearing.
+A <strong>body</strong> is a collection of [shapes](/docs/lua/game_script_env/userdata/Shape) that are built together. <br></br>
+Bodies can be connected to other bodies using [joints](/docs/lua/game_script_env/userdata/Joint) such as the bearing.
 
 ## Functions
 
@@ -27,8 +27,8 @@ Creates a new body.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>position</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The body's world position.
-- <code>rotation</code> [<strong> <a href="/docs/game_script_env/userdata/Quat"> Quat </a> </strong>]: The body's world rotation (optional).
+- <code>position</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The body's world position.
+- <code>rotation</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Quat"> Quat </a> </strong>]: The body's world rotation (optional).
 - <code>isDynamic</code> [<strong> bool </strong>]: Whether the body is dynamic or static. Defaults to dynamic.
 
 ---
@@ -56,7 +56,7 @@ sm.body.getCreationsFromBodies( bodies )
 
 Returns an array of tables containing bodies grouped by creation.
 
-A creation includes all bodies connected by [joints](/docs/game_script_env/userdata/Joint), etc.
+A creation includes all bodies connected by [joints](/docs/lua/game_script_env/userdata/Joint), etc.
 
 <strong>Arguments:</strong> <br></br>
 

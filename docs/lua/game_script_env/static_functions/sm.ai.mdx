@@ -23,8 +23,8 @@ Checks if the unit can reach the target position by moving straight.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>unit</code> [<strong> <a href="/docs/game_script_env/userdata/Unit"> Unit </a> </strong>]: The unit.
-- <code>position</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The target position.
+- <code>unit</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Unit"> Unit </a> </strong>]: The unit.
+- <code>position</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The target position.
 
 <strong>Returns:</strong> <br></br>
 
@@ -44,15 +44,15 @@ Also returns the aim position that allows the character to succeed.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>character</code> [<strong> <a href="/docs/game_script_env/userdata/Character"> Character </a> </strong>]: The firing character.
-- <code>target</code> [<strong> <a href="/docs/game_script_env/userdata/Harvestable"> Harvestable </a>/character </strong>]: The target.
+- <code>character</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Character"> Character </a> </strong>]: The firing character.
+- <code>target</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Harvestable"> Harvestable </a>/character </strong>]: The target.
 - <code>range</code> [<strong> number </strong>]: The maximum firing distance.
 - <code>width</code> [<strong> number </strong>]: The width of the fire lane.
 
 <strong>Returns:</strong> <br></br>
 
 - [<strong> bool </strong>]: Whether the character can fire at the target or not.
-- [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The aim position, if available.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The aim position, if available.
 
 ---
 
@@ -66,15 +66,15 @@ Check if there's an attackable object between the unit and a position.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>unit</code> [<strong> <a href="/docs/game_script_env/userdata/Unit"> Unit </a> </strong>]: The unit.
-- <code>position</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The target position.
+- <code>unit</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Unit"> Unit </a> </strong>]: The unit.
+- <code>position</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The target position.
 - <code>range</code> [<strong> number </strong>]: The distance.
 - <code>attack</code> [<strong> int </strong>]: The possible attack level from the attacker.
 
 <strong>Returns:</strong> <br></br>
 
 - [<strong> bool </strong>]: True if a breachable object was found or no object was found. False if the found object is unbreachable.
-- [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The attackable position, if found.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The attackable position, if found.
 - [<strong> <a href="/docs/game_script_env/userdata/Shape"> Shape </a>/<a href="/docs/game_script_env/userdata/Harvestable"> Harvestable </a>/lift </strong>]: The object to attack.
 
 ---
@@ -89,12 +89,12 @@ Find the closest "tree" harvestable in a world.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>position</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The position.
-- <code>world</code> [<strong> <a href="/docs/game_script_env/userdata/World"> World </a> </strong>]: The world.
+- <code>position</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The position.
+- <code>world</code> [<strong> <a href="/docs/lua/game_script_env/userdata/World"> World </a> </strong>]: The world.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The closest found tree.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The closest found tree.
 
 ---
 
@@ -108,12 +108,12 @@ Returns the closest visible character with matching uuid.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>unit</code> [<strong> <a href="/docs/game_script_env/userdata/Unit"> Unit </a> </strong>]: The unit.
-- <code>uuid</code> [<strong> <a href="/docs/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The character uuid.
+- <code>unit</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Unit"> Unit </a> </strong>]: The unit.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The character uuid.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Character"> Character </a> </strong>]: The closest visible character.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Character"> Character </a> </strong>]: The closest visible character.
 
 ---
 
@@ -127,11 +127,11 @@ Returns the closest visible farming harvestable.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>unit</code> [<strong> <a href="/docs/game_script_env/userdata/Unit"> Unit </a> </strong>]: The unit.
+- <code>unit</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Unit"> Unit </a> </strong>]: The unit.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The closest visible farming harvestable.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The closest visible farming harvestable.
 
 ---
 
@@ -145,11 +145,11 @@ Returns the closest visible player character.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>unit</code> [<strong> <a href="/docs/game_script_env/userdata/Unit"> Unit </a> </strong>]: The unit.
+- <code>unit</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Unit"> Unit </a> </strong>]: The unit.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Character"> Character </a> </strong>]: The closest visible player character.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Character"> Character </a> </strong>]: The closest visible player character.
 
 ---
 
@@ -163,12 +163,12 @@ Returns the closest visible character that does not have the given color.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>unit</code> [<strong> <a href="/docs/game_script_env/userdata/Unit"> Unit </a> </strong>]: The unit.
-- <code>color</code> [<strong> <a href="/docs/game_script_env/userdata/Color"> Color </a> </strong>]: The color.
+- <code>unit</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Unit"> Unit </a> </strong>]: The unit.
+- <code>color</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Color"> Color </a> </strong>]: The color.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Character"> Character </a> </strong>]: The closest visible team opponent.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Character"> Character </a> </strong>]: The closest visible team opponent.
 
 ---
 
@@ -182,11 +182,11 @@ Returns a random position on the given body.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>body</code> [<strong> <a href="/docs/game_script_env/userdata/Body"> Body </a> </strong>]: The body.
+- <code>body</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Body"> Body </a> </strong>]: The body.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The random position.
+- [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The random position.
 
 ---
 
@@ -200,8 +200,8 @@ Check if the unit can reach the target position by moving along a path.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>unit</code> [<strong> <a href="/docs/game_script_env/userdata/Unit"> Unit </a> </strong>]: The unit.
-- <code>position</code> [<strong> <a href="/docs/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The target position.
+- <code>unit</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Unit"> Unit </a> </strong>]: The unit.
+- <code>position</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The target position.
 
 <strong>Returns:</strong> <br></br>
 

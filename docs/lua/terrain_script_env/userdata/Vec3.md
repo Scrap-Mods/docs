@@ -9,7 +9,7 @@ sidebar-label: 'Vec3'
 
 ## Vec3
 
-**Associated namespace:** [sm.vec3](/docs/game_script_env/static_functions/sm.vec3)
+**Associated namespace:** [sm.vec3](/docs/lua/game_script_env/static_functions/sm.vec3)
 
 A userdata object representing a <strong>3D vector</strong>.
 

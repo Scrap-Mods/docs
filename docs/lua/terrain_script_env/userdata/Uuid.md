@@ -9,7 +9,7 @@ sidebar-label: 'Uuid'
 
 ## Uuid
 
-**Associated namespace:** [sm.uuid](/docs/game_script_env/static_functions/sm.uuid)
+**Associated namespace:** [sm.uuid](/docs/lua/game_script_env/static_functions/sm.uuid)
 
 A userdata object representing a <strong>uuid</strong>.
 
