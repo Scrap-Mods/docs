@@ -1,0 +1,36 @@
+---
+sidebar_position: 10
+title: ScriptableObjectClass
+hide_title: true
+sidebar-label: 'ScriptableObjectClass'
+---
+
+<br></br>
+
+### ScriptableObjectClass
+A script class that does not represent any particular game object.
+
+The scriptable object is automatically synchronized to all clients.
+
+The class can receive events sent with [sm.event.sendToScriptableObject](/docs/lua/game_script_env/static_functions/sm.event#sendtoscriptableobject).
+
+The fields below are accessed using <code>self.fieldName</code> in the ScriptableObjectClass script:
+
+<strong>Fields:</strong>
+
+| Type        | Name           | Description |
+| ----------- | -----------    | ----------- |
+| [ScriptableObject](/docs/lua/game_script_env/userdata/ScriptableObject) | scriptableObject | The [ScriptableObject](/docs/lua/game_script_env/userdata/ScriptableObject) belonging to this class instance. |
+| [Network](/docs/lua/game_script_env/userdata/Network) | network | A [Network](/docs/lua/game_script_env/userdata/Network) object that can be used to send data between client and server. |
+| [Storage](/docs/lua/game_script_env/userdata/Storage) | storage | A server-side [Storage](/docs/lua/game_script_env/userdata/Storage) object that can be used to save and load data to/from the world database. |
+| any | data | Data from the <code>data</code> entry in the object's JSON file entry. |
+| any | params | Parameters given to [sm.scriptableObject.createScriptableObject](/docs/lua/game_script_env/static_functions/sm.scriptableObject#createscriptableobject). |
+
+<strong>Constants:</strong> <br></br>
+
+[isSaveObject](/docs/lua/game_script_env/Constants#scriptableobjectclass)
+
+<strong>Callbacks:</strong> <br></br>
+
+The <code>ScriptableObjectClass</code> does not have any special callbacks. <br></br>
+See [Common Callbacks](/docs/lua/game_script_env/Classes/CommonCallbacks) for available callbacks for this script class.

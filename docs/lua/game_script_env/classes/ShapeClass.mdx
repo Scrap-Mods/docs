@@ -1,0 +1,474 @@
+---
+sidebar_position: 2
+title: ShapeClass
+hide_title: true
+sidebar-label: 'ShapeClass'
+---
+
+<br></br>
+
+### ShapeClass
+A script class that is instanced for every "scripted" [Interactable Shape](/docs/lua/game_script_env/userdata/Interactable) in the game.
+
+An interactable part is a [Shape](/docs/lua/game_script_env/userdata/Shape) that is usually built by the player and can be interacted with, for example a button or an engine.
+
+The class can receive events sent with [sm.event.sendToInteractable](/docs/lua/game_script_env/static_functions/sm.event#sendtointeractable).
+
+The fields below are accessed using <code>self.fieldName</code> in the ShapeClass script:
+
+<strong>Fields:</strong>
+
+| Type        | Name           | Description |
+| ----------- | -----------    | ----------- |
+| [Interactable](/docs/lua/game_script_env/userdata/Interactable) | interactable | The [Interactable](/docs/lua/game_script_env/userdata/Interactable) game object belonging to this class instance. The same as <code>shape.interactable</code>. |
+| [Shape](/docs/lua/game_script_env/userdata/Shape) | shape | The [Shape](/docs/lua/game_script_env/userdata/Shape) game object that the [Interactable](/docs/lua/game_script_env/userdata/Interactable) is attached to. (The same as interactable.shape) |
+| [Network](/docs/lua/game_script_env/userdata/Network) | network | A [Network](/docs/lua/game_script_env/userdata/Network) object that can be used to send data between client and server. |
+| [Storage](/docs/lua/game_script_env/userdata/Storage) | storage | A server-side [Storage](/docs/lua/game_script_env/userdata/Storage) object that can be used to save and load data to/from the world database. |
+| any | data | Data from the <code>data</code> entry in the shape's JSON file entry. |
+| any | params | Parameter set with [Interactable:setParams](/docs/lua/game_script_env/userdata/Interactable#setparams) when created from a script. |
+
+
+<strong>Constants:</strong> <br></br>
+
+[colorHighlight](/docs/lua/game_script_env/Constants#shapeclass) <br></br>
+[colorNormal](/docs/lua/game_script_env/Constants#shapeclass) <br></br>
+[connectionInput](/docs/lua/game_script_env/Constants#shapeclass) <br></br>
+[connectionOutput](/docs/lua/game_script_env/Constants#shapeclass) <br></br>
+[maxChildCount](/docs/lua/game_script_env/Constants#shapeclass) <br></br>
+[maxParentCount](/docs/lua/game_script_env/Constants#shapeclass) <br></br>
+[poseWeightCount](/docs/lua/game_script_env/Constants#shapeclass) <br></br>
+
+<strong>Callbacks:</strong> <br></br>
+
+## Server + Client
+
+### onProjectile
+
+```lua
+function ShapeClass.server_onProjectile( self, position, airTime, velocity, projectileName, shooter, damage, customData, normal, uuid )
+end
+function ShapeClass.client_onProjectile( self, position, airTime, velocity, projectileName, shooter, damage, customData, normal, uuid )
+end
+```
+Called when the [Shape](/docs/lua/game_script_env/userdata/Shape) is hit by a projectile.
+
+:::info note
+If the shooter is destroyed before the projectile hits, the shooter value will be nil.
+:::
+
+<strong>Arguments:</strong> <br></br>
+
+- <code>self</code> [<strong> table </strong>]: The class instance.
+- <code>position</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The position in world space where the projectile hit the Shape.
+- <code>airTime</code> [<strong> number </strong>]: The time, in seconds, that the projectile spent flying before the hit.
+- <code>velocity</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The velocity of the projectile at impact.
+- <code>projectileName</code> [<strong> string </strong>]: The name of the projectile. (Legacy, use uuid instead)
+- <code>shooter</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Player"> Player </a>/<a href="/docs/lua/game_script_env/userdata/Unit"> Unit </a>/<a href="/docs/lua/game_script_env/userdata/Shape"> Shape </a>/<a href="/docs/lua/game_script_env/userdata/Harvestable"> Harvestable </a>/ nil </strong>]: The shooter. Can be a Player, Unit, Shape, Harvestable or nil if unknown.
+- <code>damage</code> [<strong> int </strong>]: The damage value of the projectile.
+- <code>customData</code> [<strong> any </strong>]: A Lua object that can be defined at shoot time using <code>sm.projectile.customProjectileAttack</code> or any other custom version.
+- <code>normal</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The normal at the point of impact.
+- <code>uuid</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Uuid"> Uuid </a> </strong>]: The uuid of the projectile.
+
+---
+
+### onMelee
+
+```lua
+function ShapeClass.server_onMelee( self, position, attacker, damage, power, direction, normal )
+end
+function ShapeClass.client_onMelee( self, position, attacker, damage, power, direction, normal )
+end
+```
+Called when the [Shape](/docs/lua/game_script_env/userdata/Shape) is hit by a melee attack.
+
+:::info note
+If the attacker is destroyed before the hit lands, the attacker value will be nil.
+:::
+
+<strong>Arguments:</strong> <br></br>
+
+- <code>self</code> [<strong> table </strong>]: The class instance.
+- <code>position</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The position in world space where the Shape was hit.
+- <code>attacker</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Player"> Player </a>/ nil </strong>]: The attacker. Can be a Player or nil if unknown. Attacks made by a Unit will be nil on the client.
+- <code>damage</code> [<strong> int </strong>]: The damage value of the melee hit.
+- <code>power</code> [<strong> number </strong>]: The physical impact of the hit.
+- <code>direction</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The direction of the melee attack.
+- <code>normal</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The normal at the point of impact.
+
+---
+
+### onCollision
+
+```lua
+function ShapeClass.server_onCollision( self, other, position, selfPointVelocity, otherPointVelocity, normal )
+end
+function ShapeClass.client_onCollision( self, other, position, selfPointVelocity, otherPointVelocity, normal )
+end
+```
+Called when the [Shape](/docs/lua/game_script_env/userdata/Shape) collides with another object.
+
+<strong>Arguments:</strong> <br></br>
+
+- <code>self</code> [<strong> table </strong>]: The class instance.
+- <code>other</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Shape"> Shape </a>/<a href="/docs/lua/game_script_env/userdata/Character"> Character </a>/<a href="/docs/lua/game_script_env/userdata/Harvestable"> Harvestable </a>/<a href="/docs/lua/game_script_env/userdata/Lift"> Lift </a>/ nil </strong>]: The other object. Nil if terrain.
+- <code>position</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Player"> Player </a>/ nil </strong>]: The position in world space where the collision occurred.
+- <code>selfPointVelocity</code> [<strong> int </strong>]: The velocity that that the Shape had at the point of collision.
+- <code>otherPointVelocity</code> [<strong> number </strong>]: The velocity that that the other object had at the point of collision.
+- <code>normal</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The collision normal between the Shape and the other object.
+
+---
+
+### canErase
+
+```lua
+function ShapeClass.server_canErase( self )
+	return true --true or false, default true
+end
+function ShapeClass.client_canErase( self )
+	return true --true or false, default true
+end
+```
+Called to check whether the [Shape](/docs/lua/game_script_env/userdata/Shape) can be erased at this moment.
+
+:::info note
+This can be used to override restrictions. (See [Shape.erasable](/docs/lua/game_script_env/userdata/Shape))
+:::
+
+<strong>Arguments:</strong> <br></br>
+
+- <code>self</code> [<strong> table </strong>]: The class instance.
+
+<strong>Returns:</strong> <br></br>
+
+- [<strong> bool </strong>]: A boolean indicating whether the Shape can be erased or not. (Defaults to true)
+
+---
+
+## Server-only
+
+### onUnload
+
+```lua
+function ShapeClass.server_onUnload( self )
+end
+```
+Called when the [Interactable](/docs/lua/game_script_env/userdata/Interactable) is unloaded from the game because no [Player](/docs/lua/game_script_env/userdata/Player)'s [Character](/docs/lua/game_script_env/userdata/Character) is close enough to it. <br></br>
+Also called when exiting the game.
+
+:::info note
+The creation, consisting of one or more [bodies](/docs/lua/game_script_env/userdata/Body), consisting of one or more [shapes](/docs/lua/game_script_env/userdata/Shape) joined together with [joints](/docs/lua/game_script_env/userdata/Joint) are always unloaded at the same time.
+:::
+
+<strong>Arguments:</strong> <br></br>
+
+- <code>self</code> [<strong> table </strong>]: The class instance.
+
+---
+
+### onExplosion
+
+```lua
+function ShapeClass.server_onExplosion( self, center, destructionLevel )
+end
+```
+Called when the [Shape](/docs/lua/game_script_env/userdata/Shape) is hit by an explosion. <br></br>
+
+For more information about explosions, see [sm.physics.explode](/docs/lua/game_script_env/static_functions/sm.physics#explode).
+
+<strong>Arguments:</strong> <br></br>
+
+- <code>self</code> [<strong> table </strong>]: The class instance.
+- <code>center</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The center of the explosion.
+- <code>destructionLevel</code> [<strong> int </strong>]: The level of destruction done by this explosion. Corresponds to the <code>durability</code> rating of a Shape.
+
+---
+
+### onSledgehammer
+
+```lua
+function ShapeClass.server_onSledgehammer( self )
+end
+```
+:::caution deprecated
+Use [onMelee](#onmelee) instead.
+:::
+
+---
+
+## Client-only
+
+### onInteract
+
+```lua
+function ShapeClass.client_onInteract( self, character, state )
+end
+```
+Called when a [Player](/docs/lua/game_script_env/userdata/Player) is interacting with the [Interactable](/docs/lua/game_script_env/userdata/Interactable) by pressing the <code>Use</code> key (default <code>E</code>) <br></br>
+or pressing <code>0-9</code> if the [Interactable](/docs/lua/game_script_env/userdata/Interactable) is connected to a seat (See: [Interactable:pressSeatInteractable](/docs/lua/game_script_env/userdata/Interactable#pressseatinteractable)).
+
+:::info note
+If this method is defined, the player will see the interaction text <code>E Use</code> when looking at the Shape.
+:::
+
+<strong>Arguments:</strong> <br></br>
+
+- <code>self</code> [<strong> table </strong>]: The class instance.
+- <code>character</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Character"> Character </a> </strong>]: The Character of the Player that is interacting with the Interactable.
+- <code>state</code> [<strong> bool </strong>]: The interaction state (<code>true</code> if pressed, <code>false</code> if released).
+
+```lua title="Example Usage"
+-- Example of interaction
+function MySwitch.client_onInteract( self, character, state ) 
+	if state then
+		self.network:sendToServer( 'sv_n_toggle' )
+	end
+end
+
+function MySwitch.sv_n_toggle( self ) 
+	-- Toggle on and off
+	self.interactable.active = not self.interactable.active
+end
+```
+
+---
+
+### canInteract
+
+```lua
+function ShapeClass.client_canInteract( self, character )
+	return true --true or false, default true if onInteract is implemented
+end
+```
+Called to check whether the [Interactable](/docs/lua/game_script_env/userdata/Interactable) can be interacted with at this moment.
+
+:::info note
+This callback can also be used to change the interaction text shown to the player using [sm.gui.setInteractionText](/docs/lua/game_script_env/static_functions/sm.gui#setinteractiontext) (Defaults to <code>E Use</code>).
+
+This can be used to override restrictions (See [Shape.usable](/docs/lua/game_script_env/userdata/Shape)).
+:::
+
+<strong>Arguments:</strong> <br></br>
+
+- <code>self</code> [<strong> table </strong>]: The class instance.
+- <code>character</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Character"> Character </a> </strong>]: The Character of the Player that is looking at the Shape.
+
+<strong>Returns:</strong> <br></br>
+
+- [<strong> bool </strong>]: A boolean indicating whether the interactable can be interacted with or not (Defaults to true if <code>client_onInteract</code> is implemented, otherwise false).
+
+
+---
+
+### onTinker
+
+```lua
+function ShapeClass.client_onTinker( self, character, state )
+end
+```
+Called when a [Player](/docs/lua/game_script_env/userdata/Player) is interacting with the [Interactable](/docs/lua/game_script_env/userdata/Interactable) by pressing the <code>Tinker</code> key (default <code>U</code>).
+
+:::info note
+Tinkering usually means opening the upgrade menu for seats.
+:::
+
+<strong>Arguments:</strong> <br></br>
+
+- <code>self</code> [<strong> table </strong>]: The class instance.
+- <code>character</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Character"> Character </a> </strong>]: The Character of the Player that is tinkering with the Interactable.
+- <code>state</code> [<strong> bool </strong>]: The interaction state (<code>true</code> if pressed, <code>false</code> if released).
+
+---
+
+### canTinker
+
+```lua
+function ShapeClass.client_canTinker( self, character )
+	return true --true or false, default true if onTinker is implemented
+end
+```
+Called to check whether the [Interactable](/docs/lua/game_script_env/userdata/Interactable) can be tinkered with at this moment.
+
+:::info note
+Tinkering usually means opening the upgrade menu for seats.
+:::
+
+<strong>Arguments:</strong> <br></br>
+
+- <code>self</code> [<strong> table </strong>]: The class instance.
+- <code>character</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Character"> Character </a> </strong>]: The Character of the Player that is looking at the Shape.
+
+<strong>Returns:</strong> <br></br>
+
+- [<strong> bool </strong>]: A boolean indicating whether the interactable can be tinkered with or not (Defaults to true if <code>client_onTinker</code> is implemented, otherwise false).
+
+---
+
+### onInteractThroughJoint
+
+```lua
+function ShapeClass.client_onInteractThroughJoint( self, character, state, joint )
+end
+```
+Called when a [Player](/docs/lua/game_script_env/userdata/Player) is interacting with the [Interactable](/docs/lua/game_script_env/userdata/Interactable) through a connected [Joint](/docs/lua/game_script_env/userdata/Joint).
+
+<strong>Arguments:</strong> <br></br>
+
+- <code>self</code> [<strong> table </strong>]: The class instance.
+- <code>character</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Character"> Character </a> </strong>]: The Character of the Player that is interacting with the Interactable.
+- <code>state</code> [<strong> bool </strong>]: The interaction state. Always true. <code>client_onInteractThroughJoint</code> only receives the key down event.
+- <code>joint</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Joint"> Joint </a> </strong>]: The Joint that the Player interacted through.
+
+---
+
+### canInteractThroughJoint
+
+```lua
+function ShapeClass.client_canInteractThroughJoint( self, character )
+	return true --true or false, default true if onInteractThroughJoint is implemented
+end
+```
+Called to check whether the [Interactable](/docs/lua/game_script_env/userdata/Interactable) can be interacted with through a child [Joint](/docs/lua/game_script_env/userdata/Joint) at this moment.
+
+:::info note
+This callback can also be used to change the interaction text shown to the player using [sm.gui.setInteractionText](/docs/lua/game_script_env/static_functions/sm.gui#setinteractiontext) (Defaults to <code>E Use</code>)
+:::
+
+<strong>Arguments:</strong> <br></br>
+
+- <code>self</code> [<strong> table </strong>]: The class instance.
+- <code>character</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Character"> Character </a> </strong>]: The Character of the Player that is looking at the Joint.
+
+<strong>Returns:</strong> <br></br>
+
+- [<strong> bool </strong>]: A boolean indicating whether the interactable can be interacted with or not (Defaults to true if <code>client_onInteractThroughJoint</code> is implemented, otherwise false).
+
+---
+
+### onAction
+
+```lua
+function ShapeClass.client_onAction( self, action, state )
+end
+```
+Called when the interactable receives input from a [Player](/docs/lua/game_script_env/userdata/Player) with the [Character](/docs/lua/game_script_env/userdata/Character) locked to the [Interactable](/docs/lua/game_script_env/userdata/Interactable).
+
+When a [Character](/docs/lua/game_script_env/userdata/Character) is seated in an [Interactable](/docs/lua/game_script_env/userdata/Interactable) [Shape](/docs/lua/game_script_env/userdata/Shape) with a <code>seat</code> component, the [Character](/docs/lua/game_script_env/userdata/Character) is also considered locked to the [Interactable](/docs/lua/game_script_env/userdata/Interactable).
+
+Details about the <code>action</code> value are in [sm.interactable.actions](/docs/lua/game_script_env/Constants#sminteractableactions).
+
+<strong>Arguments:</strong> <br></br>
+
+- <code>self</code> [<strong> table </strong>]: The class instance.
+- <code>action</code> [<strong> int </strong>]: The action as an integer value.
+- <code>state</code> [<strong> bool </strong>]: True on begin action, false on end action.
+
+---
+
+### canCarry
+
+```lua
+function ShapeClass.client_canCarry( self )
+	return true --true or false, default false
+end
+```
+Called to check if the shape must be carried instead of put in the inventory.
+
+:::info note
+Shapes with the <code>carryItem</code> attribute are always carried.
+:::
+
+<strong>Arguments:</strong> <br></br>
+
+- <code>self</code> [<strong> table </strong>]: The class instance.
+
+<strong>Returns:</strong> <br></br>
+
+- [<strong> bool </strong>]: A boolean indicating whether the interacable must be carried or not. (Defaults to false)
+
+---
+
+### getAvailableParentConnectionCount
+
+```lua
+function ShapeClass.client_getAvailableParentConnectionCount( self, connectionType )
+	return int --The number of available connections.
+end
+```
+Called to check how many more parent (input) connections with the given [connectionType](/docs/lua/game_script_env/Constants#sminteractableconnectiontype) the [Interactable](/docs/lua/game_script_env/userdata/Interactable) will accept. <br></br>
+Return 1 or more to allow a connection of this type.
+
+See [sm.interactable.connectionType](/docs/lua/game_script_env/Constants#sminteractableconnectiontype) for details about the connection type.
+
+:::info note
+The [maxParentCount](/docs/lua/game_script_env/Constants#shapeclass) constant must be 1 or more for this callback to be called.
+:::
+
+<strong>Arguments:</strong> <br></br>
+
+- <code>self</code> [<strong> table </strong>]: The class instance.
+- <code>connectionType</code> [<strong> int </strong>]: The connection type(s).
+
+<strong>Returns:</strong> <br></br>
+
+- [<strong> int </strong>]: The number of available connections.
+
+```lua title="Example Usage"
+-- Example of implementation where logic and power shares the same slot but electricity counts as separate
+MyInteractable.maxParentCount = 2
+MyInteractable.connectionInput = sm.interactable.connectionType.logic + sm.interactable.connectionType.power + sm.interactable.connectionType.electricity
+
+function MyInteractable.client_getAvailableParentConnectionCount( self, connectionType )
+	if bit.band( connectionType, bit.bor( sm.interactable.connectionType.logic, sm.interactable.connectionType.power ) ) ~= 0 then
+		return 1 - self:getParents( bit.bor( sm.interactable.connectionType.logic, sm.interactable.connectionType.power ) )
+	end
+	if bit.band( connectionType, sm.interactable.connectionType.electricity ) ~= 0 then
+		return 1 - self:getParents( sm.interactable.connectionType.electricity )
+	end
+	return 0
+end
+```
+
+---
+
+### getAvailableChildConnectionCount
+
+```lua
+function ShapeClass.client_getAvailableChildConnectionCount( self, connectionType )
+	return int --The number of available connections.
+end
+```
+Called to check how many more child (output) connections with the given [connectionType](/docs/lua/game_script_env/Constants#sminteractableconnectiontype) the [Interactable](/docs/lua/game_script_env/userdata/Interactable) will accept. <br></br>
+Return 1 or more to allow a connection of this type.
+
+See [sm.interactable.connectionType](/docs/lua/game_script_env/Constants#sminteractableconnectiontype) for details about the connection type.
+
+:::info note
+The [maxChildCount](/docs/lua/game_script_env/Constants#shapeclass) constant must be 1 or more for this callback to be called.
+:::
+
+<strong>Arguments:</strong> <br></br>
+
+- <code>self</code> [<strong> table </strong>]: The class instance.
+- <code>connectionType</code> [<strong> int </strong>]: The connection type(s).
+
+<strong>Returns:</strong> <br></br>
+
+- [<strong> int </strong>]: The number of available connections.
+
+```lua title="Example Usage"
+-- Example of implementation that accepts 10 logic connections and 1 power connection
+MyInteractable.maxChildCount = 11
+MyInteractable.connectionOutput = sm.interactable.connectionType.logic + sm.interactable.connectionType.power
+
+function MyIteractable.client_getAvailableChildConnectionCount( self, connectionType )
+	if bit.band( connectionType, sm.interactable.connectionType.logic ) ~= 0 then
+		return 10 - self:getParents( sm.interactable.connectionType.logic )
+	end
+	if bit.band( connectionType, sm.interactable.connectionType.power ) ~= 0 then
+		return 1 - self:getParents( sm.interactable.connectionType.power )
+	end
+	return 0
+end
+```
+
+---
