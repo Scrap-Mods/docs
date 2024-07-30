@@ -9,7 +9,7 @@ sidebar-label: 'sm.color'
 
 ## sm.color
 
-**Associated object type:** [Color](/docs/terrain_script_env/userdata/Color)
+**Associated object type:** [Color](/docs/lua/terrain_script_env/userdata/Color)
 
 A color is represented using a red, green, blue and alpha component. <br></br>
 Colors are prominently used for blocks and parts that are colored by the Paint Tool.
@@ -35,7 +35,7 @@ Creates a new color object.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Color"> Color </a> </strong>]: The created color object.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Color"> Color </a> </strong>]: The created color object.
 
 ---
 

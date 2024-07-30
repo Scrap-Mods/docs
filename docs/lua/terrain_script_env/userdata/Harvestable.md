@@ -26,12 +26,12 @@ Represents a harvestable object in the game.
 	- <code>Get</code>: The harvestable's id.
 
 
-- <code>initialPosition</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>] <br></br>
+- <code>initialPosition</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>] <br></br>
 
 	- <code>Get</code>: The harvestable's initial world position.
 
 
-- <code>initialRotation</code> [<strong> <a href="/docs/terrain_script_env/userdata/Quat"> Quat </a> </strong>] <br></br>
+- <code>initialRotation</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Quat"> Quat </a> </strong>] <br></br>
 
 	- <code>Get</code>: The harvestable's initial world rotation.
 
@@ -67,17 +67,17 @@ Represents a harvestable object in the game.
 	- <code>Get</code>: The harvestable's type.
 
 
-- <code>uuid</code> [<strong> <a href="/docs/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>] <br></br>
+- <code>uuid</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>] <br></br>
 
 	- <code>Get</code>: The harvestable's uuid.
 
 
-- <code>worldPosition</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>] <br></br>
+- <code>worldPosition</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>] <br></br>
 
 	- <code>Get</code>: The harvestable's world position.
 
 
-- <code>worldRotation</code> [<strong> <a href="/docs/terrain_script_env/userdata/Quat"> Quat </a> </strong>] <br></br>
+- <code>worldRotation</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Quat"> Quat </a> </strong>] <br></br>
 
 	- <code>Get</code>: The harvestable's world rotation.
 
@@ -101,7 +101,7 @@ Destroys the harvestable.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 ---
 
@@ -115,12 +115,12 @@ Returns the bounds of the harvestable shape.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The max bounds.
-- [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The min bounds.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The max bounds.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The min bounds.
 
 ---
 
@@ -135,7 +135,7 @@ Returns the harvestable's client public data.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
@@ -153,11 +153,11 @@ Returns the harvestable's color.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Color"> Color </a> </strong>]: The color.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Color"> Color </a> </strong>]: The color.
 
 ---
 
@@ -171,7 +171,7 @@ Returns the harvestable's script data.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
@@ -189,7 +189,7 @@ Returns the harvestable's id.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
@@ -207,7 +207,7 @@ Returns the harvestable's mass.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
@@ -225,7 +225,7 @@ Returns the harvestable's material name.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
@@ -243,7 +243,7 @@ Returns the harvestable's material id.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
@@ -261,7 +261,7 @@ Returns the harvestable's name.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
@@ -280,7 +280,7 @@ Returns the pose weight of the pose in the given index.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 - <code>index</code> [<strong> int </strong>]: The index.
 
 <strong>Returns:</strong> <br></br>
@@ -299,11 +299,11 @@ Returns the harvestable's world position.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The world position.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The world position.
 
 ---
 
@@ -318,7 +318,7 @@ Returns the harvestable's server public data.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
@@ -336,11 +336,11 @@ Returns the harvestable's rotation.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Quat"> Quat </a> </strong>]: The rotation.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Quat"> Quat </a> </strong>]: The rotation.
 
 ---
 
@@ -354,11 +354,11 @@ Returns the harvestable's scale.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The scale.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The scale.
 
 ---
 
@@ -372,7 +372,7 @@ Returns the [Character](/docs/lua/game_script_env/userdata/Character) that is se
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>kinematic</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The kinematic.
+- <code>kinematic</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The kinematic.
 
 <strong>Returns:</strong> <br></br>
 
@@ -390,7 +390,7 @@ Returns the harvestable's type.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
@@ -408,11 +408,11 @@ Returns the harvestable's uuid.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The uuid.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The uuid.
 
 ---
 
@@ -427,7 +427,7 @@ Returns the harvestable's current UV animation frame.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
@@ -445,11 +445,11 @@ Returns the harvestable's world.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/World"> World </a> </strong>]: The world.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/World"> World </a> </strong>]: The world.
 
 ---
 
@@ -463,7 +463,7 @@ Returns whether the kinematic has a seat component.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>kinematic</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The kinematic.
+- <code>kinematic</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The kinematic.
 
 <strong>Returns:</strong> <br></br>
 
@@ -481,7 +481,7 @@ Returns whether the harvestable is a kinematic.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 
 <strong>Returns:</strong> <br></br>
 
@@ -500,7 +500,7 @@ Sets the harvestable's client public data.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 - <code>data</code> [<strong> table </strong>]: The data to set.
 
 ---
@@ -516,8 +516,8 @@ Sets the harvestable's color.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
-- <code>color</code> [<strong> <a href="/docs/terrain_script_env/userdata/Color"> Color </a> </strong>]: The color.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>color</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Color"> Color </a> </strong>]: The color.
 
 ---
 
@@ -532,7 +532,7 @@ Sets the harvestable's param data.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 - <code>data</code> [<strong> any </strong>]: The data.
 
 ---
@@ -548,7 +548,7 @@ Set the pose weight of the pose in the given index.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 - <code>index</code> [<strong> int </strong>]: The index.
 - <code>value</code> [<strong> number </strong>]: The pose weight.
 
@@ -565,8 +565,8 @@ Can only be used on kinematic harvestables.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>kinematic</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The kinematic.
-- <code>position</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The world position.
+- <code>kinematic</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The kinematic.
+- <code>position</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The world position.
 
 ---
 
@@ -581,7 +581,7 @@ Set the harvestable's server public data.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 - <code>data</code> [<strong> table </strong>]: The data to set.
 
 ---
@@ -597,8 +597,8 @@ Can only be used on kinematic harvestables.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>kinematic</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The kinematic.
-- <code>rotation</code> [<strong> <a href="/docs/terrain_script_env/userdata/Quat"> Quat </a> </strong>]: The rotation.
+- <code>kinematic</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The kinematic.
+- <code>rotation</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Quat"> Quat </a> </strong>]: The rotation.
 
 ---
 
@@ -612,7 +612,7 @@ Requests to seat a [Character](/docs/lua/game_script_env/userdata/Character) in 
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>kinematic</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The kinematic.
+- <code>kinematic</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The kinematic.
 - <code>character</code> [<strong> <a href="/docs/lua/game_script_env/userdata/Character"> Character </a> </strong>]: The character.
 
 ---
@@ -628,7 +628,7 @@ Sets the UV animation frame with the given index.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>harvestable</code> [<strong> <a href="/docs/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
+- <code>harvestable</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Harvestable"> Harvestable </a> </strong>]: The harvestable.
 - <code>index</code> [<strong> int </strong>]: The index.
 
 ---

@@ -64,7 +64,7 @@ Returns the hex representation of the color.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>color</code> [<strong> <a href="/docs/terrain_script_env/userdata/Color"> Color </a> </strong>]: The color.
+- <code>color</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Color"> Color </a> </strong>]: The color.
 
 <strong>Returns:</strong> <br></br>
 

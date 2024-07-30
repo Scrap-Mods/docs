@@ -23,7 +23,7 @@ Returns a table of all assets in a terrain cell.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>tileId</code> [<strong> <a href="/docs/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The tile id.
+- <code>tileId</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The tile id.
 - <code>tileOffsetX</code> [<strong> int </strong>]: The tile offset X.
 - <code>tileOffsetY</code> [<strong> int </strong>]: The tile offset Y.
 - <code>sizeLevel</code> [<strong> int </strong>]: The asset size level.
@@ -252,7 +252,7 @@ Returns a table of all creations in a terrain cell.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>tileId</code> [<strong> <a href="/docs/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The tile id.
+- <code>tileId</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The tile id.
 - <code>tileOffsetX</code> [<strong> int </strong>]: The tile offset X.
 - <code>tileOffsetY</code> [<strong> int </strong>]: The tile offset Y.
 
@@ -301,7 +301,7 @@ Returns all decals for a cell in a tile.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>id</code> [<strong> <a href="/docs/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The tile id.
+- <code>id</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The tile id.
 - <code>X-offset</code> [<strong> int </strong>]: The offset along the X axis.
 - <code>Y-offset</code> [<strong> int </strong>]: The offset along the Y axis.
 
@@ -339,7 +339,7 @@ Returns all harvestables for a cell in a tile.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>id</code> [<strong> <a href="/docs/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The tile id.
+- <code>id</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The tile id.
 - <code>X-offset</code> [<strong> int </strong>]: The offset along the X axis.
 - <code>Y-offset</code> [<strong> int </strong>]: The offset along the Y axis.
 - <code>sizeLevel</code> [<strong> int </strong>]: The size level of harvestables.
@@ -400,7 +400,7 @@ Returns all kinematics for a cell in a tile.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>id</code> [<strong> <a href="/docs/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The tile id.
+- <code>id</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The tile id.
 - <code>X-offset</code> [<strong> int </strong>]: The offset along the X axis.
 - <code>Y-offset</code> [<strong> int </strong>]: The offset along the Y axis.
 - <code>sizeLevel</code> [<strong> int </strong>]: The size level of kinematics.
@@ -469,7 +469,7 @@ Returns all nodes for a cell in a tile.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>id</code> [<strong> <a href="/docs/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The tile id.
+- <code>id</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The tile id.
 - <code>X-offset</code> [<strong> int </strong>]: The offset along the X axis.
 - <code>Y-offset</code> [<strong> int </strong>]: The offset along the Y axis.
 
@@ -505,7 +505,7 @@ Returns all prefabs for a cell in a tile.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>id</code> [<strong> <a href="/docs/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The tile id.
+- <code>id</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The tile id.
 - <code>X-offset</code> [<strong> int </strong>]: The offset along the X axis.
 - <code>Y-offset</code> [<strong> int </strong>]: The offset along the Y axis.
 
@@ -564,6 +564,6 @@ Returns the uuid for a tile file.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The tile's uuid.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The tile's uuid.
 
 ---

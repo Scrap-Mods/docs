@@ -33,7 +33,7 @@ Returns whether the uuid is nil `{00000000-0000-0000-0000-000000000000}`.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>uuid</code> [<strong> <a href="/docs/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The uuid.
+- <code>uuid</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Uuid"> Uuid </a> </strong>]: The uuid.
 
 <strong>Returns:</strong> <br></br>
 

@@ -60,12 +60,12 @@ Returns the [cross product](https://en.wikipedia.org/wiki/Cross_product) of two 
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>vec3</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
-- <code>vector</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The second vector.
+- <code>vec3</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
+- <code>vector</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The second vector.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The cross product.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The cross product.
 
 ---
 
@@ -79,12 +79,12 @@ Returns the [dot product](https://en.wikipedia.org/wiki/Dot_product) of two vect
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>vec3</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
-- <code>vector</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The second vector.
+- <code>vec3</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
+- <code>vector</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The second vector.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The dot product.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The dot product.
 
 ---
 
@@ -100,7 +100,7 @@ If you want the squared length, using [length2](#length2) is faster than squarin
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>vec3</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
+- <code>vec3</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
 
 <strong>Returns:</strong> <br></br>
 
@@ -118,7 +118,7 @@ Returns the squared length of the vector.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>vec3</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
+- <code>vec3</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
 
 <strong>Returns:</strong> <br></br>
 
@@ -136,12 +136,12 @@ Returns the maximum value between two vectors components.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>vec3</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
-- <code>vector</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The second vector.
+- <code>vec3</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
+- <code>vector</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The second vector.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: Component wise maximum value vector.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: Component wise maximum value vector.
 
 ---
 
@@ -155,12 +155,12 @@ Returns the minimum value between two vectors components.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>vec3</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
-- <code>vector</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The second vector.
+- <code>vec3</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
+- <code>vector</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The second vector.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: Component wise minimum value vector.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: Component wise minimum value vector.
 
 ---
 
@@ -174,11 +174,11 @@ Normalizes the vector, ie. converts it to a unit vector of length 1.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>vec3</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
+- <code>vec3</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The normalized vector.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The normalized vector.
 
 ---
 
@@ -194,13 +194,13 @@ The angle value uses [radians](https://en.wikipedia.org/wiki/Radian).
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>vec3</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
+- <code>vec3</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
 - <code>angle</code> [<strong> number </strong>]: The angle.
-- <code>normal</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The axis to be rotated around.
+- <code>normal</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The axis to be rotated around.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The rotated vector.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The rotated vector.
 
 ---
 
@@ -216,12 +216,12 @@ The angle value uses [radians](https://en.wikipedia.org/wiki/Radian).
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>vec3</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
+- <code>vec3</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
 - <code>angle</code> [<strong> number </strong>]: The angle.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The rotated vector.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The rotated vector.
 
 ---
 
@@ -237,12 +237,12 @@ The angle value uses [radians](https://en.wikipedia.org/wiki/Radian).
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>vec3</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
+- <code>vec3</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
 - <code>angle</code> [<strong> number </strong>]: The angle.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The rotated vector.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The rotated vector.
 
 ---
 
@@ -258,12 +258,12 @@ The angle value uses [radians](https://en.wikipedia.org/wiki/Radian).
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>vec3</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
+- <code>vec3</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
 - <code>angle</code> [<strong> number </strong>]: The angle.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The rotated vector.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The rotated vector.
 
 ---
 
@@ -277,12 +277,12 @@ Normalizes a vector with safety, ie. converts to a unit vector of length 1.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>vec3</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
-- <code>fallback</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The fallback vector.
+- <code>vec3</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The vector.
+- <code>fallback</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The fallback vector.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The normalized vector.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The normalized vector.
 
 ---
 

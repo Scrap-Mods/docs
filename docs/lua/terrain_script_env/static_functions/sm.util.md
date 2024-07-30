@@ -23,12 +23,12 @@ Constructs a quaternion from an X and Z axis.
 
 <strong>Arguments:</strong> <br></br>
 
-- <code>xAxis</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The X axis.
-- <code>zAxis</code> [<strong> <a href="/docs/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The Z axis.
+- <code>xAxis</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The X axis.
+- <code>zAxis</code> [<strong> <a href="/docs/lua/terrain_script_env/userdata/Vec3"> Vec3 </a> </strong>]: The Z axis.
 
 <strong>Returns:</strong> <br></br>
 
-- [<strong> <a href="/docs/terrain_script_env/userdata/Quat"> Quat </a> </strong>]: The created quaternion.
+- [<strong> <a href="/docs/lua/terrain_script_env/userdata/Quat"> Quat </a> </strong>]: The created quaternion.
 
 ---
 

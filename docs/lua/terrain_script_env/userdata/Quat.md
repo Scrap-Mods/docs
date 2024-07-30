@@ -9,7 +9,7 @@ sidebar-label: 'Quat'
 
 ## Quat
 
-**Associated namespace:** [sm.quat](/docs/terrain_script_env/static_functions/sm.quat)
+**Associated namespace:** [sm.quat](/docs/lua/terrain_script_env/static_functions/sm.quat)
 
 A userdata object representing a <strong>quaternion</strong>.
 
