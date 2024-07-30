@@ -1,0 +1,21 @@
+---
+title: 03 - Request Passphrase
+---
+
+# Request Passphrase
+
+The server sends this packet to the client when the client is joining the server and the server requires a passphrase to join.
+
+- **ID**: 0x03
+- **Size**: 1 byte
+- **LZ4 Compressed**: No
+- **State**: Joining
+- **Bound To**: Server -> Client
+
+## Structure
+
+No data.
+
+| Offset | Field Name | Field Type |
+|--------|------------|------------|
+| N/A    | N/A        | N/A        |

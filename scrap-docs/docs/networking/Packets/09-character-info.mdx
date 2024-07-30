@@ -1,0 +1,20 @@
+---
+title:  09 - Character Info
+---
+
+# Character Info
+
+Contains the name of the player and the customization options of the character.
+
+- **ID**: 0x09
+- **Size**: Variable
+- **LZ4 Compressed**: Yes
+- **State**: Joining
+- **Bound To**: Client -> Server
+
+## Structure
+
+| Field Name              | Field Type | Notes |
+|-------------------------|------------|-------|
+| Name                    | [String](/docs/structures/Networking/string) | The name of the player of the character. The server displays this name above the character and in the chat. |
+| Character Customization | [Character Customization](../../structures/docs/character-customization) | The customization options of the character. |

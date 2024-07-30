@@ -1,0 +1,104 @@
+---
+title: 13 - Generic Initialization Data
+---
+
+import BlobDataPacketsNotice from "../_reusable/blobdata-packets-notice.mdx"
+
+# Generic Initialization Data
+
+This packet is sent by the server to the client while joining a game. It contains the initialization data related to Lua scripts that can store data. The only known use of this packet is to send the terrain data to the client.
+
+- **ID**: 0x0B (11)
+- **Size**: Variable
+- **LZ4 Compressed**: Yes
+- **State**: Joining
+- **Bound To**: Server -> Client
+
+## Structure
+
+<BlobDataPacketsNotice />
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Game Tick  | be u32     | The tick when the server sent this packet. |
+| Data       | [BlobData](/docs/structures/Networking/blobdata)[until EOS] | The data the scripted classes are initialized with. This array is read until the end of the packet. |
+
+## BlobData Payloads
+
+In this subsection, UIDs of known [BlobData](/docs/structures/Networking/blobdata) and their payloads are listed. This is not guaranteed to be an exhaustive list.
+
+### World Info
+
+This [BlobData](/docs/structures/Networking/blobdata) contains information about the world the player is currently joining.
+
+- **UID**: `3ff36c8b-93f7-4428-ae4d-429a6f0cf77d`
+- **Key**: The ID of the world, stored as `le u32`
+- **World ID**: The ID of the world
+- **Flags**: 13 (0b1101)
+
+#### Payload
+
+This structure contains all parameters passed to `sm.world.createWorld()` when the world was created.
+
+| Field Name   | Field Type | Notes |
+|--------------|------------|-------|
+| Seed         | be u32     | The seed of the world. |
+| Filename     | [String](/docs/structures/Networking/string) | The filename of the world. |
+| Classname    | [String](/docs/structures/Networking/string) | The classname of the world. |
+| Terrain Params | [String](/docs/structures/Networking/string) | A stringified JSON object containing the terrain parameters of the world. |
+
+### Gameplay Options
+
+This [BlobData](/docs/structures/Networking/blobdata) contains the gameplay options of the world.
+
+- **UID**: `44ac020c-aec7-4f8b-b230-34d2e3bd23eb`
+- **Key**: `0`, stored as `le u32`
+- **World ID**: [No World](/docs/structures/Networking/blobdata#special-world-ids)
+- **Flags**: 15 (0b1111)
+
+#### Payload
+
+This structure stores the difficulty, multiplayer setting and the physics quality.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Options    | [String](/docs/structures/Networking/string) | A stringified JSON object containing the gameplay options of the world. |
+
+#### Example
+
+`{"Difficulty":1,"Multiplayer":2,"PhysicsQuality":8}\n`
+
+* **Difficulty**: The difficulty of the game as returned by `sm.game.getDifficulty()`.
+    * `0` is `Easy`
+    * `1` is `Normal` (default)
+* **Multiplayer**: The multiplayer setting of the game.
+    * `0` is `Private`
+    * `1` is `Friends Only`
+    * `2` is `Friends of Friends` (default)
+    * `3` is `Public`
+* **PhysicsQuality**: The quality of the physics simulation.
+    * `0` is `Simple 1`
+    * `8` is `Advanced` (default)
+
+### Player Data
+
+This [BlobData](/docs/structures/Networking/blobdata) contains information about a player.
+
+- **UID**: `51868883-d2d2-4953-9135-1ab0bdc2a47e`
+- **Key**: The ID of the player, stored as `le u32`
+- **World ID**: [No World](/docs/structures/Networking/blobdata#special-world-ids)
+- **Flags**: 13 (0b1101)
+
+#### Payload
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Character ID | be u32 | The ID of the character of the player. |
+| Steam ID 64 | be u64 | The Steam ID of the player. |
+| Inventory Container ID | be u32 | The ID of the inventory container of the player. |
+| Carry Container ID | be u32 | The ID of the carry container of the player. |
+| Carry Color | be u32 | The color of the part the player is currently carrying. Stored as `0xAABBGGRR`. `0xFFFFFFFF` if the player is not carrying anything. |
+| Unknown | u8 | |
+| Name Size | u8 | The size of the name of the player. |
+| Name | char[Name Size] | The name of the player, encoded in UTF-8. |
+| Character Customization | [Character Customization](../../structures/docs/character-customization) | The customization options of the character of the player. |

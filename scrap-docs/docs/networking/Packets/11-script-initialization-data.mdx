@@ -1,0 +1,45 @@
+---
+title: 11 - Script Initialization Data
+---
+
+import BlobDataPacketsNotice from "../_reusable/blobdata-packets-notice.mdx"
+
+# Script Initialization Data
+
+This packet is sent by the server to the client while joining a game. It contains the initialization data related to Lua scripts that can store data. The only known use of this packet is to send the terrain data to the client.
+
+- **ID**: 0x0B (11)
+- **Size**: Variable
+- **LZ4 Compressed**: Yes
+- **State**: Joining
+- **Bound To**: Server -> Client
+
+## Structure
+
+<BlobDataPacketsNotice />
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Game Tick  | be u32     | The tick when the server sent this packet. |
+| Data       | [BlobData](/docs/structures/Networking/blobdata)[until EOS] | The data the scripted classes are initialized with. This array is read until the end of the packet. |
+
+## BlobData Payloads
+
+In this subsection, UIDs of known [BlobData](/docs/structures/Networking/blobdata) and their payloads are listed. This is not guaranteed to be an exhaustive list.
+
+### Terrain Data
+
+This [BlobData](/docs/structures/Networking/blobdata) contains the terrain data of the world the player is currently joining.
+
+- **UID**: `61aa13d7-e715-4153-a269-4d338c0c5bd4`
+- **Key**: The ID of the world, stored as `le u32`
+- **World ID**: The ID of the world
+- **Flags**: 7 (0b0111)
+
+#### Payload
+
+A [LuaObject](/docs/structures/lua-object) that has been set using `sm.terrainData.save()` or `sm.world.createWorld()`
+
+| Field Name   | Field Type | Notes |
+|--------------|------------|-------|
+| Terrain Data | [LuaObject](/docs/structures/lua-object) | The terrain data. |

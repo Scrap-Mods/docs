@@ -1,0 +1,57 @@
+---
+title: 50 - Interact WIP
+---
+
+# Interact
+
+This packet is sent when the player interacts with an interactable (pressing, unpressing, interacting).
+
+- **ID**: 0x32 (50)
+- **Size**: Variable
+- **LZ4 Compressed**: No
+- **State**: Playing
+- **Bound To**: Client -> Server
+
+## Structure
+
+Depends on packet type.
+
+#### Set seated 0x90
+| Offset | Field Name       | Field Type | Notes |
+|--------|------------------|------------|-------|
+| 0x00   | Packet Type      | u8         | Entering seats |
+| 0x01   | Interactable ID  | be u32     | |
+| 0x05   | Player ID        | be u32     | |
+
+#### Other 0x80
+| Offset | Field Name       | Field Type | Notes |
+|--------|------------------|------------|-------|
+| 0x00   | Packet Type      | u8         | Buttons and switches etc |
+| 0x01   | Interactable ID  | be u32     | |
+| 0x05   | State            | u8         | |
+
+#### Suspension Height 0x60
+| Offset | Field Name       | Field Type | Notes |
+|--------|------------------|------------|-------|
+| 0x00   | Packet Type      | u8         | Suspension Height |
+| 0x01   | Interactable ID  | be u32     | |
+| 0x05   | Value            | be u16     | |
+
+#### Bearing Setting (Size=21) 0xfA
+| Offset | Field Name       | Field Type   | Notes |
+|--------|------------------|--------------|-------|
+| 0x00   | Packet Type      | u8           | Bearing Setting |
+| 0x01   | Unknown          | u8[14]       | |
+| 0x0f   | type             | u8 | Index of bearing change <br/><ul><li>0x01=LTurnSpeed</li><li>0x02=RTurnSpeed</li><li>0x03=RTurnANgle</li><li>0x04=LTurnAngle</li></ul>|
+| 0x11   | Value            | float        | |
+
+#### Bearing Setting (Size=18) 0xfA
+| Offset | Field Name       | Field Type   | Notes |
+|--------|------------------|--------------|-------|
+| 0x00   | Packet Type      | u8           | Bearing Setting |
+| 0x01   | Unknown          | u8[14]       | |
+| 0x0f   | type             | u8 | Index of bearing change ( 0x10=BearingLock )|
+| 0x11   | Value            | Boolean      | |
+
+[//]: # (Size veries between pressing buttons and entering seats,
+last byte for pressing is the state.)

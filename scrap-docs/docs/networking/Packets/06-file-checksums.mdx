@@ -1,0 +1,20 @@
+---
+title: 06 - File Checksums
+---
+
+# File Checksums
+
+Send the checksums of the files that the client has.
+
+- **ID**: 0x06
+- **Size**: variable
+- **LZ4 Compressed**: Yes
+- **State**: Joining
+- **Bound To**: Client -> Server
+
+## Structure
+
+| Offset | Field Name | Field Type  | Notes                          |
+|--------|------------|------------ |--------------------------------|
+| 0      | size       | uint32      | The size of the checksum array |
+| 4      | checksum   | uint32[size]| The checksum array             |
