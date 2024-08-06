@@ -77,3 +77,52 @@ main > .container > .row {
     }
   }
 }
+
+/* Navbar icons */
+.navbar-icon {
+  a {
+    display: flex;
+  }
+
+  svg {
+    transition: fill var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+  }
+
+  a:hover svg {
+    fill: var(--ifm-link-hover-color);
+  }
+}
+
+[data-theme='dark'] .navbar-icon {
+  svg {
+    fill: #fff;
+  }
+}
+
+/* Separator between the Discord icon and the theme switcher */
+@media screen and not (max-width: 996px) {
+  .navbar__items .toggle_node_modules-\@docusaurus-theme-classic-lib-theme-ColorModeToggle-styles-module {
+    width: unset;
+    padding-block: var(--ifm-navbar-item-padding-vertical);
+    padding-right: var(--ifm-navbar-item-padding-horizontal);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 0.5rem;
+  
+    &::before {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 1.5rem;
+      background-color: var(--ifm-color-gray-500);
+      margin-right: calc(var(--ifm-navbar-item-padding-horizontal) + 0.5rem - 4px);
+    }
+  }
+}
+
+/* Hide the GitHub and Discord icons from the mobile navigation sidebar */
+.navbar-sidebar .navbar-icon {
+  display: none;
+}
+
