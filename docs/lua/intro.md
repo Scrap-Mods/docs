@@ -6,6 +6,10 @@ sidebar_position: 1
 
 Lua documentation is in construction! 🚧
 
+For now, use these alternatives:
+- https://scrapmechanic.com/api/index.html
+- https://scrapmechanicdocs.com/docs/
+
 
 ## Lua code
 
