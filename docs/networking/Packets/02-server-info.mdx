@@ -16,21 +16,20 @@ This is sent by the client after being accepted by the server. It contains infor
 
 ### Server Info
 
-| Field Name | Field Type | Size | Notes |
-| --- | --- | --- | --- |
-| Version | u32 | 4 bytes | The protocol version |
-| Gamemode | [enum u32](#gamemode-enum) | 4 bytes | Definition  |
-| Seed | u32 | 4 bytes |  World seed  |
-| Gametick | u32 | 4 bytes |  Current game tick  |
-| Mod Count | u32 | 4 bytes |  Amount of enabled mods  |
-| Mod Data | [ModData[]](#moddata) | 24 x Mod Count bytes |    |
-| Unknown Length | u16 | 2 bytes |    |
-| Unknown Data | byte[] | Unknown Length bytes |    |
-| Script Key Count | u32 | 4 bytes |    |
-| Script Data | [GenericData[]](#genericdata) | 20 x Script Key Count bytes |    |
-| Generic Key Count | u32 | 4 bytes |    |
-| Generic Data | [GenericData[]](#genericdata) | 20 x Generic Key Count bytes |    |
-| Flags | [bitfield](#flags-bitfield) | 1 byte |  Developer mode  |
+| Field Name | Field Type | Notes |
+| --- | --- | --- |
+| Version           | be u32                                         | The game build number                                                |
+| Gamemode          | [enum be u32](#gamemode-enum)                  | Game mode identifier                                                 |
+| Seed              | be u32                                         | World seed                                                           |
+| Gametick          | be u32                                         | Current game tick                                                    |
+| Mod Count         | be u32                                         | Amount of enabled mods                                               |
+| Mod Data          | [ModData](#moddata)[Mod Count]                 | A list of enabled mods                                               |
+| Game Data         | [String](/docs/structures/Networking/string)   | This JSON string is parsed and stored in the game script `self.data` |
+| Script Key Count  | be u32                                         |                                                                      |
+| Script Data       | [GenericData](#genericdata)[Script Key Count]  |                                                                      |
+| Generic Key Count | be u32                                         |                                                                      |
+| Generic Data      | [GenericData](#genericdata)[Generic Key Count] |                                                                      |
+| Flags             | [bitfield](#flags-bitfield)                    | Developer mode                                                       |
 
 ### Gamemode enum
 
