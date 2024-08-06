@@ -26,3 +26,54 @@
   --ifm-color-primary-lighter: #48c8ff;
   --ifm-color-primary-lightest: #72d5ff;
 }
+
+/* Custom colors */
+[data-theme='light'] {
+  --ifm-color-primary: #0026ff;
+  --ifm-link-color: #4863ff;
+}
+
+/* Faster dropdown animation */
+.menu__list {
+  transition-duration: var(--ifm-transition-fast) !important;
+}
+
+/* Homepage */
+.hero {
+  background: rgb(0,159,255);
+  background: linear-gradient(150deg, rgba(0,159,255,1) 0%, rgba(115,0,255,1) 86%);
+}
+
+[data-theme='dark'] .hero__title,
+[data-theme='dark'] .hero__subtitle {
+  color: #fff;
+}
+
+/* Move the footer below the viewport, except on the homepage */
+html:not(.plugin-pages) .main-wrapper {
+  min-height: calc(100vh - var(--ifm-navbar-height));  
+}
+
+/* Footer */
+.footer__links {
+  text-align: center;
+}
+
+/* Move the navigation buttons to the bottom */
+main > .container > .row {
+  height: 100%;
+
+  & > div:first-child > div:has(article) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+  }
+
+  /* Hide the table of contents for the 1 frame it is visible on mobile */
+  @media screen and (max-width: 996px) {
+    & > .col:has(> div > .table-of-contents) {
+      display: none;
+    }
+  }
+}
