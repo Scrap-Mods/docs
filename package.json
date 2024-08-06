@@ -42,6 +42,11 @@
       "last 5 safari version"
     ]
   },
+  "resolutions": {
+    "@docusaurus/plugin-google-analytics": "link:./node_modules/.cache/null",
+    "@docusaurus/plugin-google-gtag": "link:./node_modules/.cache/null",
+    "@docusaurus/plugin-google-tag-manager": "link:./node_modules/.cache/null"
+  },
   "engines": {
     "node": ">=18.0"
   }
