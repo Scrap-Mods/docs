@@ -62,46 +62,42 @@ html:not(.plugin-pages) .main-wrapper {
 /* Move the navigation buttons to the bottom */
 main > .container > .row {
   height: 100%;
+}
 
-  & > div:first-child > div:has(article) {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: space-between;
-  }
+main > .container > .row > div:first-child > div:has(article) {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
 
-  /* Hide the table of contents for the 1 frame it is visible on mobile */
-  @media screen and (max-width: 996px) {
-    & > .col:has(> div > .table-of-contents) {
-      display: none;
-    }
+/* Hide the table of contents for the 1 frame it is visible on mobile */
+@media screen and (max-width: 996px) {
+  main > .container > .row > .col:has(> div > .table-of-contents) {
+    display: none;
   }
 }
 
 /* Navbar icons */
-.navbar-icon {
-  a {
-    display: flex;
-  }
-
-  svg {
-    transition: fill var(--ifm-transition-fast) var(--ifm-transition-timing-default);
-  }
-
-  a:hover svg {
-    fill: var(--ifm-link-hover-color);
-  }
+.navbar-icon a {
+  display: flex;
 }
 
-[data-theme='dark'] .navbar-icon {
-  svg {
-    fill: #fff;
-  }
+.navbar-icon svg {
+  transition: fill var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+}
+
+.navbar-icon a:hover svg {
+  fill: var(--ifm-link-hover-color);
+}
+
+[data-theme='dark'] .navbar-icon svg {
+  fill: #fff;
 }
 
 /* Separator between the Discord icon and the theme switcher */
 @media screen and not (max-width: 996px) {
-  .navbar__items .toggle_node_modules-\@docusaurus-theme-classic-lib-theme-ColorModeToggle-styles-module {
+  .navbar__items--right > *:nth-last-child(2) {
     width: unset;
     padding-block: var(--ifm-navbar-item-padding-vertical);
     padding-right: var(--ifm-navbar-item-padding-horizontal);
@@ -109,15 +105,15 @@ main > .container > .row {
     flex-direction: row;
     align-items: center;
     margin-left: 0.5rem;
+  }
   
-    &::before {
-      content: '';
-      display: block;
-      width: 1px;
-      height: 1.5rem;
-      background-color: var(--ifm-color-gray-500);
-      margin-right: calc(var(--ifm-navbar-item-padding-horizontal) + 0.5rem - 4px);
-    }
+  .navbar__items--right > *:nth-last-child(2)::before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 1.5rem;
+    background-color: var(--ifm-color-gray-500);
+    margin-right: calc(var(--ifm-navbar-item-padding-horizontal) + 0.5rem - 4px);
   }
 }
 

@@ -24,7 +24,7 @@ This is sent by the client after being accepted by the server. It contains infor
 | Gametick          | be u32                                         | Current game tick                                                    |
 | Mod Count         | be u32                                         | Amount of enabled mods                                               |
 | Mod Data          | [ModData](#moddata)[Mod Count]                 | A list of enabled mods                                               |
-| Game Data         | [String](/docs/structures/Networking/string)   | This JSON string is parsed and stored in the game script `self.data` |
+| Game Data         | [String](/docs/structures/networking/string)   | This JSON string is parsed and stored in the game script `self.data` |
 | Script Key Count  | be u32                                         |                                                                      |
 | Script Data       | [GenericData](#genericdata)[Script Key Count]  |                                                                      |
 | Generic Key Count | be u32                                         |                                                                      |

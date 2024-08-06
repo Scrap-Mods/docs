@@ -20,19 +20,19 @@ To be documented.
 
 | Field Name | Field Type | Notes |
 |------------|------------|-------|
-| Data       | [BlobData](/docs/structures/Networking/blobdata)[until EOS] | The generic data. This array is read until the end of the packet. |
+| Data       | [BlobData](/docs/structures/networking/blobdata)[until EOS] | The generic data. This array is read until the end of the packet. |
 
 ## BlobData Payloads
 
-In this subsection, known [BlobData](/docs/structures/Networking/blobdata) payloads are listed. This is not guaranteed to be an exhaustive list.
+In this subsection, known [BlobData](/docs/structures/networking/blobdata) payloads are listed. This is not guaranteed to be an exhaustive list.
 
 ### Chat Message
 
-This [BlobData](/docs/structures/Networking/blobdata) is sent when the player sends a chat message. The server does not verify any of the fields and broadcasts them to all players without modification.
+This [BlobData](/docs/structures/networking/blobdata) is sent when the player sends a chat message. The server does not verify any of the fields and broadcasts them to all players without modification.
 
 - **UID**: `46968863-090a-46b8-ad99-1159b53450fe`
 - **Key**: Always `0`, stored as `le u32`.
-- **World ID**: [No World](/docs/structures/Networking/blobdata#special-world-ids)
+- **World ID**: [No World](/docs/structures/networking/blobdata#special-world-ids)
 - **Flags**: 0
 
 #### Payload

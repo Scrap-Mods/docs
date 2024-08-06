@@ -2,6 +2,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
+
 const config: Config = {
   title: 'Scrap Docs',
   tagline: 'Documentation for Scrap Mechanic',
@@ -43,15 +44,38 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-           'https://pr.new/github.com/Scrap-Mods/docs/blob/main',
+          editUrl: 'https://pr.new/github.com/Scrap-Mods/docs/blob/main',
+
+          // Leave the packet ids in the URL
+          numberPrefixParser: false,
+
+          sidebarItemsGenerator: async function ({
+            defaultSidebarItemsGenerator,
+            ...args
+          }) {
+            const sidebarItems = await defaultSidebarItemsGenerator(args);
+            return sidebarItems.map((item) => {
+              if (item.type === 'category') {
+                // If the first character is lowercase, split on dashes and convert to PascalCase
+                const title = item.label;
+                const isLowercase = title[0] === title[0].toLowerCase();
+                const label = isLowercase ? title.split('-').map((part) => part[0].toUpperCase() + part.slice(1)).join(' ') : title;
+
+                return {
+                  ...item,
+                  label,
+                  collapsed: false,
+                };
+              }
+              return item;
+            });
+          },
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-           'https://pr.new/github.com/Scrap-Mods/docs/blob/main',
+          editUrl: 'https://pr.new/github.com/Scrap-Mods/docs/blob/main',
         },
         theme: {
           customCss: './src/css/custom.css',

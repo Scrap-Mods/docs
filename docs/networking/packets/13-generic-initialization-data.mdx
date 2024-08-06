@@ -21,15 +21,15 @@ This packet is sent by the server to the client while joining a game. It contain
 | Field Name | Field Type | Notes |
 |------------|------------|-------|
 | Game Tick  | be u32     | The tick when the server sent this packet. |
-| Data       | [BlobData](/docs/structures/Networking/blobdata)[until EOS] | The data the scripted classes are initialized with. This array is read until the end of the packet. |
+| Data       | [BlobData](/docs/structures/networking/blobdata)[until EOS] | The data the scripted classes are initialized with. This array is read until the end of the packet. |
 
 ## BlobData Payloads
 
-In this subsection, UIDs of known [BlobData](/docs/structures/Networking/blobdata) and their payloads are listed. This is not guaranteed to be an exhaustive list.
+In this subsection, UIDs of known [BlobData](/docs/structures/networking/blobdata) and their payloads are listed. This is not guaranteed to be an exhaustive list.
 
 ### World Info
 
-This [BlobData](/docs/structures/Networking/blobdata) contains information about the world the player is currently joining.
+This [BlobData](/docs/structures/networking/blobdata) contains information about the world the player is currently joining.
 
 - **UID**: `3ff36c8b-93f7-4428-ae4d-429a6f0cf77d`
 - **Key**: The ID of the world, stored as `le u32`
@@ -43,17 +43,17 @@ This structure contains all parameters passed to `sm.world.createWorld()` when t
 | Field Name   | Field Type | Notes |
 |--------------|------------|-------|
 | Seed         | be u32     | The seed of the world. |
-| Filename     | [String](/docs/structures/Networking/string) | The filename of the world. |
-| Classname    | [String](/docs/structures/Networking/string) | The classname of the world. |
-| Terrain Params | [String](/docs/structures/Networking/string) | A stringified JSON object containing the terrain parameters of the world. |
+| Filename     | [String](/docs/structures/networking/string) | The filename of the world. |
+| Classname    | [String](/docs/structures/networking/string) | The classname of the world. |
+| Terrain Params | [String](/docs/structures/networking/string) | A stringified JSON object containing the terrain parameters of the world. |
 
 ### Gameplay Options
 
-This [BlobData](/docs/structures/Networking/blobdata) contains the gameplay options of the world.
+This [BlobData](/docs/structures/networking/blobdata) contains the gameplay options of the world.
 
 - **UID**: `44ac020c-aec7-4f8b-b230-34d2e3bd23eb`
 - **Key**: `0`, stored as `le u32`
-- **World ID**: [No World](/docs/structures/Networking/blobdata#special-world-ids)
+- **World ID**: [No World](/docs/structures/networking/blobdata#special-world-ids)
 - **Flags**: 15 (0b1111)
 
 #### Payload
@@ -62,7 +62,7 @@ This structure stores the difficulty, multiplayer setting and the physics qualit
 
 | Field Name | Field Type | Notes |
 |------------|------------|-------|
-| Options    | [String](/docs/structures/Networking/string) | A stringified JSON object containing the gameplay options of the world. |
+| Options    | [String](/docs/structures/networking/string) | A stringified JSON object containing the gameplay options of the world. |
 
 #### Example
 
@@ -82,11 +82,11 @@ This structure stores the difficulty, multiplayer setting and the physics qualit
 
 ### Player Data
 
-This [BlobData](/docs/structures/Networking/blobdata) contains information about a player.
+This [BlobData](/docs/structures/networking/blobdata) contains information about a player.
 
 - **UID**: `51868883-d2d2-4953-9135-1ab0bdc2a47e`
 - **Key**: The ID of the player, stored as `le u32`
-- **World ID**: [No World](/docs/structures/Networking/blobdata#special-world-ids)
+- **World ID**: [No World](/docs/structures/networking/blobdata#special-world-ids)
 - **Flags**: 13 (0b1101)
 
 #### Payload

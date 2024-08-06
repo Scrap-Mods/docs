@@ -10,32 +10,33 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
+    title: 'Who are we?',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        We are a Scrap Mods, a group of modders who are dedicated to making
+        Scrap Mechanic a better game for everyone.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'Our mission',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        We aim to provide the best possible documentation for modding Scrap
+        Mechanic, as well as create our own mods to enhance the game.
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Join us!',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        If you want to help us out, or just hang out with us, feel free to join
+        our <a href="https://discord.gg/ahzyHPn3y2" target="_blank">Discord server</a> or check
+        out our <a href="https://github.com/Scrap-Mods/" target="_blank">GitHub repo</a>!
       </>
     ),
   },
