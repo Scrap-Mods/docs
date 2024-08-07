@@ -1,0 +1,17 @@
+---
+title: 21 - Initialization Network Update
+---
+
+# Initialization Network Update
+
+Sent during the joining phase to update the client with information about which `NetObj`s have been created. This packet is handled in exactly the same way as [22 - Network Update](./22-network-update.mdx).
+
+- **ID**: 0x15 (21)
+- **Size**: Variable
+- **LZ4 Compressed**: Yes
+- **State**: Joining
+- **Bound To**: Server -> Client
+
+## Structure
+
+See [22 - Network Update](./22-network-update.mdx).
