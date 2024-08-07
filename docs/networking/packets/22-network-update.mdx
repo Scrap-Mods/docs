@@ -1,0 +1,151 @@
+---
+title: 22 - Network Update
+---
+
+# Network Update
+
+This packet informs the client about which `NetObj`s have been created, updated, or removed. The server may compress sub-updates by comparing them to the previous update, and only sending the differences.
+
+- **ID**: 0x16 (22)
+- **Size**: Variable
+- **LZ4 Compressed**: Yes
+- **State**: Playing
+- **Bound To**: Server -> Client
+
+## Structure
+
+| Field Name  | Field Type   | Notes |
+|-------------|--------------|-------|
+| Tick        | be u32       | The tick at which the packet was sent. |
+| Sub Updates | [CompressedUpdate](#compressedupdate)[Until EOS] | The (compressed) sub-updates. |
+
+## The compression algorithm
+
+In short, the compressed data is a sequence of updates. Each update is either a raw update or a delta update. A [RawUpdate](#rawupdate) is a sequence of bytes that represents the full state of the update. A [DeltaUpdate](#deltaupdate) is a sequence of bytes that represents the differences between the previous update and the current update. The first 1-8 bytes of a delta update are a bitfield that indicates which bytes from the previous update should be kept. The remaining bytes are the new bytes that should be added to the previous update.
+
+The first bit of the first byte of an update indicates whether the update is a raw update or a delta. If the bit is 0, the update is a raw update. If the bit is 1, the update is a delta.
+
+### RawUpdate
+
+A RawUpdate is a sequence of bytes that represents the full state of the update.
+
+As the first bit of the first byte of an update indicates whether the update is a raw update or a delta, the first byte of a RawUpdate is always 0. This means that the size of the update is always between `0` and `0x7fff` bytes.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Size       | be u16     | The size of the update, including the size field. |
+| Data       | u8[Size-2] | The update data. |
+
+### DeltaUpdate
+
+A DeltaUpdate is a sequence of bytes that represents the differences between the previous update and the current update. The first bit of the first byte of a DeltaUpdate is always 1. The update, once reconstructed, is the same size as the previous update.
+
+The size is the previous update must be known to be able to reconstruct an update. This size can then be used to determine the size of the bitfield using the formula `(size + 8) >> 3`, where `size` is the size of the previous update, excluding the size field. The bitfield is always between `1` and `8` bytes in size.
+
+The bitfield is used to determine which bytes from the previous update should be kept. If a bit is set, the corresponding byte from the previous update should be kept. If a bit is not set, the next byte from the compressed data should be used. As the bitfield can be at most 8 bytes in size, and the first bit of the first byte of a DeltaUpdate is always 1, the size of the update is always between `0` and `0x3f` bytes.
+
+#### Reconstruction pseudo-code
+
+To reconstruct a DeltaUpdate, the previous uncompressed data and the compressed data stream are required. The following pseudo-code can be used to reconstruct a DeltaUpdate:
+
+```py
+# Requirements:
+#   `prevUncompressedData` | The data of the previous update, excluding the size field.
+#   `stream`               | The data stream containing the delta update.
+
+u16ObjSize = len(prevUncompressedData)
+assert u16ObjSize <= 0x3f
+
+uBitfieldSizeInBytes = (u16ObjSize + 8) >> 3
+assert uBitfieldSizeInBytes > 0 and uBitfieldSizeInBytes <= 8
+
+# Read the bitfield from the compressed data stream.
+bitfield = stream.read(uBitfieldSizeInBytes)
+
+# Create a copy of the previous uncompressed data
+reconstructedData = list(prevUncompressedData)
+
+# Iterate over the bitfield in reverse order.
+for (byteIndex, keep) in enumerate(reversed(bitfield)):
+    # Read at most `u16ObjSize` bytes from the compressed data stream.
+    if byteIndex >= u16ObjSize:
+        break
+
+    # If the bit is set, keep the corresponding byte from the previous uncompressed data.
+    # If the bit is not set, use the next byte from the compressed data and increment the index.
+    if not keep:
+        reconstructedData[byteIndex] = stream.read(1)
+
+# Consecutive DeltaUpdates are also relative to the previous DeltaUpdate, so the previous uncompressed data
+# must be updated with the reconstructed data.
+prevUncompressedData = reconstructedData
+
+return reconstructedData
+```
+
+#### Example
+
+Consider the following example:
+
+> The previous uncompressed data is `00 0a 64 00 00 00 01 00 00 00`.<br />
+> The compressed data is `80 ef 02`.
+> 
+> `u16ObjSize` = `len(64 00 00 00 01 00 00 00)` = `8`<br />
+> `uBitfieldSizeInBytes` = `(8 + 8) >> 3` = `2`<br />
+> `bitfield` = `80 ef` = `10000000 11101111`<br />
+>
+> 1. Keep 4 bytes from the previous uncompressed data, as we start from the right<br />
+>    `64 00 00 00`
+> 2. Read 1 byte from the compressed data stream.<br />
+>    `64 00 00 00 02`
+> 3. Keep 3 bytes from the previous uncompressed data.<br />
+>    `64 00 00 00 02 00 00 00`
+> 4. `u16ObjSize` bytes have been read, so stop.
+>
+> The reconstructed data (without the prefixed size) is `64 00 00 00 02 00 00 00`.<br />
+> Finally, the previous uncompressed data is updated to `00 0a 64 00 00 00 02 00 00 00`.
+
+## NetworkUpdate
+
+The data of a [RawUpdate](#rawupdate) or decompressed [DeltaUpdate](#deltaupdate) can be parsed as a `NetworkUpdate` structure.
+
+| Field Name      | Field Type | Notes |
+|-----------------|------------|-------|
+| Update Type     | enum [UpdateType](#updatetype-enum) : 3 bits | The type of the update. |
+| NetObj Type     | enum [NetObjType](#netobjtype-enum) : 5 bits | The type of the `NetObj` that the update is for. |
+| Controller Type | u8         | The controller type of the `NetObj`. **Only present for `Create` updates.** For all other updates, this field is not present, and the game does not read anything for this update type. |
+| NetObj ID       | be u32     | The ID of the `NetObj` that the update is for. |
+| Data            | ...        | The data of the update. The structure of this field depends on the `Update Type` and `NetObj Type`. |
+
+### UpdateType Enum
+
+This is an exhaustive list. Updates with values not listed in this table are printed as `ERR` in the console.
+
+| ID | Name   | Notes |
+|----|--------|-------|
+| 1  | Create |       |
+| 2  | P      | What `P` stands for is not yet known. It is sent when a creation that already contains a joint is updated. It can only be sent with a `Joint` NetObj type. |
+| 3  | Update |       |
+| 5  | Remove |       |
+
+### NetObjType Enum
+
+This is an exhaustive list.
+
+| ID | Name             |
+|----|------------------|
+| 0  | RigidBody        |
+| 1  | ChildShape       |
+| 2  | Joint            |
+| 3  | Controller       |
+| 4  | Container        |
+| 5  | Harvestable      |
+| 6  | Character        |
+| 7  | Lift             |
+| 8  | Tool             |
+| 9  | Portal           |
+| 10 | PathNode         |
+| 11 | Unit             |
+| 12 | VoxelTerrainCell |
+| 13 | ScriptableObject |
+| 14 | ShapeGroup       |
