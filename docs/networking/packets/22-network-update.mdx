@@ -132,20 +132,128 @@ This is an exhaustive list. Updates with values not listed in this table are pri
 
 This is an exhaustive list.
 
-| ID | Name             |
-|----|------------------|
-| 0  | RigidBody        |
-| 1  | ChildShape       |
-| 2  | Joint            |
-| 3  | Controller       |
-| 4  | Container        |
-| 5  | Harvestable      |
-| 6  | Character        |
-| 7  | Lift             |
-| 8  | Tool             |
-| 9  | Portal           |
-| 10 | PathNode         |
-| 11 | Unit             |
-| 12 | VoxelTerrainCell |
-| 13 | ScriptableObject |
-| 14 | ShapeGroup       |
+| ID | Name             | Create | P | Update | Remove |
+|----|------------------|--------|---|--------|--------|
+| 0  | RigidBody        | [CreateRigidBody](#createrigidbody)               | :x:               | [UpdateRigidBody](#updaterigidbody)               | [RemoveRigidBody](#removerigidbody)               |
+| 1  | ChildShape       | [CreateChildShape](#createchildshape)             | :x:               | [UpdateChildShape](#updatechildshape)             | [RemoveChildShape](#removechildshape)             |
+| 2  | Joint            | [CreateJoint](#createjoint)                       | [PJoint](#pjoint) | [UpdateJoint](#updatejoint)                       | [RemoveJoint](#removejoint)                       |
+| 3  | Controller       | [CreateController](#createcontroller)             | :x:               | [UpdateController](#updatecontroller)             | [RemoveController](#removecontroller)             |
+| 4  | Container        | [CreateContainer](#createcontainer)               | :x:               | [UpdateContainer](#updatecontainer)               | [RemoveContainer](#removecontainer)               |
+| 5  | Harvestable      | [CreateHarvestable](#createharvestable)           | :x:               | [UpdateHarvestable](#updateharvestable)           | [RemoveHarvestable](#removeharvestable)           |
+| 6  | Character        | [CreateCharacter](#createcharacter)               | :x:               | [UpdateCharacter](#updatecharacter)               | [RemoveCharacter](#removecharacter)               |
+| 7  | Lift             | [CreateLift](#createlift)                         | :x:               | [UpdateLift](#updatelift)                         | [RemoveLift](#removelift)                         |
+| 8  | Tool             | [CreateTool](#createtool)                         | :x:               | [UpdateTool](#updatetool)                         | [RemoveTool](#removetool)                         |
+| 9  | Portal           | [CreatePortal](#createportal)                     | :x:               | [UpdatePortal](#updateportal)                     | [RemovePortal](#removeportal)                     |
+| 10 | PathNode         | [CreatePathNode](#createpathnode)                 | :x:               | [UpdatePathNode](#updatepathnode)                 | [RemovePathNode](#removepathnode)                 |
+| 11 | Unit             | [CreateUnit](#createunit)                         | :x:               | [UpdateUnit](#updateunit)                         | [RemoveUnit](#removeunit)                         |
+| 12 | VoxelTerrainCell | [CreateVoxelTerrainCell](#createvoxelterraincell) | :x:               | [UpdateVoxelTerrainCell](#updatevoxelterraincell) | [RemoveVoxelTerrainCell](#removevoxelterraincell) |
+| 13 | ScriptableObject | [CreateScriptableObject](#createscriptableobject) | :x:               | [UpdateScriptableObject](#updatescriptableobject) | [RemoveScriptableObject](#removescriptableobject) |
+| 14 | ShapeGroup       | [CreateShapeGroup](#createshapegroup)             | :x:               | [UpdateShapeGroup](#updateshapegroup)             | [RemoveShapeGroup](#removeshapegroup)             |
+
+## Updates
+
+---
+
+### CreateRigidBody
+
+This update is sent when a `RigidBody` is created. This can occur when a new `RigidBody` is added to the world or when a `RigidBody` is loaded from a save file.
+
+There are two different structures for `CreateRigidBody` updates. The structure to use is determined by the `Controller Type` field.
+
+##### Controller Type 1 - Static
+
+This structure represents a static `RigidBody`. It is connected to the terrain and has a fixed position and rotation.
+
+| Field Name | Field Type            | Notes |
+|------------|-----------------------|-------|
+| World ID   | be u16                | The ID of the world that the `RigidBody` is in. |
+| Rotation   | [QuatWZYX](#quatwzyx) | The rotation of the `RigidBody`. |
+| Position   | [Vec3fXYZ](#vec3fxyz) | The position of the `RigidBody`. |
+
+##### Controller Type 2 - Dynamic
+
+This structure represents a dynamic `RigidBody`. It is affected by physics and can move.
+
+| Field Name | Field Type              | Notes |
+|------------|-------------------------|-------|
+| World ID   | be u16                  | The ID of the world that the `RigidBody` is in. |
+| Transform  | [Transform](#transform) | The transform of the `RigidBody`. |
+
+### UpdateRigidBody
+
+This update is sent when a `RigidBody` is updated. This can occur when a child shape or joint is added, removed, painted or anything else that affects the `RigidBody`.
+
+There are two different structures for `UpdateRigidBody` updates. The structure to use is determined by the `Controller Type` field. Because the `Controller Type` field is not present for `Update` updates, the parser must statefully keep track of the controller type for each `RigidBody`, or attempt to recover the controller type based on (the size of) the update data.
+
+##### Controller Type 1 - Static
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Unknown    | u8         | Unknown. Always `0`. |
+| Unknown 2  | be s32     | Unknown. Always `-1`. |
+
+##### Controller Type 2 - Dynamic
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Unknown    | u8         | Unknown. Always `0`. |
+| Revision   | u8         | The revision of the `RigidBody`. This value increases every time the `RigidBody` is updated by at least one. |
+
+### RemoveRigidBody
+
+This update is sent when a `RigidBody` is removed. This occurs when a `RigidBody` is deleted from the world. When a static `RigidBody` is converted to a dynamic `RigidBody`, the static `RigidBody` is removed and a dynamic `RigidBody` is created.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+---
+
+## Other structures
+
+Structure definitions that are used in updates.
+
+### Transform
+
+This structure represents a transform of a physical object in a world.
+
+| Field Name       | Field Type            | Notes |
+|------------------|-----------------------|-------|
+| Rotation         | [QuatXYZW](#quatxyzw) | The rotation of the object. |
+| Position         | [Vec3fXYZ](#vec3fxyz) | The position of the object. |
+| Velocity         | [Vec3fXYZ](#vec3fxyz) | The velocity of the object. |
+| Angular Velocity | [Vec3fXYZ](#vec3fxyz) | The angular velocity of the object. |
+
+### Vec3fXYZ
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| X          | be float   | The 32-bit, floating point, X coordinate. |
+| Y          | be float   | The 32-bit, floating point, Y coordinate. |
+| Z          | be float   | The 32-bit, floating point, Z coordinate. |
+
+### Vec3fZYX
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Z          | be float   | The 32-bit, floating point, Z coordinate. |
+| Y          | be float   | The 32-bit, floating point, Y coordinate. |
+| X          | be float   | The 32-bit, floating point, X coordinate. |
+
+### QuatXYZW
+
+| Offset | Field Name | Field Type | Notes |
+|--------|------------|------------|-------|
+| 0x00   | X          | be float   | The 32-bit, floating point, X coordinate. |
+| 0x04   | Y          | be float   | The 32-bit, floating point, Y coordinate. |
+| 0x08   | Z          | be float   | The 32-bit, floating point, Z coordinate. |
+| 0x0C   | W          | be float   | The 32-bit, floating point, real, W coordinate. |
+
+### QuatWZYX
+
+| Offset | Field Name | Field Type | Notes |
+|--------|------------|------------|-------|
+| 0x0C   | W          | be float   | The 32-bit, floating point, real, W coordinate. |
+| 0x08   | Z          | be float   | The 32-bit, floating point, Z coordinate. |
+| 0x04   | Y          | be float   | The 32-bit, floating point, Y coordinate. |
+| 0x00   | X          | be float   | The 32-bit, floating point, X coordinate. |
