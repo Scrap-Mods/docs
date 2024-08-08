@@ -1,0 +1,32 @@
+---
+title: Local Rotation
+---
+
+# Local Rotation
+
+Rotation in 3D space can be represented using two vectors. Local rotation is a way to represent the rotation of an object relative to its own axes. This is in contrast to global rotation, which is relative to the world axes.
+
+## Axis representation
+
+The game uses the X axis and the Z axis to represent the local rotation of an object. The Y axis is not used, as it is calculated from the X and Z axes.
+
+The index of the axis is represented by an integer value. The following table shows the mapping between the integer value and the axis:
+
+| Value | Vector (XYZ)   | Axis            |
+|-------|----------------|-----------------|
+| `-3`  | `( 0,  0, -1)` | Negative Z axis |
+| `-2`  | `( 0, -1,  0)` | Negative Y axis |
+| `-1`  | `(-1,  0,  0)` | Negative X axis |
+| ` 1`  | `( 1,  0,  0)` | Positive X axis |
+| ` 2`  | `( 0,  1,  0)` | Positive Y axis |
+| ` 3`  | `( 0,  0,  1)` | Positive Z axis |
+
+Any other value is invalid.
+
+Both blueprints and certain network packets use this representation to store the local rotation of an object.
+
+## Default rotation
+
+The default rotation of a shape has an X axis of `(1, 0, 0)` and a Z axis of `(0, 0, 1)`. This means that the X axis of the shape aligns with the X axis of its body, and the Z axis aligns with the Z axis of its body.
+
+Blocks always have the default rotation, while parts and joints can have any local rotation.

@@ -209,6 +209,99 @@ This update is sent when a `RigidBody` is removed. This occurs when a `RigidBody
 
 ---
 
+### CreateChildShape
+
+This update is sent when a `ChildShape` is created.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+The type of the child shape is determined by the `Controller Type` field.
+
+| Controller Type | Child Shape Type | Notes |
+|-----------------|------------------|-------|
+| 31              | Block            | The child shape is a block. |
+| 32              | Part             | The child shape is a part. Interactable parts and scripted parts are also of this type. |
+
+No other child shape types are known.
+
+### UpdateChildShape
+
+This update is sent when a `ChildShape` is updated. This occurs when the shape is painted. Changing the bounds of a block requires creating a new child shape.
+
+{/* 
+UpdateChildShape = Bytewise(Struct(
+    "uuid" / Int16ub,
+    "parent_body_id" / Int32ub,
+    "pos" / Struct(
+        "x" / Int16sb,
+        "y" / Int16sb,
+        "z" / Int16sb,
+    ),
+    "color" / Struct(
+        "a" / Hex(Byte),
+        "b" / Hex(Byte),
+        "g" / Hex(Byte),
+        "r" / Hex(Byte),
+    ),
+    "data" / Select(
+        # Blocks
+        Struct(
+            "bounds" / Struct(
+                "x" / Int16sb,
+                "y" / Int16sb,
+                "z" / Int16sb,
+            ),
+        ),
+        # Parts
+        Struct(
+            "axis" / Bitwise(Struct(
+                "z_axis" / AxisAdapter(BitsInteger(4)),
+                "x_axis" / AxisAdapter(BitsInteger(4)),
+            )),
+        ),
+    ),
+))
+*/}
+
+| Field Name     | Field Type                        | Notes |
+|----------------|-----------------------------------|-------|
+| Uuid           | be u16                            | The index of the UUID of the child shape in the [UUID Network Map](../concepts/uuid-network-map.mdx). |
+| Body ID        | be u32                            | The ID of the `RigidBody` that the child shape is attached to. |
+| Local Position | [Vec3i16XYZ](#vec3i16xyz)         | The position of the child shape, in coordinates local to the body. |
+| Color          | be u32                            | The color of the child shape. Stored as `0xAABBGGRR`. |
+| Data           | [ChildShapeData](#childshapedata) | The data of the child shape. This field is different for blocks and parts and is determined by the `Controller Type` field. |
+
+#### ChildShapeData
+
+There are two different structures for `ChildShapeData` updates. The structure to use is determined by the `Controller Type` field. Because the `Controller Type` field is not present for `Update` updates, the parser must statefully keep track of the controller type for each `ChildShape`, or attempt to recover the controller type based on (the size of) the update data.
+
+##### Controller Type 31 - Block
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Bounds     | [Vec3i16XYZ](#vec3i16xyz) | The bounds of the block. |
+
+##### Controller Type 32 - Part
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Z Axis     | 4 bits     | The Z axis of the part. |
+| X Axis     | 4 bits     | The X axis of the part. |
+
+To decode an axis, subtract `4` from its value to get a value that represents the axis. The axis values are described in the [Local Rotation](../concepts/local-rotation.mdx) concept.
+
+### RemoveChildShape
+
+This update is sent when a `ChildShape` is removed.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+---
+
 ### CreateJoint
 
 This update is sent when a `Joint` is created.
@@ -244,8 +337,8 @@ This update is sent when a `Joint` is placed, painted or a [PJoint](#pjoint) upd
 | Uuid       | be u16     | The index of the UUID of the join in the [UUID Network Map](../concepts/uuid-network-map.mdx). |
 | ID Shape A | be u32     | The ID of the child shape on side A of the joint. |
 | ID Shape B | be u32     | The ID of the child shape on side B of the joint. |
-| Pos A      | [Vec3iXYZ](#vec3ixyz) | The position of the face of the joint on side A, in coordinates local to the body. |
-| Pos B      | [Vec3iXYZ](#vec3ixyz) | The position of the face of the joint on side B, in coordinates local to the body. |
+| Pos A      | [Vec3i32XYZ](#vec3i32xyz) | The position of the face of the joint on side A, in coordinates local to the body. |
+| Pos B      | [Vec3i32XYZ](#vec3i32xyz) | The position of the face of the joint on side B, in coordinates local to the body. |
 | Axis       | [JointAxis](#jointaxis) | The axis of the joint. |
 | Color      | be u32     | The color of the joint. Stored as `0xAABBGGRR`. |
 
@@ -262,18 +355,7 @@ The orientations of the faces of the joint are represented by pairs of X and Z a
 | X Axis B   | 4 bits     | The X axis of side B. |
 | X Axis A   | 4 bits     | The X axis of side A. |
 
-To decode the axis, subtract `4` from the value to get a value that represents the axis. The axis values are as follows:
-
-| Value | Axis (XYZ)     |
-|-------|----------------|
-| `-3`  | `( 0,  0, -1)` |
-| `-2`  | `( 0, -1,  0)` |
-| `-1`  | `(-1,  0,  0)` |
-| ` 1`  | `( 1,  0,  0)` |
-| ` 2`  | `( 0,  1,  0)` |
-| ` 3`  | `( 0,  0,  1)` |
-
-Any other value is invalid.
+To decode an axis, subtract `4` from its value to get a value that represents the axis. The axis values are described in the [Local Rotation](../concepts/local-rotation.mdx) concept.
 
 ### RemoveJoint
 
@@ -366,7 +448,7 @@ This structure represents a transform of a physical object in a world.
 | Y          | be float   | The 32-bit, floating point, Y coordinate. |
 | X          | be float   | The 32-bit, floating point, X coordinate. |
 
-### Vec3iXYZ
+### Vec3i32XYZ
 
 | Field Name | Field Type | Notes |
 |------------|------------|-------|
