@@ -482,6 +482,35 @@ This update is sent when a `Character` is removed. This can occur when a player 
 
 ---
 
+### CreateLift
+
+This update is sent when a `Lift` is created. This can occur when a player places their lift, spawns a creation on the lift, or puts a creation on the lift.
+
+| Field Name  | Field Type | Notes |
+|-------------|------------|-------|
+| Steam ID 64 | be u64     | The Steam ID of the player that owns the lift. |
+| World ID    | be u16     | The ID of the world that the lift is in. |
+| Position    | [Vec3i32XYZ](#vec3i32xyz) | The position of the lift. This is in block units relative to the origin of the world, not in meters. |
+| Level       | be s32     | The level of the lift. This is the height of the lift in block units. A value of `0` means that the lift is not extended. |
+
+### UpdateLift
+
+This update is sent when a `Lift` is updated. This can occur when a player extends or retracts their lift.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Level      | be s32     | The level of the lift. This is the height of the lift in block units. A value of `0` means that the lift is not extended. |
+
+### RemoveLift
+
+This update is sent when a `Lift` is removed. This can occur when a player removes their lift, a creation is spawned on the lift, or a creation is put on the lift. In the last (two) case(s), the old lift is removed and a new lift is created.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+---
+
 ## Other structures
 
 Structure definitions that are used in updates.
