@@ -115,7 +115,7 @@ The data of a [RawUpdate](#rawupdate) or decompressed [DeltaUpdate](#deltaupdate
 | NetObj Type     | enum [NetObjType](#netobjtype-enum) : 5 bits | The type of the `NetObj` that the update is for. |
 | Controller Type | u8         | The controller type of the `NetObj`. **Only present for `Create` updates.** For all other updates, this field is not present, and the game does not read anything for this update type. |
 | NetObj ID       | be u32     | The ID of the `NetObj` that the update is for. |
-| Data            | ...        | The data of the update. The structure of this field depends on the `Update Type` and `NetObj Type`. |
+| Data            | ...        | The data of the update. The structure of this field depends on the `Update Type` and `NetObj Type`. See the [table of updates](#netobjtype-enum) for more information. |
 
 ### UpdateType Enum
 
@@ -202,6 +202,56 @@ There are two different structures for `UpdateRigidBody` updates. The structure 
 ### RemoveRigidBody
 
 This update is sent when a `RigidBody` is removed. This occurs when a `RigidBody` is deleted from the world. When a static `RigidBody` is converted to a dynamic `RigidBody`, the static `RigidBody` is removed and a dynamic `RigidBody` is created.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+---
+
+### CreateContainer
+
+This update is sent when a `Container` is created. When joining a world, the client receives a `CreateContainer` update for their inventory and carry container.
+
+| Field Name   | Field Type                            | Notes |
+|--------------|---------------------------------------|-------|
+| Size         | be u16                                | The amount of slots in the container. |
+| Stack Size   | be u16                                | The maximum stack size of the container. |
+| Items        | [ContainerItem](#containeritem)[Size] | The items in the container. |
+| Filter Count | be u16                                | The amount of filters in the container. |
+| Filters      | [Uuid](#uuid)[Filter Count]           | The filters of the container. |
+
+#### ContainerItem
+
+| Field Name       | Field Type | Notes |
+|------------------|------------|-------|
+| Uuid             | le u128    | The UUID of the item. Empty slots store the nil UUID `00000000-0000-0000-0000-000000000000`. |
+| Tool Instance ID | be u32     | The instance ID of the item. Always `0xFFFFFFFF` for items that are not tools or if the slot is empty. |
+| Quantity         | be u16     | The quantity of the item. Always `0` for empty slots. |
+
+### UpdateContainer
+
+| Field Name        | Field Type                           | Notes |
+|-------------------|--------------------------------------|-------|
+| Slot Change Count | be u16                               | The amount of slot changes. |
+| Slot Changes      | [SlotChange](#slotchange)[Slot Change Count] | The changes to the container slots. |
+| Has Filters       | bool : 1 bit                         | Whether or not the container has filters. |
+| Filter Count      | be u16                               | The amount of filters in the container. This field is only present if `Has Filters` is `True`. Note that this field is not aligned to a whole byte. |
+| Padding           | *Padding* : 7 bits                   | Padding to align the filters to a whole byte. This field is only present if `Has Filters` is `True`. |
+| Filter Uuids      | be u128[Filter Count]                | The UUIDs of the filters. This field is only present if `Has Filters` is `True`. The UUIDs are aligned to whole bytes. |
+
+#### SlotChange
+
+| Field Name       | Field Type | Notes |
+|------------------|------------|-------|
+| Uuid             | le u128    | The UUID of the item. Empty slots store the nil UUID `00000000-0000-0000-0000-000000000000`. |
+| Tool Instance ID | be u32     | The instance ID of the item. Always `0xFFFFFFFF` for items that are not tools or if the slot is empty. |
+| Quantity         | be u16     | The quantity of the item. Always `0` for empty slots. |
+| Slot             | be u16     | The slot index in the container. |
+
+### RemoveContainer
+
+This update is sent when a `Container` is removed, for example when a chest is destroyed.
 
 | Field Name | Field Type | Notes |
 |------------|------------|-------|
