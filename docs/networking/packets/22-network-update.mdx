@@ -417,6 +417,71 @@ This update is sent when a `Container` is removed, for example when a chest is d
 
 ---
 
+### CreateCharacter
+
+This update is sent when a `Character` is created. This can occur when a player joins the world or when a new character is created.
+
+| Field Name     | Field Type | Notes |
+|----------------|------------|-------|
+| Steam ID 64    | be u64     | The Steam ID of the player. |
+| Position       | [Vec3fZYX](#vec3fzyx) | The position of the character. |
+| World ID       | be u16     | The ID of the world that the character is in. |
+| Yaw            | be float   | The yaw of the character. |
+| Pitch          | be float   | The pitch of the character. |
+| Character Uuid | le u128    | The UUID of the character. Always `00000000-0000-0000-0000-000000000000` for players. |
+
+### UpdateCharacter
+
+This update is sent when a `Character` is updated. This can occur when a player selects a holds a different item, a character gets downed, a character gets painted, and in many other situations.
+
+This update does not contain the transform of the character. The transform is sent in the [24 - Unreliable Update](./24-unreliable-update.mdx#netobjtype-6---character) packet.
+
+| Field Name             | Field Type   | Notes |
+|------------------------|--------------|-------|
+| Update Movement States | bool : 1 bit | Whether or not the movement states of the character are updated. |
+| Update Color           | bool : 1 bit | Whether or not the color of the character is updated. |
+| Update Selected Item   | bool : 1 bit | Whether or not the selected item of the character is updated. |
+| Update Is Player       | bool : 1 bit | Whether or not the character is a player. |
+| Movement States        | [MovementStates](#movementstates) | The updated movement states of the character. This field is only present if `Update Movement States` is `True`. |
+| Color                  | be u32       | The color of the character. Stored as `0xRRGGBBAA`. This field is only present if `Update Color` is `True`. |
+| Selected Item          | [SelectedItem](#selecteditem) | The selected item of the character. This field is only present if `Update Selected Item` is `True`. |
+| Is Player              | [IsPlayer](#isplayer) | Whether or not the character is a player. This field is only present if `Update Is Player` is `True`. |
+
+#### MovementStates
+
+| Field Name  | Field Type   | Notes |
+|-------------|--------------|-------|
+| Is Downed   | bool : 1 bit | Whether or not the character is downed. |
+| Is Swimming | bool : 1 bit | Whether or not the character is swimming. |
+| Is Diving   | bool : 1 bit | Whether or not the character is diving. |
+| Unknown     | bool : 1 bit | Unknown. Possibly whether or not the character is aiming or a value from `Tool:setMovementSlowDown`. |
+| Is Climbing | bool : 1 bit | Whether or not the character is climbing. |
+| Is Tumbling | bool : 1 bit | Whether or not the character is tumbling. |
+
+#### SelectedItem
+
+| Field Name  | Field Type | Notes |
+|-------------|------------|-------|
+| Uuid        | le u128    | The UUID of the selected item. If the character does not have a selected item, this field is the nil UUID `00000000-0000-0000-0000-000000000000`. |
+| Instance ID | be u32     | The tool instance ID of the selected item. Always `0xFFFFFFFF` for items that are not tools or if the character does not have a selected item. |
+
+#### IsPlayer
+
+| Field Name        | Field Type   | Notes |
+|-------------------|--------------|-------|
+| Is Player         | bool : 1 bit | Whether or not the character is a player. |
+| Player or Unit ID | be u32       | The ID of the player or unit. If the character is a player, this field is the player ID. If the character is not a player, this field is the unit ID. |
+
+### RemoveCharacter
+
+This update is sent when a `Character` is removed. This can occur when a player leaves the world or when a unit dies or is removed.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+---
+
 ## Other structures
 
 Structure definitions that are used in updates.
