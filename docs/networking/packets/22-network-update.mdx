@@ -511,6 +511,32 @@ This update is sent when a `Lift` is removed. This can occur when a player remov
 
 ---
 
+### CreateTool
+
+This update is sent when a `Tool` is created. All tools that exist in the save file are sent to the client when they join the world. Dragging a tool from the unlimited inventory to the hotbar also creates a new tool.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Uuid       | le u128    | The UUID of the tool. |
+
+### UpdateTool
+
+This update is sent when a `Tool` is created or updated. It assigns a tool to a player.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Player ID  | be u32     | The ID of the player that the tool is assigned to. When the tool is put into a chest, this field is `0xFFFFFFFF`. |
+
+### RemoveTool
+
+This update is sent when a `Tool` is removed. This can occur when a player dragges a tool from the hotbar to the unlimited inventory.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+---
+
 ## Other structures
 
 Structure definitions that are used in updates.
