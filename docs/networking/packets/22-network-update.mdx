@@ -1,5 +1,5 @@
 ---
-title: 22 - Network Update
+title: 22 - Network Update - WIP
 ---
 
 # Network Update
@@ -137,18 +137,18 @@ This is an exhaustive list.
 | 0  | RigidBody        | [CreateRigidBody](#createrigidbody)               | :x:               | [UpdateRigidBody](#updaterigidbody)               | [RemoveRigidBody](#removerigidbody)               |
 | 1  | ChildShape       | [CreateChildShape](#createchildshape)             | :x:               | [UpdateChildShape](#updatechildshape)             | [RemoveChildShape](#removechildshape)             |
 | 2  | Joint            | [CreateJoint](#createjoint)                       | [PJoint](#pjoint) | [UpdateJoint](#updatejoint)                       | [RemoveJoint](#removejoint)                       |
-| 3  | Controller       | [CreateController](#createcontroller)             | :x:               | [UpdateController](#updatecontroller)             | [RemoveController](#removecontroller)             |
+| 3  | Controller       | CreateController                                  | :x:               | UpdateController                                  | RemoveController                                  |
 | 4  | Container        | [CreateContainer](#createcontainer)               | :x:               | [UpdateContainer](#updatecontainer)               | [RemoveContainer](#removecontainer)               |
-| 5  | Harvestable      | [CreateHarvestable](#createharvestable)           | :x:               | [UpdateHarvestable](#updateharvestable)           | [RemoveHarvestable](#removeharvestable)           |
+| 5  | Harvestable      | CreateHarvestable                                 | :x:               | UpdateHarvestable                                 | RemoveHarvestable                                 |
 | 6  | Character        | [CreateCharacter](#createcharacter)               | :x:               | [UpdateCharacter](#updatecharacter)               | [RemoveCharacter](#removecharacter)               |
 | 7  | Lift             | [CreateLift](#createlift)                         | :x:               | [UpdateLift](#updatelift)                         | [RemoveLift](#removelift)                         |
 | 8  | Tool             | [CreateTool](#createtool)                         | :x:               | [UpdateTool](#updatetool)                         | [RemoveTool](#removetool)                         |
-| 9  | Portal           | [CreatePortal](#createportal)                     | :x:               | [UpdatePortal](#updateportal)                     | [RemovePortal](#removeportal)                     |
-| 10 | PathNode         | [CreatePathNode](#createpathnode)                 | :x:               | [UpdatePathNode](#updatepathnode)                 | [RemovePathNode](#removepathnode)                 |
-| 11 | Unit             | [CreateUnit](#createunit)                         | :x:               | [UpdateUnit](#updateunit)                         | [RemoveUnit](#removeunit)                         |
-| 12 | VoxelTerrainCell | [CreateVoxelTerrainCell](#createvoxelterraincell) | :x:               | [UpdateVoxelTerrainCell](#updatevoxelterraincell) | [RemoveVoxelTerrainCell](#removevoxelterraincell) |
-| 13 | ScriptableObject | [CreateScriptableObject](#createscriptableobject) | :x:               | [UpdateScriptableObject](#updatescriptableobject) | [RemoveScriptableObject](#removescriptableobject) |
-| 14 | ShapeGroup       | [CreateShapeGroup](#createshapegroup)             | :x:               | [UpdateShapeGroup](#updateshapegroup)             | [RemoveShapeGroup](#removeshapegroup)             |
+| 9  | Portal           | CreatePortal                                      | :x:               | UpdatePortal                                      | RemovePortal                                      |
+| 10 | PathNode         | CreatePathNode                                    | :x:               | UpdatePathNode                                    | RemovePathNode                                    |
+| 11 | Unit             | CreateUnit                                        | :x:               | UpdateUnit                                        | RemoveUnit                                        |
+| 12 | VoxelTerrainCell | CreateVoxelTerrainCell                            | :x:               | UpdateVoxelTerrainCell                            | RemoveVoxelTerrainCell                            |
+| 13 | ScriptableObject | CreateScriptableObject                            | :x:               | UpdateScriptableObject                            | RemoveScriptableObject                            |
+| 14 | ShapeGroup       | CreateShapeGroup                                  | :x:               | UpdateShapeGroup                                  | RemoveShapeGroup                                  |
 
 ## Updates
 
@@ -229,41 +229,6 @@ No other child shape types are known.
 ### UpdateChildShape
 
 This update is sent when a `ChildShape` is updated. This occurs when the shape is painted. Changing the bounds of a block requires creating a new child shape.
-
-{/* 
-UpdateChildShape = Bytewise(Struct(
-    "uuid" / Int16ub,
-    "parent_body_id" / Int32ub,
-    "pos" / Struct(
-        "x" / Int16sb,
-        "y" / Int16sb,
-        "z" / Int16sb,
-    ),
-    "color" / Struct(
-        "a" / Hex(Byte),
-        "b" / Hex(Byte),
-        "g" / Hex(Byte),
-        "r" / Hex(Byte),
-    ),
-    "data" / Select(
-        # Blocks
-        Struct(
-            "bounds" / Struct(
-                "x" / Int16sb,
-                "y" / Int16sb,
-                "z" / Int16sb,
-            ),
-        ),
-        # Parts
-        Struct(
-            "axis" / Bitwise(Struct(
-                "z_axis" / AxisAdapter(BitsInteger(4)),
-                "x_axis" / AxisAdapter(BitsInteger(4)),
-            )),
-        ),
-    ),
-))
-*/}
 
 | Field Name     | Field Type                        | Notes |
 |----------------|-----------------------------------|-------|
@@ -432,7 +397,7 @@ This update is sent when a `Character` is created. This can occur when a player 
 
 ### UpdateCharacter
 
-This update is sent when a `Character` is updated. This can occur when a player selects a holds a different item, a character gets downed, a character gets painted, and in many other situations.
+This update is sent when a `Character` is updated. This can occur when a player selects a holds a different item, a character gets downed, a character gets painted, and in many other situations. When a character is created, this update is sent with all four update flags set to `True`.
 
 This update does not contain the transform of the character. The transform is sent in the [24 - Unreliable Update](./24-unreliable-update.mdx#netobjtype-6---character) packet.
 
