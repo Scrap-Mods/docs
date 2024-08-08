@@ -209,6 +209,82 @@ This update is sent when a `RigidBody` is removed. This occurs when a `RigidBody
 
 ---
 
+### CreateJoint
+
+This update is sent when a `Joint` is created.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+The type of the joint is determined by the `Controller Type` field.
+
+| Controller Type | Joint Type                |
+|-----------------|---------------------------|
+| 2               | Bearing                   |
+| 3               | Spring                    |
+| 4               | SurvivalSpring            |
+| 28              | Piston and SurvivalPiston |
+| 41              | GenericRotational         |
+
+### PJoint
+
+This update is sent for every `Joint` attached to a `RigidBody` when the `RigidBody` is revised, or when the joint is painted. It is not sent when the first joint of a creation is placed. Bodies on both the `A` and `B` side of the joint are able to trigger this update. The reason for this update is not yet known.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+### UpdateJoint
+
+This update is sent when a `Joint` is placed, painted or a [PJoint](#pjoint) update is triggered.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Uuid       | be u16     | The index of the UUID of the join in the [UUID Network Map](../concepts/uuid-network-map.mdx). |
+| ID Shape A | be u32     | The ID of the child shape on side A of the joint. |
+| ID Shape B | be u32     | The ID of the child shape on side B of the joint. |
+| Pos A      | [Vec3iXYZ](#vec3ixyz) | The position of the face of the joint on side A, in coordinates local to the body. |
+| Pos B      | [Vec3iXYZ](#vec3ixyz) | The position of the face of the joint on side B, in coordinates local to the body. |
+| Axis       | [JointAxis](#jointaxis) | The axis of the joint. |
+| Color      | be u32     | The color of the joint. Stored as `0xAABBGGRR`. |
+
+For bearings, `Pos A` and `Pos B` are the same, as both faces are at the same position. For pistons, `Pos A` and `Pos B` differ by one unit, as the faces are one unit apart.
+
+#### JointAxis
+
+The orientations of the faces of the joint are represented by pairs of X and Z axes, in coordinates local to the body.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Z Axis B   | 4 bits     | The Z axis of side B. |
+| Z Axis A   | 4 bits     | The Z axis of side A. |
+| X Axis B   | 4 bits     | The X axis of side B. |
+| X Axis A   | 4 bits     | The X axis of side A. |
+
+To decode the axis, subtract `4` from the value to get a value that represents the axis. The axis values are as follows:
+
+| Value | Axis (XYZ)     |
+|-------|----------------|
+| `-3`  | `( 0,  0, -1)` |
+| `-2`  | `( 0, -1,  0)` |
+| `-1`  | `(-1,  0,  0)` |
+| ` 1`  | `( 1,  0,  0)` |
+| ` 2`  | `( 0,  1,  0)` |
+| ` 3`  | `( 0,  0,  1)` |
+
+Any other value is invalid.
+
+### RemoveJoint
+
+This update is sent when a `Joint` is removed.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+---
+
 ### CreateContainer
 
 This update is sent when a `Container` is created. When joining a world, the client receives a `CreateContainer` update for their inventory and carry container.
@@ -289,6 +365,14 @@ This structure represents a transform of a physical object in a world.
 | Z          | be float   | The 32-bit, floating point, Z coordinate. |
 | Y          | be float   | The 32-bit, floating point, Y coordinate. |
 | X          | be float   | The 32-bit, floating point, X coordinate. |
+
+### Vec3iXYZ
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| X          | be s32     | The signed 32-bit integer X coordinate. |
+| Y          | be s32     | The signed 32-bit integer Y coordinate. |
+| Z          | be s32     | The signed 32-bit integer Z coordinate. |
 
 ### QuatXYZW
 

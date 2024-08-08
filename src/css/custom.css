@@ -122,3 +122,7 @@ main > .container > .row > div:first-child > div:has(article) {
   display: none;
 }
 
+/* Preserve multiple consecutive spaces in `inline code blocks` */
+code {
+  white-space: break-spaces;
+}
