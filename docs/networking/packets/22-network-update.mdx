@@ -1,0 +1,568 @@
+---
+title: 22 - Network Update - WIP
+---
+
+# Network Update
+
+This packet informs the client about which `NetObj`s have been created, updated, or removed. The server may compress sub-updates by comparing them to the previous update, and only sending the differences.
+
+- **ID**: 0x16 (22)
+- **Size**: Variable
+- **LZ4 Compressed**: Yes
+- **State**: Playing
+- **Bound To**: Server -> Client
+
+## Structure
+
+| Field Name  | Field Type   | Notes |
+|-------------|--------------|-------|
+| Tick        | be u32       | The tick at which the packet was sent. |
+| Sub Updates | ([RawUpdate](#rawupdate) \| [DeltaUpdate](#deltaupdate))[Until <abbr title="End of Stream">EOS</abbr>] | The (compressed) sub-updates. |
+
+## The compression algorithm
+
+In short, the compressed data is a sequence of updates. Each update is either a raw update or a delta update. A [RawUpdate](#rawupdate) is a sequence of bytes that represents the full state of the update. A [DeltaUpdate](#deltaupdate) is a sequence of bytes that represents the differences between the previous update and the current update. The first 1-8 bytes of a delta update are a bitfield that indicates which bytes from the previous update should be kept. The remaining bytes are the new bytes that should be added to the previous update.
+
+The first bit of the first byte of an update indicates whether the update is a raw update or a delta. If the bit is 0, the update is a raw update. If the bit is 1, the update is a delta.
+
+### RawUpdate
+
+A RawUpdate is a sequence of bytes that represents the full state of the update.
+
+As the first bit of the first byte of an update indicates whether the update is a raw update or a delta, the first byte of a RawUpdate is always 0. This means that the size of the update is always between `0` and `0x7fff` bytes.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Size       | be u16     | The size of the update, including the size field. |
+| Data       | u8[Size-2] | The update data. |
+
+### DeltaUpdate
+
+A DeltaUpdate is a sequence of bytes that represents the differences between the previous update and the current update. The first bit of the first byte of a DeltaUpdate is always 1. The update, once reconstructed, is the same size as the previous update.
+
+The size is the previous update must be known to be able to reconstruct an update. This size can then be used to determine the size of the bitfield using the formula `(size + 8) >> 3`, where `size` is the size of the previous update, excluding the size field. The bitfield is always between `1` and `8` bytes in size.
+
+The bitfield is used to determine which bytes from the previous update should be kept. If a bit is set, the corresponding byte from the previous update should be kept. If a bit is not set, the next byte from the compressed data should be used. As the bitfield can be at most 8 bytes in size, and the first bit of the first byte of a DeltaUpdate is always 1, the size of the update is always between `0` and `0x3f` bytes.
+
+#### Reconstruction pseudo-code
+
+To reconstruct a DeltaUpdate, the previous uncompressed data and the compressed data stream are required. The following pseudo-code can be used to reconstruct a DeltaUpdate:
+
+```py
+# Requirements:
+#   `prevUncompressedData` | The data of the previous update, excluding the size field.
+#   `stream`               | The data stream containing the delta update.
+
+u16ObjSize = len(prevUncompressedData)
+assert u16ObjSize <= 0x3f
+
+uBitfieldSizeInBytes = (u16ObjSize + 8) >> 3
+assert uBitfieldSizeInBytes > 0 and uBitfieldSizeInBytes <= 8
+
+# Read the bitfield from the compressed data stream.
+bitfield = stream.read(uBitfieldSizeInBytes)
+
+# Create a copy of the previous uncompressed data
+reconstructedData = list(prevUncompressedData)
+
+# Iterate over the bitfield in reverse order.
+for (byteIndex, keep) in enumerate(reversed(bitfield)):
+    # Read at most `u16ObjSize` bytes from the compressed data stream.
+    if byteIndex >= u16ObjSize:
+        break
+
+    # If the bit is set, keep the corresponding byte from the previous uncompressed data.
+    # If the bit is not set, use the next byte from the compressed data and increment the index.
+    if not keep:
+        reconstructedData[byteIndex] = stream.read(1)
+
+# Consecutive DeltaUpdates are also relative to the previous DeltaUpdate, so the previous uncompressed data
+# must be updated with the reconstructed data.
+prevUncompressedData = reconstructedData
+
+return reconstructedData
+```
+
+#### Example
+
+Consider the following example:
+
+> The previous uncompressed data is `00 0a 64 00 00 00 01 00 00 00`.<br />
+> The compressed data is `80 ef 02`.
+> 
+> `u16ObjSize` = `len(64 00 00 00 01 00 00 00)` = `8`<br />
+> `uBitfieldSizeInBytes` = `(8 + 8) >> 3` = `2`<br />
+> `bitfield` = `80 ef` = `10000000 11101111`<br />
+>
+> 1. Keep 4 bytes from the previous uncompressed data, as we start from the right<br />
+>    `64 00 00 00`
+> 2. Read 1 byte from the compressed data stream.<br />
+>    `64 00 00 00 02`
+> 3. Keep 3 bytes from the previous uncompressed data.<br />
+>    `64 00 00 00 02 00 00 00`
+> 4. `u16ObjSize` bytes have been read, so stop.
+>
+> The reconstructed data (without the prefixed size) is `64 00 00 00 02 00 00 00`.<br />
+> Finally, the previous uncompressed data is updated to `00 0a 64 00 00 00 02 00 00 00`.
+
+## NetworkUpdate
+
+The data of a [RawUpdate](#rawupdate) or decompressed [DeltaUpdate](#deltaupdate) can be parsed as a `NetworkUpdate` structure.
+
+| Field Name      | Field Type | Notes |
+|-----------------|------------|-------|
+| Update Type     | enum [UpdateType](#updatetype-enum) : 3 bits | The type of the update. |
+| NetObj Type     | enum [NetObjType](#netobjtype-enum) : 5 bits | The type of the `NetObj` that the update is for. |
+| Controller Type | u8         | The controller type of the `NetObj`. **Only present for `Create` updates.** For all other updates, this field is not present, and the game does not read anything for this update type. |
+| NetObj ID       | be u32     | The ID of the `NetObj` that the update is for. |
+| Data            | ...        | The data of the update. The structure of this field depends on the `Update Type` and `NetObj Type`. See the [table of updates](#netobjtype-enum) for more information. |
+
+### UpdateType Enum
+
+This is an exhaustive list. Updates with values not listed in this table are printed as `ERR` in the console.
+
+| ID | Name   | Notes |
+|----|--------|-------|
+| 1  | Create |       |
+| 2  | P      | What `P` stands for is not yet known. It is sent when a creation that already contains a joint is updated. It can only be sent with a `Joint` NetObj type. |
+| 3  | Update |       |
+| 5  | Remove |       |
+
+### NetObjType Enum
+
+This is an exhaustive list.
+
+| ID | Name             | Create | P | Update | Remove |
+|----|------------------|--------|---|--------|--------|
+| 0  | RigidBody        | [CreateRigidBody](#createrigidbody)               | :x:               | [UpdateRigidBody](#updaterigidbody)               | [RemoveRigidBody](#removerigidbody)               |
+| 1  | ChildShape       | [CreateChildShape](#createchildshape)             | :x:               | [UpdateChildShape](#updatechildshape)             | [RemoveChildShape](#removechildshape)             |
+| 2  | Joint            | [CreateJoint](#createjoint)                       | [PJoint](#pjoint) | [UpdateJoint](#updatejoint)                       | [RemoveJoint](#removejoint)                       |
+| 3  | Controller       | CreateController                                  | :x:               | UpdateController                                  | RemoveController                                  |
+| 4  | Container        | [CreateContainer](#createcontainer)               | :x:               | [UpdateContainer](#updatecontainer)               | [RemoveContainer](#removecontainer)               |
+| 5  | Harvestable      | CreateHarvestable                                 | :x:               | UpdateHarvestable                                 | RemoveHarvestable                                 |
+| 6  | Character        | [CreateCharacter](#createcharacter)               | :x:               | [UpdateCharacter](#updatecharacter)               | [RemoveCharacter](#removecharacter)               |
+| 7  | Lift             | [CreateLift](#createlift)                         | :x:               | [UpdateLift](#updatelift)                         | [RemoveLift](#removelift)                         |
+| 8  | Tool             | [CreateTool](#createtool)                         | :x:               | [UpdateTool](#updatetool)                         | [RemoveTool](#removetool)                         |
+| 9  | Portal           | CreatePortal                                      | :x:               | UpdatePortal                                      | RemovePortal                                      |
+| 10 | PathNode         | CreatePathNode                                    | :x:               | UpdatePathNode                                    | RemovePathNode                                    |
+| 11 | Unit             | CreateUnit                                        | :x:               | UpdateUnit                                        | RemoveUnit                                        |
+| 12 | VoxelTerrainCell | CreateVoxelTerrainCell                            | :x:               | UpdateVoxelTerrainCell                            | RemoveVoxelTerrainCell                            |
+| 13 | ScriptableObject | CreateScriptableObject                            | :x:               | UpdateScriptableObject                            | RemoveScriptableObject                            |
+| 14 | ShapeGroup       | CreateShapeGroup                                  | :x:               | UpdateShapeGroup                                  | RemoveShapeGroup                                  |
+
+## Updates
+
+---
+
+### CreateRigidBody
+
+This update is sent when a `RigidBody` is created. This can occur when a new `RigidBody` is added to the world or when a `RigidBody` is loaded from a save file.
+
+There are two different structures for `CreateRigidBody` updates. The structure to use is determined by the `Controller Type` field.
+
+##### Controller Type 1 - Static
+
+This structure represents a static `RigidBody`. It is connected to the terrain and has a fixed position and rotation.
+
+| Field Name | Field Type            | Notes |
+|------------|-----------------------|-------|
+| World ID   | be u16                | The ID of the world that the `RigidBody` is in. |
+| Rotation   | [QuatWZYX](#quatwzyx) | The rotation of the `RigidBody`. |
+| Position   | [Vec3fXYZ](#vec3fxyz) | The position of the `RigidBody`. |
+
+##### Controller Type 2 - Dynamic
+
+This structure represents a dynamic `RigidBody`. It is affected by physics and can move.
+
+| Field Name | Field Type              | Notes |
+|------------|-------------------------|-------|
+| World ID   | be u16                  | The ID of the world that the `RigidBody` is in. |
+| Transform  | [Transform](#transform) | The transform of the `RigidBody`. |
+
+### UpdateRigidBody
+
+This update is sent when a `RigidBody` is updated. This can occur when a child shape or joint is added, removed, painted or anything else that affects the `RigidBody`.
+
+There are two different structures for `UpdateRigidBody` updates. The structure to use is determined by the `Controller Type` field. Because the `Controller Type` field is not present for `Update` updates, the parser must statefully keep track of the controller type for each `RigidBody`, or attempt to recover the controller type based on (the size of) the update data.
+
+##### Controller Type 1 - Static
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Unknown    | u8         | Unknown. Always `0`. |
+| Unknown 2  | be s32     | Unknown. Always `-1`. |
+
+##### Controller Type 2 - Dynamic
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Unknown    | u8         | Unknown. Always `0`. |
+| Revision   | u8         | The revision of the `RigidBody`. This value increases every time the `RigidBody` is updated by at least one. |
+
+### RemoveRigidBody
+
+This update is sent when a `RigidBody` is removed. This occurs when a `RigidBody` is deleted from the world. When a static `RigidBody` is converted to a dynamic `RigidBody`, the static `RigidBody` is removed and a dynamic `RigidBody` is created.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+---
+
+### CreateChildShape
+
+This update is sent when a `ChildShape` is created.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+The type of the child shape is determined by the `Controller Type` field.
+
+| Controller Type | Child Shape Type | Notes |
+|-----------------|------------------|-------|
+| 31              | Block            | The child shape is a block. |
+| 32              | Part             | The child shape is a part. Interactable parts and scripted parts are also of this type. |
+
+No other child shape types are known.
+
+### UpdateChildShape
+
+This update is sent when a `ChildShape` is updated. This occurs when the shape is painted. Changing the bounds of a block requires creating a new child shape.
+
+| Field Name     | Field Type                        | Notes |
+|----------------|-----------------------------------|-------|
+| Uuid           | be u16                            | The index of the UUID of the child shape in the [UUID Network Map](../concepts/uuid-network-map.mdx). |
+| Body ID        | be u32                            | The ID of the `RigidBody` that the child shape is attached to. |
+| Local Position | [Vec3i16XYZ](#vec3i16xyz)         | The position of the child shape, in coordinates local to the body. |
+| Color          | be u32                            | The color of the child shape. Stored as `0xAABBGGRR`. |
+| Data           | [ChildShapeData](#childshapedata) | The data of the child shape. This field is different for blocks and parts and is determined by the `Controller Type` field. |
+
+#### ChildShapeData
+
+There are two different structures for `ChildShapeData` updates. The structure to use is determined by the `Controller Type` field. Because the `Controller Type` field is not present for `Update` updates, the parser must statefully keep track of the controller type for each `ChildShape`, or attempt to recover the controller type based on (the size of) the update data.
+
+##### Controller Type 31 - Block
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Bounds     | [Vec3i16XYZ](#vec3i16xyz) | The bounds of the block. |
+
+##### Controller Type 32 - Part
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Z Axis     | 4 bits     | The Z axis of the part. |
+| X Axis     | 4 bits     | The X axis of the part. |
+
+To decode an axis, subtract `4` from its value to get a value that represents the axis. The axis values are described in the [Local Rotation](../concepts/local-rotation.mdx) concept.
+
+### RemoveChildShape
+
+This update is sent when a `ChildShape` is removed.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+---
+
+### CreateJoint
+
+This update is sent when a `Joint` is created.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+The type of the joint is determined by the `Controller Type` field.
+
+| Controller Type | Joint Type                |
+|-----------------|---------------------------|
+| 2               | Bearing                   |
+| 3               | Spring                    |
+| 4               | SurvivalSpring            |
+| 28              | Piston and SurvivalPiston |
+| 41              | GenericRotational         |
+
+### PJoint
+
+This update is sent for every `Joint` attached to a `RigidBody` when the `RigidBody` is revised, or when the joint is painted. It is not sent when the first joint of a creation is placed. Bodies on both the `A` and `B` side of the joint are able to trigger this update. The reason for this update is not yet known.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+### UpdateJoint
+
+This update is sent when a `Joint` is placed, painted or a [PJoint](#pjoint) update is triggered.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Uuid       | be u16     | The index of the UUID of the join in the [UUID Network Map](../concepts/uuid-network-map.mdx). |
+| ID Shape A | be u32     | The ID of the child shape on side A of the joint. |
+| ID Shape B | be u32     | The ID of the child shape on side B of the joint. |
+| Pos A      | [Vec3i32XYZ](#vec3i32xyz) | The position of the face of the joint on side A, in coordinates local to the body. |
+| Pos B      | [Vec3i32XYZ](#vec3i32xyz) | The position of the face of the joint on side B, in coordinates local to the body. |
+| Axis       | [JointAxis](#jointaxis) | The axis of the joint. |
+| Color      | be u32     | The color of the joint. Stored as `0xAABBGGRR`. |
+
+For bearings, `Pos A` and `Pos B` are the same, as both faces are at the same position. For pistons, `Pos A` and `Pos B` differ by one unit, as the faces are one unit apart.
+
+#### JointAxis
+
+The orientations of the faces of the joint are represented by pairs of X and Z axes, in coordinates local to the body.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Z Axis B   | 4 bits     | The Z axis of side B. |
+| Z Axis A   | 4 bits     | The Z axis of side A. |
+| X Axis B   | 4 bits     | The X axis of side B. |
+| X Axis A   | 4 bits     | The X axis of side A. |
+
+To decode an axis, subtract `4` from its value to get a value that represents the axis. The axis values are described in the [Local Rotation](../concepts/local-rotation.mdx) concept.
+
+### RemoveJoint
+
+This update is sent when a `Joint` is removed.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+---
+
+### CreateContainer
+
+This update is sent when a `Container` is created. When joining a world, the client receives a `CreateContainer` update for their inventory and carry container.
+
+| Field Name   | Field Type                            | Notes |
+|--------------|---------------------------------------|-------|
+| Size         | be u16                                | The amount of slots in the container. |
+| Stack Size   | be u16                                | The maximum stack size of the container. |
+| Items        | [ContainerItem](#containeritem)[Size] | The items in the container. |
+| Filter Count | be u16                                | The amount of filters in the container. |
+| Filters      | be u128[Filter Count]                 | The filters of the container. |
+
+#### ContainerItem
+
+| Field Name       | Field Type | Notes |
+|------------------|------------|-------|
+| Uuid             | le u128    | The UUID of the item. Empty slots store the nil UUID `00000000-0000-0000-0000-000000000000`. |
+| Tool Instance ID | be u32     | The instance ID of the item. Always `0xFFFFFFFF` for items that are not tools or if the slot is empty. |
+| Quantity         | be u16     | The quantity of the item. Always `0` for empty slots. |
+
+### UpdateContainer
+
+| Field Name        | Field Type                           | Notes |
+|-------------------|--------------------------------------|-------|
+| Slot Change Count | be u16                               | The amount of slot changes. |
+| Slot Changes      | [SlotChange](#slotchange)[Slot Change Count] | The changes to the container slots. |
+| Has Filters       | bool : 1 bit                         | Whether or not the container has filters. |
+| Filter Count      | be u16                               | The amount of filters in the container. This field is only present if `Has Filters` is `True`. Note that this field is not aligned to a whole byte. |
+| Padding           | *Padding* : 7 bits                   | Padding to align the filters to a whole byte. This field is only present if `Has Filters` is `True`. |
+| Filter Uuids      | be u128[Filter Count]                | The UUIDs of the filters. This field is only present if `Has Filters` is `True`. The UUIDs are aligned to whole bytes. |
+
+#### SlotChange
+
+| Field Name       | Field Type | Notes |
+|------------------|------------|-------|
+| Uuid             | le u128    | The UUID of the item. Empty slots store the nil UUID `00000000-0000-0000-0000-000000000000`. |
+| Tool Instance ID | be u32     | The instance ID of the item. Always `0xFFFFFFFF` for items that are not tools or if the slot is empty. |
+| Quantity         | be u16     | The quantity of the item. Always `0` for empty slots. |
+| Slot             | be u16     | The slot index in the container. |
+
+### RemoveContainer
+
+This update is sent when a `Container` is removed, for example when a chest is destroyed.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+---
+
+### CreateCharacter
+
+This update is sent when a `Character` is created. This can occur when a player joins the world or when a new character is created.
+
+| Field Name     | Field Type | Notes |
+|----------------|------------|-------|
+| Steam ID 64    | be u64     | The Steam ID of the player. |
+| Position       | [Vec3fZYX](#vec3fzyx) | The position of the character. |
+| World ID       | be u16     | The ID of the world that the character is in. |
+| Yaw            | be float   | The yaw of the character. |
+| Pitch          | be float   | The pitch of the character. |
+| Character Uuid | le u128    | The UUID of the character. Always `00000000-0000-0000-0000-000000000000` for players. |
+
+### UpdateCharacter
+
+This update is sent when a `Character` is updated. This can occur when a player selects a holds a different item, a character gets downed, a character gets painted, and in many other situations. When a character is created, this update is sent with all four update flags set to `True`.
+
+This update does not contain the transform of the character. The transform is sent in the [24 - Unreliable Update](./24-unreliable-update.mdx#netobjtype-6---character) packet.
+
+| Field Name             | Field Type   | Notes |
+|------------------------|--------------|-------|
+| Update Movement States | bool : 1 bit | Whether or not the movement states of the character are updated. |
+| Update Color           | bool : 1 bit | Whether or not the color of the character is updated. |
+| Update Selected Item   | bool : 1 bit | Whether or not the selected item of the character is updated. |
+| Update Is Player       | bool : 1 bit | Whether or not the character is a player. |
+| Movement States        | [MovementStates](#movementstates) | The updated movement states of the character. This field is only present if `Update Movement States` is `True`. |
+| Color                  | be u32       | The color of the character. Stored as `0xRRGGBBAA`. This field is only present if `Update Color` is `True`. |
+| Selected Item          | [SelectedItem](#selecteditem) | The selected item of the character. This field is only present if `Update Selected Item` is `True`. |
+| Is Player              | [IsPlayer](#isplayer) | Whether or not the character is a player. This field is only present if `Update Is Player` is `True`. |
+
+#### MovementStates
+
+| Field Name  | Field Type   | Notes |
+|-------------|--------------|-------|
+| Is Downed   | bool : 1 bit | Whether or not the character is downed. |
+| Is Swimming | bool : 1 bit | Whether or not the character is swimming. |
+| Is Diving   | bool : 1 bit | Whether or not the character is diving. |
+| Unknown     | bool : 1 bit | Unknown. Possibly whether or not the character is aiming or a value from `Tool:setMovementSlowDown`. |
+| Is Climbing | bool : 1 bit | Whether or not the character is climbing. |
+| Is Tumbling | bool : 1 bit | Whether or not the character is tumbling. |
+
+#### SelectedItem
+
+| Field Name  | Field Type | Notes |
+|-------------|------------|-------|
+| Uuid        | le u128    | The UUID of the selected item. If the character does not have a selected item, this field is the nil UUID `00000000-0000-0000-0000-000000000000`. |
+| Instance ID | be u32     | The tool instance ID of the selected item. Always `0xFFFFFFFF` for items that are not tools or if the character does not have a selected item. |
+
+#### IsPlayer
+
+| Field Name        | Field Type   | Notes |
+|-------------------|--------------|-------|
+| Is Player         | bool : 1 bit | Whether or not the character is a player. |
+| Player or Unit ID | be u32       | The ID of the player or unit. If the character is a player, this field is the player ID. If the character is not a player, this field is the unit ID. |
+
+### RemoveCharacter
+
+This update is sent when a `Character` is removed. This can occur when a player leaves the world or when a unit dies or is removed.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+---
+
+### CreateLift
+
+This update is sent when a `Lift` is created. This can occur when a player places their lift, spawns a creation on the lift, or puts a creation on the lift.
+
+| Field Name  | Field Type | Notes |
+|-------------|------------|-------|
+| Steam ID 64 | be u64     | The Steam ID of the player that owns the lift. |
+| World ID    | be u16     | The ID of the world that the lift is in. |
+| Position    | [Vec3i32XYZ](#vec3i32xyz) | The position of the lift. This is in block units relative to the origin of the world, not in meters. |
+| Level       | be s32     | The level of the lift. This is the height of the lift in block units. A value of `0` means that the lift is not extended. |
+
+### UpdateLift
+
+This update is sent when a `Lift` is updated. This can occur when a player extends or retracts their lift.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Level      | be s32     | The level of the lift. This is the height of the lift in block units. A value of `0` means that the lift is not extended. |
+
+### RemoveLift
+
+This update is sent when a `Lift` is removed. This can occur when a player removes their lift, a creation is spawned on the lift, or a creation is put on the lift. In the last (two) case(s), the old lift is removed and a new lift is created.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+---
+
+### CreateTool
+
+This update is sent when a `Tool` is created. All tools that exist in the save file are sent to the client when they join the world. Dragging a tool from the unlimited inventory to the hotbar also creates a new tool.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Uuid       | le u128    | The UUID of the tool. |
+
+### UpdateTool
+
+This update is sent when a `Tool` is created or updated. It assigns a tool to a player.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Player ID  | be u32     | The ID of the player that the tool is assigned to. When the tool is put into a chest, this field is `0xFFFFFFFF`. |
+
+### RemoveTool
+
+This update is sent when a `Tool` is removed. This can occur when a player dragges a tool from the hotbar to the unlimited inventory.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| N/A        | N/A        | No additional data is sent. |
+
+---
+
+## Other structures
+
+Structure definitions that are used in updates.
+
+### Transform
+
+This structure represents a transform of a physical object in a world.
+
+| Field Name       | Field Type            | Notes |
+|------------------|-----------------------|-------|
+| Rotation         | [QuatXYZW](#quatxyzw) | The rotation of the object. |
+| Position         | [Vec3fXYZ](#vec3fxyz) | The position of the object. |
+| Velocity         | [Vec3fXYZ](#vec3fxyz) | The velocity of the object. |
+| Angular Velocity | [Vec3fXYZ](#vec3fxyz) | The angular velocity of the object. |
+
+### Vec3fXYZ
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| X          | be float   | The 32-bit, floating point, X coordinate. |
+| Y          | be float   | The 32-bit, floating point, Y coordinate. |
+| Z          | be float   | The 32-bit, floating point, Z coordinate. |
+
+### Vec3fZYX
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| Z          | be float   | The 32-bit, floating point, Z coordinate. |
+| Y          | be float   | The 32-bit, floating point, Y coordinate. |
+| X          | be float   | The 32-bit, floating point, X coordinate. |
+
+### Vec3i32XYZ
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| X          | be s32     | The signed 32-bit integer X coordinate. |
+| Y          | be s32     | The signed 32-bit integer Y coordinate. |
+| Z          | be s32     | The signed 32-bit integer Z coordinate. |
+
+### Vec3i16XYZ
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| X          | be s16     | The signed 16-bit integer X coordinate. |
+| Y          | be s16     | The signed 16-bit integer Y coordinate. |
+| Z          | be s16     | The signed 16-bit integer Z coordinate. |
+
+### QuatXYZW
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| X          | be float   | The 32-bit, floating point, X coordinate. |
+| Y          | be float   | The 32-bit, floating point, Y coordinate. |
+| Z          | be float   | The 32-bit, floating point, Z coordinate. |
+| W          | be float   | The 32-bit, floating point, real, W coordinate. |
+
+### QuatWZYX
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| W          | be float   | The 32-bit, floating point, real, W coordinate. |
+| Z          | be float   | The 32-bit, floating point, Z coordinate. |
+| Y          | be float   | The 32-bit, floating point, Y coordinate. |
+| X          | be float   | The 32-bit, floating point, X coordinate. |

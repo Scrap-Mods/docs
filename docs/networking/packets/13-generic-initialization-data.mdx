@@ -21,7 +21,7 @@ This packet is sent by the server to the client while joining a game. It contain
 | Field Name | Field Type | Notes |
 |------------|------------|-------|
 | Game Tick  | be u32     | The tick when the server sent this packet. |
-| Data       | [BlobData](/docs/structures/networking/blobdata)[until EOS] | The data the scripted classes are initialized with. This array is read until the end of the packet. |
+| Data       | [BlobData](/docs/structures/networking/blobdata)[Until <abbr title="End of Stream">EOS</abbr>] | The data the scripted classes are initialized with. This array is read until the end of the packet. |
 
 ## BlobData Payloads
 
