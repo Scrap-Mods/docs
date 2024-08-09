@@ -17,7 +17,7 @@ This packet informs the client about which `NetObj`s have been created, updated,
 | Field Name  | Field Type   | Notes |
 |-------------|--------------|-------|
 | Tick        | be u32       | The tick at which the packet was sent. |
-| Sub Updates | ([RawUpdate](#rawupdate) | [DeltaUpdate](#deltaupdate))[Until EOS] | The (compressed) sub-updates. |
+| Sub Updates | ([RawUpdate](#rawupdate) \| [DeltaUpdate](#deltaupdate))[Until <abbr title="End of Stream">EOS</abbr>] | The (compressed) sub-updates. |
 
 ## The compression algorithm
 
