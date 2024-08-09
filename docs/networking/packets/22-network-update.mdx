@@ -17,7 +17,7 @@ This packet informs the client about which `NetObj`s have been created, updated,
 | Field Name  | Field Type   | Notes |
 |-------------|--------------|-------|
 | Tick        | be u32       | The tick at which the packet was sent. |
-| Sub Updates | [CompressedUpdate](#compressedupdate)[Until EOS] | The (compressed) sub-updates. |
+| Sub Updates | ([RawUpdate](#rawupdate) | [DeltaUpdate](#deltaupdate))[Until EOS] | The (compressed) sub-updates. |
 
 ## The compression algorithm
 
@@ -342,7 +342,7 @@ This update is sent when a `Container` is created. When joining a world, the cli
 | Stack Size   | be u16                                | The maximum stack size of the container. |
 | Items        | [ContainerItem](#containeritem)[Size] | The items in the container. |
 | Filter Count | be u16                                | The amount of filters in the container. |
-| Filters      | [Uuid](#uuid)[Filter Count]           | The filters of the container. |
+| Filters      | be u128[Filter Count]                 | The filters of the container. |
 
 #### ContainerItem
 
@@ -540,6 +540,14 @@ This structure represents a transform of a physical object in a world.
 | X          | be s32     | The signed 32-bit integer X coordinate. |
 | Y          | be s32     | The signed 32-bit integer Y coordinate. |
 | Z          | be s32     | The signed 32-bit integer Z coordinate. |
+
+### Vec3i16XYZ
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| X          | be s16     | The signed 16-bit integer X coordinate. |
+| Y          | be s16     | The signed 16-bit integer Y coordinate. |
+| Z          | be s16     | The signed 16-bit integer Z coordinate. |
 
 ### QuatXYZW
 
