@@ -114,3 +114,16 @@ sequenceDiagram
     Client->>Server: Initiate connection
     Server->>Client: Close connection
 ```
+## Troubleshooting
+
+### Stuck after `Receiving initialization data...`
+
+If you are stuck in the loading screen and the last line printed to the console is `Join request accepted`, verify that the server sends all blob data listed in the [2 - Server Info](../packets/02-server-info.mdx) packet.
+
+### Stuck after `Join request accepted`
+
+If you are stuck in the loading screen and the last line printed to the console is `Join request accepted`, it is likely that the server has not created a character for you.
+
+### Missing name tags for player characters
+
+If the character is created properly, but the name tag is missing, verify the server sends the [22 - Network Update](../packets/22-network-update.mdx) packet at least one tick after the [13 - Generic Initialization Data](../packets/13-generic-initialization-data.mdx) packet. If these packets are sent in the same tick, the name tag will not be displayed.
