@@ -1,5 +1,5 @@
 ---
-title: 24 - Unreliable Update - WIP
+title: 24 - Unreliable Update
 ---
 
 import BitstreamNotice from "../_reusable/bitstream-notice.mdx"
@@ -56,7 +56,15 @@ This is an exhaustive list. Updates with values not listed in this table print a
 
 #### NetObjType 0 - RigidBody
 
-// TODO
+| Offset       | Field Name       | Field Type      | Notes |
+|--------------|------------------|-----------------|-------|
+| 0x00         | Body ID          | be u32          | The ID of the rigid body to update. |
+| 0x04         | Rotation         | [Quat](#quat)   | The world rotation of the rigid body. |
+| 0x14         | Position         | [Vec3f](#vec3f) | The world position of the rigid body. |
+| 0x20         | Velocity         | [Vec3f](#vec3f) | The velocity of the rigid body. |
+| 0x2C         | Angular Velocity | [Vec3f](#vec3f) | The angular velocity of the rigid body. |
+| 0x38         | Is Awake         | bool : 1 bit    | Whether or not the rigid body is awake. |
+| 0x38 + 1 bit | Revision         | u8 : 7 bits     | The revision of the rigid body. Overflows back to `0` after reaching `127`. |
 
 #### NetObjType 3 - Controller
 
@@ -73,6 +81,7 @@ This is an exhaustive list. Updates with values not listed in this table print a
 |-----------|-----------------|------------|-------|
 | 0x00 bits | Character ID    | be u32     | The ID of the character to update. |
 | 0x20 bits | Is Tumbling     | bool       | Whether or not the character is tumbling. |
+| 0x21 bits | ...             | [Not Tumbling](#not-tumbling) \| [Tumbling](#tumbling) | The character data. See [Not Tumbling](#not-tumbling) and [Tumbling](#tumbling) for more information. |
 
 ##### Not Tumbling
 
