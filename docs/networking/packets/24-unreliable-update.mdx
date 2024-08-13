@@ -126,8 +126,8 @@ Contains information about which movement keys are pressed. All bits are always 
     <tbody>
         <tr>
             <td>7</td>
-            <td rowSpan="4">Unknown</td>
-            <td rowSpan="4">Not known to be anything other than low.</td>
+            <td rowSpan="3">Unknown</td>
+            <td rowSpan="3">Not known to be anything other than low.</td>
         </tr>
         <tr>
             <td>6</td>
@@ -137,6 +137,8 @@ Contains information about which movement keys are pressed. All bits are always 
         </tr>
         <tr>
             <td>4</td>
+            <td>Aiming</td>
+            <td>High when the player is aiming with a Spud Gun, low otherwise. This value is set using `Tool:setMovementSlowDown` and read using `Character:isAiming`</td>
         </tr>
         <tr>
             <td>3</td>
