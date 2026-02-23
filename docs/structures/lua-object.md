@@ -43,7 +43,7 @@ This enum is used to specify the type of data that is stored. This is an exhaust
 | Int8        | 8     |
 | Json        | 9     |
 | Userdata    | 100   |
-| Unknown_101 | 101   |
+| WeakScriptRef | 101   |
 
 ## LuaSaveDataValue
 
@@ -162,9 +162,24 @@ The `Json` type has not been documented yet.
 
 The `Userdata` type is used to represent a userdata object in Lua. It is serialized as a [LuaUserdata](#luauserdata) object.
 
-### Unknown_101
+### WeakScriptRef
 
-The `Unknown_101` type has not been documented yet.
+:::warning Additional Information Required
+This field requires more detailed documentation. Further explanation about its purpose, behavior, and usage is needed.
+
+If you have any further information on this field, please create a Pull Request for this.
+:::
+
+The `WeakScriptRef` type allows retrieveing objects from a defined list inside the LuaVM. It cannot be created from normal functions and is only ever used internally.
+
+If you want to use this type, will may have to manually create the LuaObject yourself.
+
+| Field Name | Field Type | Notes |
+|------------|------------|-------|
+| RefID      | u32        | The reference in
+| Unknown    | Flag (1-bit) | Unknown flag. (During testing, The type only seem to work when this was set)
+
+The `RefID` may point to a reference inside a pool stored in the LuaVM/LuaManager. The purpose of this type is not yet clear, however it is clearly not intended for modders.
 
 ## LuaUserdata
 
